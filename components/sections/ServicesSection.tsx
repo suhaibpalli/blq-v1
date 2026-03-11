@@ -1,49 +1,147 @@
+"use client";
+
+import { useState } from "react";
 import { SERVICES } from "@/lib/constants";
-import { Card } from "@/components/ui/Card";
-import RevealOnScroll from "@/components/animations/RevealOnScroll";
-import * as LucideIcons from "lucide-react";
+import RevealOnScroll, { StaggerReveal, StaggerItem } from "@/components/animations/RevealOnScroll";
 import Link from "next/link";
+import * as LucideIcons from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 
 export default function ServicesSection() {
+  const [hovered, setHovered] = useState<string | null>(null);
+
   return (
-    <section className="py-32 px-6 max-w-[1440px] mx-auto">
-      <RevealOnScroll>
-        <div className="mb-16">
-          <span className="text-text-secondary text-xs tracking-[0.15em] uppercase mb-4 block">Capabilities</span>
-          <h2 className="font-display font-bold text-[clamp(36px,5vw,72px)] leading-tight">Everything you need.<br/><span className="text-text-muted">Nothing you don&apos;t.</span></h2>
+    <section
+      className="py-40 px-6 md:px-10 max-w-[1440px] mx-auto border-t"
+      style={{ borderColor: "var(--color-border)" }}
+    >
+      {/* Header */}
+      <RevealOnScroll variant="fade-up">
+        <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-24">
+          <div>
+            <p
+              className="text-[11px] tracking-[0.22em] uppercase mb-6 font-medium"
+              style={{ color: "var(--color-ink-3)" }}
+            >
+              Capabilities
+            </p>
+            <h2
+              className="font-display font-black leading-[1.0] tracking-[-0.03em]"
+              style={{ fontSize: "clamp(40px,5.5vw,80px)", color: "var(--color-ink)" }}
+            >
+              Everything you need.
+              <br />
+              <span style={{ color: "var(--color-ink-3)" }}>Nothing you don&apos;t.</span>
+            </h2>
+          </div>
+          <Link
+            href="/services"
+            className="shrink-0 inline-flex items-center gap-2 text-sm font-bold hover-line transition-colors"
+            style={{ color: "var(--color-cyan)" }}
+          >
+            View all services →
+          </Link>
         </div>
       </RevealOnScroll>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* Service List */}
+      <StaggerReveal stagger={0.07}>
         {SERVICES.map((service, index) => {
           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-          const IconComponent = LucideIcons[service.icon as keyof typeof LucideIcons] as any;
-          
+          const Icon = LucideIcons[service.icon as keyof typeof LucideIcons] as any;
+          const isHovered = hovered === service.id;
+
           return (
-            <RevealOnScroll key={service.id} delay={index * 0.1}>
-              <Card className="h-full flex flex-col justify-between group cursor-pointer relative overflow-hidden">
-                <div className="absolute top-0 right-0 w-32 h-32 bg-accent-glow rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 opacity-0 group-hover:opacity-100 transition-opacity duration-500" />
-                
-                <div>
-                  <div className="flex justify-between items-start mb-8">
-                    <div className="w-12 h-12 rounded-full bg-bg-elevated flex items-center justify-center text-accent-primary group-hover:scale-110 transition-transform duration-300">
-                      {IconComponent && <IconComponent size={24} strokeWidth={1.5} />}
-                    </div>
-                    <span className="font-mono text-text-muted text-sm">{service.id}</span>
-                  </div>
-                  
-                  <h3 className="text-xl font-bold mb-3 text-text-primary">{service.title}</h3>
-                  <p className="text-text-secondary text-sm leading-relaxed mb-6">{service.description}</p>
+            <StaggerItem key={service.id}>
+              <motion.div
+                onMouseEnter={() => setHovered(service.id)}
+                onMouseLeave={() => setHovered(null)}
+                className="group relative border-b flex items-start gap-8 py-8 transition-all duration-400 service-row"
+                style={{
+                  borderColor: "var(--color-border)",
+                  background: isHovered ? "var(--color-bg-2)" : "transparent",
+                }}
+                animate={{ paddingLeft: isHovered ? "16px" : "0px" }}
+                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+              >
+                {/* Number */}
+                <span
+                  className="font-mono text-xs font-bold shrink-0 mt-1 w-10 transition-colors"
+                  style={{ color: isHovered ? "var(--color-cyan)" : "var(--color-ink-3)" }}
+                >
+                  {service.id}
+                </span>
+
+                {/* Icon */}
+                <div
+                  className="shrink-0 w-10 h-10 rounded-lg flex items-center justify-center transition-all duration-300"
+                  style={{
+                    background: isHovered ? "var(--color-cyan-dim)" : "var(--color-surface)",
+                    color: isHovered ? "var(--color-cyan)" : "var(--color-ink-3)",
+                  }}
+                >
+                  {Icon && <Icon size={18} strokeWidth={1.5} />}
                 </div>
 
-                <Link href={`/services#${service.id}`} className="text-accent-primary text-sm font-bold flex items-center gap-2 group-hover:gap-3 transition-all mt-auto w-fit">
-                  Learn more <span className="text-lg leading-none">&rarr;</span>
-                </Link>
-              </Card>
-            </RevealOnScroll>
+                {/* Title + Desc */}
+                <div className="flex-1 min-w-0">
+                  <h3
+                    className="font-display font-bold text-xl md:text-2xl mb-2 transition-colors"
+                    style={{ color: isHovered ? "var(--color-ink)" : "var(--color-ink-2)" }}
+                  >
+                    {service.title}
+                  </h3>
+                  <AnimatePresence>
+                    {isHovered && (
+                      <motion.p
+                        initial={{ opacity: 0, y: 8, height: 0 }}
+                        animate={{ opacity: 1, y: 0, height: "auto" }}
+                        exit={{ opacity: 0, y: 4, height: 0 }}
+                        transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                        className="text-sm leading-relaxed overflow-hidden"
+                        style={{ color: "var(--color-ink-2)" }}
+                      >
+                        {service.description}
+                      </motion.p>
+                    )}
+                  </AnimatePresence>
+                </div>
+
+                {/* Arrow */}
+                <motion.div
+                  animate={{
+                    opacity: isHovered ? 1 : 0,
+                    x: isHovered ? 0 : -8,
+                  }}
+                  transition={{ duration: 0.3 }}
+                  className="shrink-0 mt-1"
+                >
+                  <Link
+                    href={`/services#${service.id}`}
+                    className="inline-flex items-center gap-2 text-xs font-bold tracking-wide"
+                    style={{ color: "var(--color-cyan)" }}
+                  >
+                    Explore
+                    <svg width="10" height="10" viewBox="0 0 10 10" fill="none">
+                      <path d="M1 9L9 1M9 1H3M9 1V7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                    </svg>
+                  </Link>
+                </motion.div>
+
+                {/* Large background number on hover */}
+                <motion.span
+                  animate={{ opacity: isHovered ? 0.04 : 0 }}
+                  transition={{ duration: 0.3 }}
+                  className="absolute right-6 top-1/2 -translate-y-1/2 font-display font-black pointer-events-none select-none"
+                  style={{ fontSize: "clamp(60px,10vw,120px)", color: "var(--color-ink)", lineHeight: 1 }}
+                >
+                  {String(index + 1).padStart(2, "0")}
+                </motion.span>
+              </motion.div>
+            </StaggerItem>
           );
         })}
-      </div>
+      </StaggerReveal>
     </section>
   );
 }

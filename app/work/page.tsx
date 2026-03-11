@@ -4,72 +4,145 @@ import { useState } from "react";
 import { WORKS } from "@/lib/constants";
 import RevealOnScroll from "@/components/animations/RevealOnScroll";
 import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 
 const CATEGORIES = ["All", "Web App", "Mobile App", "AI Integration", "Design"];
 
 export default function WorkIndexPage() {
-  const [activeCategory, setActiveCategory] = useState("All");
-
-  const filteredWorks = activeCategory === "All" 
-    ? WORKS 
-    : WORKS.filter(work => work.type === activeCategory);
+  const [active, setActive] = useState("All");
+  const filtered = active === "All" ? WORKS : WORKS.filter(w => w.type === active);
 
   return (
-    <main className="min-h-screen pt-32 pb-24 px-6 max-w-[1440px] mx-auto w-full">
-      <RevealOnScroll>
-        <div className="mb-20">
-          <h1 className="font-display font-bold text-[clamp(48px,8vw,96px)] leading-tight mb-8">Work that speaks <span className="text-accent-secondary">for itself.</span></h1>
-          
-          <div className="flex flex-wrap gap-4 mt-8">
-            {CATEGORIES.map(category => (
+    <main style={{ paddingTop: "120px" }}>
+      {/* Header */}
+      <section className="px-6 md:px-10 max-w-[1440px] mx-auto pb-20">
+        <RevealOnScroll variant="fade-up">
+          <p className="text-[11px] tracking-[0.22em] uppercase mb-6 font-medium" style={{ color: "var(--color-ink-3)" }}>
+            Case Studies
+          </p>
+          <h1
+            className="font-display font-black leading-[0.93] tracking-[-0.04em] mb-12"
+            style={{ fontSize: "clamp(52px,9vw,120px)", color: "var(--color-ink)" }}
+          >
+            Work that speaks
+            <br />
+            <span style={{ color: "var(--color-cyan)" }}>for itself.</span>
+          </h1>
+        </RevealOnScroll>
+
+        {/* Filter Pills */}
+        <RevealOnScroll delay={0.1} variant="fade-up">
+          <div className="flex flex-wrap gap-3">
+            {CATEGORIES.map(cat => (
               <button
-                key={category}
-                onClick={() => setActiveCategory(category)}
+                key={cat}
+                onClick={() => setActive(cat)}
                 className={cn(
-                  "px-6 py-2 rounded-full text-sm font-bold border transition-all",
-                  activeCategory === category 
-                    ? "bg-text-primary text-bg-primary border-text-primary" 
-                    : "border-border text-text-secondary hover:border-accent-primary hover:text-accent-primary"
+                  "px-5 py-2 rounded-full text-xs font-bold tracking-wide border transition-all duration-300",
+                  active === cat
+                    ? "border-(--color-cyan) text-(--color-cyan) bg-(--color-cyan-dim)"
+                    : "border-(--color-border) text-(--color-ink-2) hover:border-(--color-border-strong)"
                 )}
               >
-                {category}
+                {cat}
               </button>
             ))}
           </div>
-        </div>
-      </RevealOnScroll>
+        </RevealOnScroll>
+      </section>
 
-      <div className="columns-1 md:columns-2 gap-8 space-y-8">
-        {filteredWorks.map((work, index) => (
-          <RevealOnScroll key={work.id} delay={Math.min(index * 0.1, 0.4)} className="break-inside-avoid">
-            <Link href={`/work/${work.id}`} className="group block relative overflow-hidden rounded-xl bg-bg-secondary border border-border">
-              <div className="aspect-4/5 md:aspect-square bg-bg-elevated relative w-full flex items-center justify-center p-8 overflow-hidden">
-                <div className="absolute inset-0 bg-linear-to-br from-[#00F5FF10] to-[#7B61FF10] opacity-50 z-0"></div>
-                <p className="text-text-muted font-mono tracking-widest text-sm uppercase relative z-10">[{work.id} Preview Image]</p>
-                
-                {/* Image zoom effect on hover (simulated without actual image) */}
-                <div className="absolute inset-0 bg-bg-primary/90 opacity-0 group-hover:opacity-100 transition-all duration-500 z-20 flex flex-col justify-end p-8 translate-y-8 group-hover:translate-y-0">
-                  <h3 className="font-display text-3xl font-bold mb-4">{work.title}</h3>
-                  <p className="text-text-secondary mb-6">{work.description}</p>
-                  <span className="text-accent-primary font-bold inline-flex items-center gap-2">View Project &rarr;</span>
-                </div>
-              </div>
-              
-              <div className="p-6 border-t border-border flex justify-between items-center group-hover:bg-bg-elevated transition-colors">
-                <div>
-                  <h3 className="font-bold text-lg">{work.title}</h3>
-                  <p className="text-text-secondary text-sm">{work.client}</p>
-                </div>
-                <div className="text-right">
-                  <span className="block text-sm font-medium text-text-primary">{work.type}</span>
-                  <span className="block text-xs font-mono text-text-muted mt-1">{work.year}</span>
-                </div>
-              </div>
-            </Link>
-          </RevealOnScroll>
-        ))}
-      </div>
+      {/* Grid */}
+      <section
+        className="px-6 md:px-10 max-w-[1440px] mx-auto pb-40 border-t pt-16"
+        style={{ borderColor: "var(--color-border)" }}
+      >
+        <AnimatePresence mode="wait">
+          <motion.div
+            key={active}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+            transition={{ duration: 0.3 }}
+            className="grid grid-cols-1 md:grid-cols-2 gap-6"
+          >
+            {filtered.map((work, i) => (
+              <motion.div
+                key={work.id}
+                initial={{ opacity: 0, y: 32 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ delay: i * 0.07, duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+                className={cn(
+                  "group",
+                  i === 0 && filtered.length > 2 ? "md:col-span-2" : ""
+                )}
+              >
+                <Link href={`/work/${work.id}`} data-cursor="view" className="block">
+                  <div
+                    className="relative overflow-hidden rounded-2xl border mb-5 transition-all duration-500 group-hover:border-(--color-border-strong)"
+                    style={{
+                      background: "var(--color-bg-2)",
+                      borderColor: "var(--color-border)",
+                      aspectRatio: i === 0 && filtered.length > 2 ? "16/7" : "4/3",
+                    }}
+                  >
+                    <div
+                      className="absolute inset-0"
+                      style={{
+                        background: `radial-gradient(ellipse at 30% 50%, rgba(0,232,255,0.06) 0%, transparent 60%)`,
+                      }}
+                    />
+                    <div className="absolute inset-0 flex items-center justify-center">
+                      <p
+                        className="text-[11px] tracking-[0.2em] uppercase font-mono"
+                        style={{ color: "var(--color-ink-3)" }}
+                      >
+                        [{work.id}]
+                      </p>
+                    </div>
+                    {/* Hover overlay */}
+                    <motion.div
+                      className="absolute inset-0 flex items-end p-8"
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      transition={{ duration: 0.3 }}
+                      style={{ background: "rgba(3,3,10,0.85)", backdropFilter: "blur(8px)" }}
+                    >
+                      <div>
+                        <p className="text-sm font-bold mb-2" style={{ color: "var(--color-cyan)" }}>
+                          View Case Study →
+                        </p>
+                        <p className="text-sm" style={{ color: "var(--color-ink-2)" }}>{work.description}</p>
+                      </div>
+                    </motion.div>
+                  </div>
+
+                  {/* Meta */}
+                  <div className="flex justify-between items-start">
+                    <div>
+                      <h3 className="font-display font-bold text-xl mb-1" style={{ color: "var(--color-ink)" }}>
+                        {work.title}
+                      </h3>
+                      <p className="text-sm" style={{ color: "var(--color-ink-3)" }}>{work.client}</p>
+                    </div>
+                    <div className="text-right">
+                      <span
+                        className="block text-xs font-mono px-3 py-1 rounded-full border"
+                        style={{ borderColor: "var(--color-border)", color: "var(--color-ink-2)" }}
+                      >
+                        {work.type}
+                      </span>
+                      <span className="block text-xs font-mono mt-2" style={{ color: "var(--color-ink-3)" }}>
+                        {work.year}
+                      </span>
+                    </div>
+                  </div>
+                </Link>
+              </motion.div>
+            ))}
+          </motion.div>
+        </AnimatePresence>
+      </section>
     </main>
   );
 }

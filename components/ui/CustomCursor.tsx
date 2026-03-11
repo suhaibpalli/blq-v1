@@ -1,62 +1,123 @@
 "use client";
 
-import { useEffect, useState } from "react";
-import { motion } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+
+type CursorState = "default" | "hover" | "view";
 
 export default function CustomCursor() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-  const [isHovered, setIsHovered] = useState(false);
+  const dotRef   = useRef<HTMLDivElement>(null);
+  const ringRef  = useRef<HTMLDivElement>(null);
+  const state    = useRef<CursorState>("default");
+  const pos      = useRef({ x: -100, y: -100 });
+  const raf      = useRef<number>(0);
+  const [label, setLabel] = useState("");
 
   useEffect(() => {
-    const updateMousePosition = (e: MouseEvent) => {
-      setMousePosition({ x: e.clientX, y: e.clientY });
-    };
+    // Hide on mobile
+    if (window.matchMedia("(pointer: coarse)").matches) return;
 
-    const handleMouseOver = (e: MouseEvent) => {
+    const onMove = (e: MouseEvent) => {
+      pos.current = { x: e.clientX, y: e.clientY };
+
       const target = e.target as HTMLElement;
-      if (
-        target.tagName.toLowerCase() === "a" ||
-        target.tagName.toLowerCase() === "button" ||
-        target.closest("a") ||
-        target.closest("button")
-      ) {
-        setIsHovered(true);
+      const isImage = target.closest("[data-cursor='view']");
+      const isLink  = target.closest("a, button, [data-cursor='hover']");
+
+      if (isImage) {
+        state.current = "view";
+        setLabel("VIEW");
+      } else if (isLink) {
+        state.current = "hover";
+        setLabel("");
       } else {
-        setIsHovered(false);
+        state.current = "default";
+        setLabel("");
       }
     };
 
-    window.addEventListener("mousemove", updateMousePosition);
-    window.addEventListener("mouseover", handleMouseOver);
+    window.addEventListener("mousemove", onMove);
+
+    const animate = () => {
+      const dot  = dotRef.current;
+      const ring = ringRef.current;
+      if (!dot || !ring) { raf.current = requestAnimationFrame(animate); return; }
+
+      // Dot follows instantly
+      dot.style.transform  = `translate(${pos.current.x - 3}px, ${pos.current.y - 3}px)`;
+
+      // Ring lerps behind
+      const lerpFactor = state.current === "view" ? 0.08 : 0.12;
+      const rx = pos.current.x - (state.current === "view" ? 32 : 20);
+      const ry = pos.current.y - (state.current === "view" ? 32 : 20);
+      
+      // Direct lerp without using the ringPos ref incorrectly
+      const currentX = parseFloat(ring.dataset.x || String(pos.current.x - 20));
+      const currentY = parseFloat(ring.dataset.y || String(pos.current.y - 20));
+      const newX = currentX + (rx - currentX) * lerpFactor;
+      const newY = currentY + (ry - currentY) * lerpFactor;
+      ring.dataset.x = String(newX);
+      ring.dataset.y = String(newY);
+
+      ring.style.transform = `translate(${newX}px, ${newY}px)`;
+
+      if (state.current === "view") {
+        ring.style.width  = "64px";
+        ring.style.height = "64px";
+        ring.style.backgroundColor = "var(--color-cyan)";
+        ring.style.borderColor = "transparent";
+      } else if (state.current === "hover") {
+        ring.style.width  = "48px";
+        ring.style.height = "48px";
+        ring.style.backgroundColor = "rgba(0,232,255,0.15)";
+        ring.style.borderColor = "var(--color-cyan)";
+      } else {
+        ring.style.width  = "40px";
+        ring.style.height = "40px";
+        ring.style.backgroundColor = "transparent";
+        ring.style.borderColor = "rgba(0,232,255,0.5)";
+      }
+
+      raf.current = requestAnimationFrame(animate);
+    };
+
+    raf.current = requestAnimationFrame(animate);
 
     return () => {
-      window.removeEventListener("mousemove", updateMousePosition);
-      window.removeEventListener("mouseover", handleMouseOver);
+      window.removeEventListener("mousemove", onMove);
+      cancelAnimationFrame(raf.current);
     };
   }, []);
 
   return (
     <>
       {/* Inner dot */}
-      <motion.div
-        className="fixed top-0 left-0 w-1.5 h-1.5 bg-accent-primary rounded-full pointer-events-none z-50 mix-blend-difference"
-        animate={{
-          x: mousePosition.x - 3,
-          y: mousePosition.y - 3,
+      <div
+        ref={dotRef}
+        className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full pointer-events-none z-9997"
+        style={{
+          background: "var(--color-cyan)",
+          transition: "opacity 0.2s",
+          willChange: "transform",
         }}
-        transition={{ type: "tween", ease: "backOut", duration: 0.1 }}
       />
       {/* Outer ring */}
-      <motion.div
-        className="fixed top-0 left-0 w-10 h-10 border border-accent-primary rounded-full pointer-events-none z-50 mix-blend-difference flex items-center justify-center"
-        animate={{
-          x: mousePosition.x - 20,
-          y: mousePosition.y - 20,
-          scale: isHovered ? 1.5 : 1,
-          backgroundColor: isHovered ? "var(--color-accent-glow)" : "transparent",
+      <div
+        ref={ringRef}
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-9997 border flex items-center justify-center"
+        style={{
+          width: "40px",
+          height: "40px",
+          borderColor: "rgba(0,232,255,0.5)",
+          transition: "width 0.3s cubic-bezier(0.16,1,0.3,1), height 0.3s cubic-bezier(0.16,1,0.3,1), background-color 0.3s, border-color 0.3s",
+          willChange: "transform, width, height",
         }}
-        transition={{ type: "tween", ease: "backOut", duration: 0.15 }}
-      />
+      >
+        {label && (
+          <span className="text-[9px] font-black tracking-[0.15em] uppercase" style={{ color: "#03030A" }}>
+            {label}
+          </span>
+        )}
+      </div>
     </>
   );
 }

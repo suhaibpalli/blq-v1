@@ -1,90 +1,150 @@
 import RevealOnScroll from "@/components/animations/RevealOnScroll";
 import { Marquee } from "@/components/ui/Marquee";
-import Image from "next/image";
-import { Card } from "@/components/ui/Card";
+import type { Metadata } from "next";
+
+export const metadata: Metadata = {
+  title: "About",
+  description: "Born in a lab. Built for the real world. The story behind Black Quantum Labs.",
+};
 
 const VALUES = [
-  { num: "01", title: "Craft First", desc: "We obsess over details most overlook." },
-  { num: "02", title: "Ship Fast", desc: "Speed without sloppiness. We move fast and fix things." },
-  { num: "03", title: "Full Transparency", desc: "No surprises. You always know where your project stands." },
-  { num: "04", title: "Long-term Thinking", desc: "We build for scale, not just for today." },
+  { num: "01", title: "Craft First",            desc: "We obsess over the 1% of details that 99% of studios overlook. Every interaction, every animation, every API response — it all matters." },
+  { num: "02", title: "Ship Fast",               desc: "Speed without sloppiness. We move with urgency because your runway is real, without cutting corners that'll haunt you later." },
+  { num: "03", title: "Full Transparency",        desc: "No status theatre. No spin. You always know exactly where your project stands — the good, the hard, and the plan." },
+  { num: "04", title: "Long-term Thinking",       desc: "We build architecture that scales, code that's readable, and systems you'll be proud of in three years." },
 ];
 
 const STACK = [
-  "React", "Next.js", "TypeScript", "Node.js", "Python", "AWS", "GCP", 
-  "Figma", "Three.js", "PostgreSQL", "MongoDB", "Docker", "Kubernetes"
+  "React", "Next.js", "TypeScript", "Node.js", "Python", "AWS", "GCP",
+  "Figma", "Three.js", "PostgreSQL", "MongoDB", "Docker", "Kubernetes",
+  "Redis", "GraphQL", "Tailwind",
 ];
 
 export default function AboutPage() {
   return (
-    <main className="min-h-screen pt-32 pb-0 flex flex-col items-center">
+    <main style={{ paddingTop: "120px" }}>
       {/* Hero */}
-      <section className="w-full max-w-[1440px] px-6 text-center mb-32">
-        <RevealOnScroll>
-          <span className="text-text-secondary text-xs tracking-[0.15em] uppercase mb-8 block">Our Story</span>
-          <h1 className="font-display font-extrabold text-[clamp(48px,8vw,120px)] leading-[1.1] tracking-tight text-gradient bg-clip-text text-transparent bg-linear-to-br from-text-primary to-text-secondary">
-            Born in a lab.<br/>
-            Built for the real world.
+      <section className="px-6 md:px-10 max-w-[1440px] mx-auto pb-32">
+        <RevealOnScroll variant="fade-up">
+          <p className="text-[11px] tracking-[0.22em] uppercase mb-8 font-medium" style={{ color: "var(--color-ink-3)" }}>
+            Our Story
+          </p>
+          <h1
+            className="font-display font-black leading-[0.93] tracking-[-0.04em] max-w-5xl"
+            style={{ fontSize: "clamp(52px,9vw,136px)", color: "var(--color-ink)" }}
+          >
+            Born in a lab.
+            <br />
+            <span style={{ color: "var(--color-cyan)" }}>Built for the</span>
+            <br />
+            real world.
           </h1>
         </RevealOnScroll>
       </section>
 
-      {/* Origin Story */}
-      <section className="w-full px-6 max-w-[800px] mx-auto text-lg md:text-xl leading-relaxed text-text-secondary space-y-8 mb-32">
-        <RevealOnScroll>
-          <p>
-            <strong className="text-text-primary">Black Quantum Labs</strong> began with a simple premise: the gap between exceptional design and world-class engineering is too wide. The industry separates the thinkers from the builders, the designers from the developers.
+      {/* Story */}
+      <section
+        className="px-6 md:px-10 max-w-[1440px] mx-auto py-32 border-t grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-20"
+        style={{ borderColor: "var(--color-border)" }}
+      >
+        <RevealOnScroll variant="fade-up">
+          <p className="text-[11px] tracking-[0.22em] uppercase font-medium" style={{ color: "var(--color-ink-3)" }}>
+            The Origin
           </p>
         </RevealOnScroll>
-        <RevealOnScroll delay={0.1}>
-          <p>
-            We bridge that gap. We are a collective of digital craftsmen — engineers who understand typography, and designers who understand system architecture. 
-          </p>
-        </RevealOnScroll>
-        <RevealOnScroll delay={0.2}>
-          <p>
-            Based in Chennai but working globally, we partner strictly with founders and established teams who view software not as a cost center, but as a competitive advantage. If you want something average, there are thousands of agencies who can help. If you want something extraordinary, welcome to the Lab.
-          </p>
-        </RevealOnScroll>
+
+        <div className="space-y-10">
+          {[
+            <>
+              <strong style={{ color: "var(--color-ink)" }}>Black Quantum Labs</strong> began with a simple premise: the gap between exceptional design and world-class engineering is too wide. The industry separates the thinkers from the builders.
+            </>,
+            "We bridge that gap. We are engineers who understand typography, and designers who understand distributed systems. That dual fluency isn't common — and it shows in every product we ship.",
+            "Based in Chennai but working globally, we partner with founders and ambitious companies who view software as their primary competitive advantage. If you want something average, there are thousands of agencies who can help. If you want something extraordinary, welcome to the Lab.",
+          ].map((text, i) => (
+            <RevealOnScroll key={i} delay={i * 0.1} variant="fade-up">
+              <p className="text-lg md:text-xl leading-[1.8]" style={{ color: "var(--color-ink-2)" }}>
+                {text}
+              </p>
+            </RevealOnScroll>
+          ))}
+        </div>
       </section>
 
       {/* Values */}
-      <section className="w-full max-w-[1440px] px-6 mx-auto mb-32">
-         <RevealOnScroll>
-           <h2 className="font-display font-bold text-4xl mb-12 text-center">Core Principles</h2>
-         </RevealOnScroll>
-         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-           {VALUES.map((val, i) => (
-             <RevealOnScroll key={val.num} delay={i * 0.1}>
-               <Card className="h-full bg-bg-secondary hover:bg-bg-elevated transition-colors border-border">
-                  <span className="text-accent-primary font-mono text-sm mb-6 block">{val.num}</span>
-                  <h3 className="font-bold text-xl mb-3">{val.title}</h3>
-                  <p className="text-text-secondary text-sm leading-relaxed">{val.desc}</p>
-               </Card>
-             </RevealOnScroll>
-           ))}
-         </div>
+      <section
+        className="px-6 md:px-10 max-w-[1440px] mx-auto py-32 border-t"
+        style={{ borderColor: "var(--color-border)" }}
+      >
+        <RevealOnScroll variant="fade-up">
+          <p className="text-[11px] tracking-[0.22em] uppercase mb-16 font-medium" style={{ color: "var(--color-ink-3)" }}>
+            Core Principles
+          </p>
+        </RevealOnScroll>
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-px" style={{ background: "var(--color-border)" }}>
+          {VALUES.map((val, i) => (
+            <RevealOnScroll key={val.num} delay={val.num === "01" ? 0 : i * 0.08} variant="fade-up">
+              <div
+                className="p-10 group transition-colors duration-300 bg-(--color-bg) hover:bg-(--color-bg-2)"
+              >
+                <div className="flex items-start gap-6">
+                  <span className="font-mono text-xs font-bold mt-1 shrink-0" style={{ color: "var(--color-cyan)" }}>
+                    {val.num}
+                  </span>
+                  <div>
+                    <h3 className="font-display font-bold text-xl mb-3" style={{ color: "var(--color-ink)" }}>
+                      {val.title}
+                    </h3>
+                    <p className="text-sm leading-relaxed" style={{ color: "var(--color-ink-2)" }}>
+                      {val.desc}
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </RevealOnScroll>
+          ))}
+        </div>
       </section>
 
       {/* Tech Stack Marquee */}
-      <section className="w-full py-20 bg-bg-secondary border-y border-border overflow-hidden mb-32">
-         <h2 className="text-center text-text-muted text-sm tracking-[0.15em] uppercase mb-12">Technologies We Leverage</h2>
-         <Marquee direction="left" speed="normal">
-           {STACK.map((tech, i) => (
-             <span key={i} className="text-2xl md:text-4xl font-display font-bold text-text-primary/10 hover:text-text-primary/50 transition-colors mx-8 whitespace-nowrap">
-               {tech}
-             </span>
-           ))}
-         </Marquee>
-         <Marquee direction="right" speed="slow" className="mt-8">
-           {STACK.reverse().map((tech, i) => (
-             <span key={i} className="text-2xl md:text-4xl font-display font-bold text-text-primary/10 hover:text-text-primary/50 transition-colors mx-8 whitespace-nowrap">
-               {tech}
-             </span>
-           ))}
-         </Marquee>
+      <section
+        className="py-24 border-y overflow-hidden"
+        style={{ borderColor: "var(--color-border)", background: "var(--color-bg-2)" }}
+      >
+        <p
+          className="text-center text-[11px] tracking-[0.22em] uppercase mb-12 font-medium"
+          style={{ color: "var(--color-ink-3)" }}
+        >
+          Technologies we leverage
+        </p>
+        <Marquee duration="35s" direction="left">
+          {STACK.map((tech, i) => (
+            <span
+              key={i}
+              className="font-display font-black whitespace-nowrap px-8"
+              style={{
+                fontSize: "clamp(24px,3.5vw,44px)",
+                color: i % 2 === 0 ? "rgba(255,255,255,0.07)" : "rgba(255,255,255,0.03)",
+              }}
+            >
+              {tech} <span style={{ color: "var(--color-cyan)", opacity: 0.3 }}>·</span>
+            </span>
+          ))}
+        </Marquee>
+        <Marquee duration="45s" direction="right" className="mt-4">
+          {[...STACK].reverse().map((tech, i) => (
+            <span
+              key={i}
+              className="font-display font-black whitespace-nowrap px-8"
+              style={{
+                fontSize: "clamp(20px,2.5vw,32px)",
+                color: "rgba(255,255,255,0.04)",
+              }}
+            >
+              {tech} <span style={{ color: "var(--color-cyan)", opacity: 0.2 }}>·</span>
+            </span>
+          ))}
+        </Marquee>
       </section>
-      
     </main>
   );
 }

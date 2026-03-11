@@ -1,25 +1,52 @@
-import { Marquee } from "@/components/ui/Marquee";
+const ITEMS = [
+  "Web Engineering", "Mobile Apps", "AI & Automation",
+  "Cloud Architecture", "UI/UX Design", "API Engineering", "Tech Consulting",
+];
 
-export default function MarqueeSection() {
-  const items = [
-    "Web Development",
-    "Mobile Apps",
-    "AI Integration",
-    "Cloud Architecture",
-    "UI/UX Design",
-    "API Engineering",
-    "Tech Consulting"
-  ];
+function MarqueeRow({
+  direction = "left",
+  speed = "40s",
+}: {
+  direction?: "left" | "right";
+  speed?: string;
+}) {
+  const cls = direction === "left" ? "marquee-left" : "marquee-right";
 
   return (
-    <section className="py-20 bg-bg-primary overflow-hidden border-y border-border transform -skew-y-1 my-12">
-      <Marquee speed="slow" className="py-4">
-        {items.map((item, i) => (
-          <span key={i} className="text-4xl md:text-5xl font-display font-extrabold text-text-muted whitespace-nowrap mx-4">
-            {item} &middot;
+    <div className="overflow-hidden py-3">
+      <div
+        className={`marquee-track ${cls}`}
+        style={{ "--duration": speed } as React.CSSProperties}
+      >
+        {[...ITEMS, ...ITEMS].map((item, i) => (
+          <span
+            key={i}
+            className="font-display font-black whitespace-nowrap px-8 select-none"
+            style={{
+              fontSize: "clamp(28px,4vw,52px)",
+              color: i % 3 === 0 ? "var(--color-ink-3)" : i % 3 === 1 ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.05)",
+            }}
+          >
+            {item}
+            <span
+              className="mx-6 inline-block align-middle w-2 h-2 rounded-full"
+              style={{ background: "var(--color-cyan)", opacity: 0.4 }}
+            />
           </span>
         ))}
-      </Marquee>
+      </div>
+    </div>
+  );
+}
+
+export default function MarqueeSection() {
+  return (
+    <section
+      className="relative overflow-hidden border-y py-6"
+      style={{ borderColor: "var(--color-border)", background: "var(--color-bg-2)" }}
+    >
+      <MarqueeRow direction="left"  speed="45s" />
+      <MarqueeRow direction="right" speed="55s" />
     </section>
   );
 }

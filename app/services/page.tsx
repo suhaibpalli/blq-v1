@@ -5,112 +5,201 @@ import RevealOnScroll from "@/components/animations/RevealOnScroll";
 import { useState } from "react";
 import { cn } from "@/lib/utils";
 import * as LucideIcons from "lucide-react";
-import { Button } from "@/components/ui/Button";
+import Link from "next/link";
+import { motion, AnimatePresence } from "framer-motion";
 
 const PRICING = [
   {
-    tier: "STARTER",
-    price: "₹50K–80K",
-    features: ["Landing page", "3-5 sections", "CMS setup", "2 revisions"],
-    cta: "Get Quote",
+    tier: "Starter",
+    price: "₹50K – 80K",
+    sub: "Ideal for landing pages & MVPs",
+    features: ["Landing page (3–5 sections)", "CMS integration", "Responsive design", "SEO setup", "2 revision rounds"],
+    cta: "Get a Quote",
+    highlight: false,
   },
   {
-    tier: "GROWTH",
-    price: "₹1.5L–3L",
-    features: ["Full web app", "+ mobile app", "AI features", "3 revisions", "Priority support"],
-    cta: "Get Quote",
+    tier: "Growth",
+    price: "₹1.5L – 3L",
+    sub: "Full-featured web or mobile product",
+    features: ["Complete web or mobile app", "AI/automation features", "Custom integrations", "3 revision rounds", "Priority support"],
+    cta: "Get a Quote",
     highlight: true,
   },
   {
-    tier: "ENTERPRISE",
+    tier: "Enterprise",
     price: "₹5L+",
-    features: ["End-to-end product", "Retainer model", "Dedicated team", "SLA guarantees"],
+    sub: "End-to-end product with ongoing support",
+    features: ["End-to-end product build", "Dedicated team", "Retainer model", "SLA guarantees", "Post-launch support"],
     cta: "Let's Talk",
+    highlight: false,
   },
 ];
 
 const FAQS = [
-  { q: "How long does a typical project take?", a: "Most web apps take 4-8 weeks. Landing pages take 1-2 weeks. We operate in fast, focused 1-week sprints." },
-  { q: "Do you offer post-launch support?", a: "Yes, we offer ongoing maintenance and growth retainers starting at ₹25k/mo to ensure your digital asset stays performant." },
-  { q: "What tech stack do you use?", a: "Standardized on Next.js, Node.js, and React Native. We choose boring tech for the backend (Postgres) and cutting-edge tech for the frontend." },
-  { q: "Do you design the UI as well?", a: "Absolutely. We are a design-first engineering studio. Every project goes through a rigorous UX/UI phase before a line of code is written." },
+  { q: "How long does a typical project take?",         a: "Most web apps take 4–8 weeks. Landing pages take 1–2 weeks. We operate in focused 1-week sprints with weekly demos." },
+  { q: "Do you offer post-launch support?",             a: "Yes. We offer ongoing maintenance and growth retainers starting at ₹25k/mo to keep your product performant and evolving." },
+  { q: "What tech stack do you use?",                   a: "We standardize on Next.js, Node.js, and React Native. We choose proven tech for the backend (Postgres) and cutting-edge for the frontend." },
+  { q: "Do you design the UI as well?",                 a: "Absolutely. We are design-first. Every project begins with a UX research and Figma design phase before a line of code is written." },
+  { q: "Can you work with our existing codebase?",      a: "Yes. We frequently do audits, refactors, and feature additions on existing products. We'll assess it first and give you an honest evaluation." },
+  { q: "How do engagements typically start?",           a: "We start with a 30-minute discovery call to understand your goals, then send a fixed-scope proposal within 48 hours. No retainers upfront." },
 ];
 
 export default function ServicesPage() {
-  const [openFaq, setOpenFaq] = useState<number | null>(0);
+  const [openFaq, setOpenFaq] = useState<number | null>(null);
 
   return (
-    <main className="min-h-screen pt-32 pb-24 px-6 max-w-[1440px] mx-auto w-full">
-      <RevealOnScroll>
-        <div className="mb-24 text-center">
-          <h1 className="font-display font-bold text-[clamp(48px,8vw,96px)] leading-tight mb-8">Capabilities & <span className="text-accent-primary">Pricing.</span></h1>
-          <p className="text-text-secondary text-lg md:text-xl max-w-2xl mx-auto">We build elite software for founders who refuse to settle for average.</p>
-        </div>
-      </RevealOnScroll>
-
-      {/* Services Deep Dive */}
-      <section className="mb-32 max-w-[1000px] mx-auto space-y-8">
-         <RevealOnScroll>
-           <h2 className="text-2xl font-bold mb-12 border-b border-border pb-4">Our Expertise</h2>
-         </RevealOnScroll>
-         
-         {SERVICES.map((service, index) => {
-           // eslint-disable-next-line @typescript-eslint/no-explicit-any
-           const IconComponent = LucideIcons[service.icon as keyof typeof LucideIcons] as any;
-           return (
-             <RevealOnScroll key={service.id} delay={index * 0.1}>
-               <div id={service.id} className="p-8 bg-bg-secondary border border-border rounded-xl flex flex-col md:flex-row gap-8 items-start scroll-mt-32">
-                 <div className="w-16 h-16 shrink-0 rounded-full bg-bg-elevated text-accent-primary flex items-center justify-center">
-                   {IconComponent && <IconComponent size={32} strokeWidth={1.5} />}
-                 </div>
-                 <div>
-                   <h3 className="text-2xl font-bold mb-4">{service.title}</h3>
-                   <p className="text-text-secondary leading-relaxed mb-6">{service.description}</p>
-                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm font-mono text-text-muted">
-                     <span>&rarr; Strategy & Architecture</span>
-                     <span>&rarr; Full-stack Implementation</span>
-                     <span>&rarr; Performance Tuning</span>
-                     <span>&rarr; Deployment</span>
-                   </div>
-                 </div>
-               </div>
-             </RevealOnScroll>
-           );
-         })}
+    <main style={{ paddingTop: "120px" }}>
+      {/* Header */}
+      <section className="px-6 md:px-10 max-w-[1440px] mx-auto pb-32">
+        <RevealOnScroll variant="fade-up">
+          <p className="text-[11px] tracking-[0.22em] uppercase mb-6 font-medium" style={{ color: "var(--color-ink-3)" }}>
+            What We Do
+          </p>
+          <h1
+            className="font-display font-black leading-[0.93] tracking-[-0.04em]"
+            style={{ fontSize: "clamp(52px,9vw,120px)", color: "var(--color-ink)" }}
+          >
+            Capabilities &
+            <br />
+            <span style={{ color: "var(--color-cyan)" }}>Pricing.</span>
+          </h1>
+        </RevealOnScroll>
       </section>
 
-      {/* Pricing Tiers */}
-      <section className="mb-32">
-        <RevealOnScroll>
-          <div className="text-center mb-16">
-            <h2 className="font-display font-bold text-[clamp(36px,5vw,72px)] leading-tight mb-4">Transparent Pricing.</h2>
-            <p className="text-text-secondary text-lg">No hidden fees. Just world-class execution.</p>
+      {/* Services */}
+      <section
+        className="px-6 md:px-10 max-w-[1440px] mx-auto py-24 border-t"
+        style={{ borderColor: "var(--color-border)" }}
+      >
+        <RevealOnScroll variant="fade-up">
+          <p className="text-[11px] tracking-[0.22em] uppercase mb-16 font-medium" style={{ color: "var(--color-ink-3)" }}>
+            Our Expertise
+          </p>
+        </RevealOnScroll>
+
+        {SERVICES.map((service, index) => {
+          // eslint-disable-next-line @typescript-eslint/no-explicit-any
+          const Icon = LucideIcons[service.icon as keyof typeof LucideIcons] as any;
+          return (
+            <RevealOnScroll key={service.id} delay={index * 0.07} variant="fade-up">
+              <div
+                id={service.id}
+                className="group border-b py-12 scroll-mt-32 grid grid-cols-1 lg:grid-cols-[80px_1fr_1fr] gap-8 items-start transition-all duration-300"
+                style={{ borderColor: "var(--color-border)" }}
+              >
+                <div className="flex items-center gap-4 lg:flex-col lg:items-start">
+                  <span className="font-mono text-xs font-bold" style={{ color: "var(--color-ink-3)" }}>
+                    {service.id}
+                  </span>
+                  <div
+                    className="w-10 h-10 rounded-lg flex items-center justify-center"
+                    style={{ background: "var(--color-surface)", color: "var(--color-cyan)" }}
+                  >
+                    {Icon && <Icon size={18} strokeWidth={1.5} />}
+                  </div>
+                </div>
+
+                <div>
+                  <h3
+                    className="font-display font-bold text-2xl md:text-3xl mb-4 transition-colors"
+                    style={{ color: "var(--color-ink)" }}
+                  >
+                    {service.title}
+                  </h3>
+                  <p className="text-base leading-relaxed" style={{ color: "var(--color-ink-2)" }}>
+                    {service.description}
+                  </p>
+                </div>
+
+                <div className="grid grid-cols-1 gap-2 text-sm font-mono" style={{ color: "var(--color-ink-3)" }}>
+                  {["Strategy & Architecture", "Full-stack Implementation", "Performance Optimization", "Deployment & Monitoring"].map(item => (
+                    <span key={item} className="flex items-center gap-2">
+                      <span style={{ color: "var(--color-cyan)", opacity: 0.5 }}>→</span>
+                      {item}
+                    </span>
+                  ))}
+                </div>
+              </div>
+            </RevealOnScroll>
+          );
+        })}
+      </section>
+
+      {/* Pricing */}
+      <section
+        className="px-6 md:px-10 max-w-[1440px] mx-auto py-40 border-t"
+        style={{ borderColor: "var(--color-border)" }}
+      >
+        <RevealOnScroll variant="fade-up">
+          <div className="mb-20">
+            <p className="text-[11px] tracking-[0.22em] uppercase mb-6 font-medium" style={{ color: "var(--color-ink-3)" }}>
+              Investment
+            </p>
+            <h2
+              className="font-display font-black leading-[0.95] tracking-[-0.03em]"
+              style={{ fontSize: "clamp(40px,6vw,88px)", color: "var(--color-ink)" }}
+            >
+              Transparent Pricing.
+              <br />
+              <span style={{ color: "var(--color-ink-3)" }}>No hidden fees.</span>
+            </h2>
           </div>
         </RevealOnScroll>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 max-w-[1200px] mx-auto">
-          {PRICING.map((tier, index) => (
-            <RevealOnScroll key={tier.tier} delay={index * 0.1}>
-              <div className={cn(
-                "p-8 rounded-2xl border flex flex-col h-full",
-                tier.highlight ? "bg-[radial-gradient(ellipse_at_top,var(--color-bg-elevated),var(--color-bg-secondary))] border-accent-primary shadow-[0_0_30px_var(--color-accent-glow)]" : "bg-bg-secondary border-border"
-              )}>
-                {tier.highlight && <span className="bg-accent-primary text-bg-primary text-xs font-bold px-3 py-1 rounded-full w-fit mb-6">MOST POPULAR</span>}
-                <h3 className="text-xl font-bold mb-2">{tier.tier}</h3>
-                <div className="text-4xl font-display font-bold mb-8">{tier.price}</div>
-                
-                <ul className="space-y-4 mb-12 flex-1">
-                  {tier.features.map(feat => (
-                    <li key={feat} className="flex gap-3 text-text-secondary">
-                      <LucideIcons.Check size={20} className="text-accent-primary shrink-0" />
-                      <span>{feat}</span>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px" style={{ background: "var(--color-border)" }}>
+          {PRICING.map((tier, i) => (
+            <RevealOnScroll key={tier.tier} delay={i * 0.1} variant="fade-up">
+              <div
+                className="relative p-10 flex flex-col h-full transition-all duration-300"
+                style={{
+                  background: tier.highlight ? "var(--color-bg-3)" : "var(--color-bg-2)",
+                  minHeight: "520px",
+                }}
+              >
+                {tier.highlight && (
+                  <span
+                    className="absolute top-6 right-6 text-[10px] font-black tracking-[0.15em] uppercase px-3 py-1 rounded-full"
+                    style={{ background: "var(--color-cyan-dim)", color: "var(--color-cyan)", border: "1px solid var(--color-cyan-glow)" }}
+                  >
+                    Most Popular
+                  </span>
+                )}
+                <div className="mb-10">
+                  <p className="text-sm font-bold mb-2" style={{ color: "var(--color-ink-3)" }}>
+                    {tier.tier}
+                  </p>
+                  <p
+                    className="font-display font-black tracking-tight mb-2"
+                    style={{ fontSize: "clamp(28px,3vw,44px)", color: "var(--color-ink)" }}
+                  >
+                    {tier.price}
+                  </p>
+                  <p className="text-sm" style={{ color: "var(--color-ink-3)" }}>{tier.sub}</p>
+                </div>
+
+                <ul className="space-y-4 flex-1 mb-10">
+                  {tier.features.map(f => (
+                    <li key={f} className="flex items-start gap-3 text-sm" style={{ color: "var(--color-ink-2)" }}>
+                      <LucideIcons.Check size={14} style={{ color: "var(--color-cyan)", marginTop: 3, flexShrink: 0 }} />
+                      {f}
                     </li>
                   ))}
                 </ul>
-                
-                <Button variant={tier.highlight ? "primary" : "outline"} className="w-full">
-                  {tier.cta} &rarr;
-                </Button>
+
+                <Link href="/contact">
+                  <motion.span
+                    className={cn(
+                      "inline-flex w-full items-center justify-center gap-2 h-12 rounded-full font-bold text-sm border transition-all",
+                      tier.highlight
+                        ? "bg-(--color-cyan) text-bg border-transparent"
+                        : "bg-transparent border-(--color-border-strong) text-(--color-ink-2)"
+                    )}
+                    whileHover={tier.highlight ? { scale: 1.02 } : { borderColor: "var(--color-ink-2)", color: "var(--color-ink)" }}
+                    whileTap={{ scale: 0.97 }}
+                  >
+                    {tier.cta} →
+                  </motion.span>
+                </Link>
               </div>
             </RevealOnScroll>
           ))}
@@ -118,40 +207,59 @@ export default function ServicesPage() {
       </section>
 
       {/* FAQ */}
-      <section className="max-w-[800px] mx-auto">
-        <RevealOnScroll>
-           <h2 className="font-display font-bold text-4xl mb-12 text-center">Frequently Asked Questions</h2>
+      <section
+        className="px-6 md:px-10 max-w-[800px] mx-auto pb-40"
+      >
+        <RevealOnScroll variant="fade-up">
+          <p className="text-[11px] tracking-[0.22em] uppercase mb-16 font-medium" style={{ color: "var(--color-ink-3)" }}>
+            FAQ
+          </p>
         </RevealOnScroll>
-        <div className="space-y-4">
-          {FAQS.map((faq, index) => (
-            <RevealOnScroll key={index} delay={0.1}>
-              <div 
-                className={cn(
-                  "border rounded-xl p-6 cursor-pointer transition-all",
-                  openFaq === index ? "border-accent-primary bg-bg-elevated" : "border-border bg-bg-secondary"
-                )}
-                onClick={() => setOpenFaq(openFaq === index ? null : index)}
-              >
-                <div className="flex justify-between items-center gap-4">
-                  <h4 className={cn("font-bold text-lg", openFaq === index ? "text-accent-primary" : "text-text-primary")}>{faq.q}</h4>
-                  <span className="text-text-muted shrink-0">
-                    <LucideIcons.ChevronDown className={cn("transition-transform duration-300", openFaq === index ? "rotate-180" : "")} />
-                  </span>
-                </div>
-                <div className={cn(
-                  "grid transition-all duration-300 ease-in-out",
-                  openFaq === index ? "grid-rows-[1fr] opacity-100 mt-4" : "grid-rows-[0fr] opacity-0"
-                )}>
-                  <div className="overflow-hidden">
-                    <p className="text-text-secondary leading-relaxed">{faq.a}</p>
-                  </div>
-                </div>
-              </div>
-            </RevealOnScroll>
-          ))}
-        </div>
-      </section>
 
+        {FAQS.map((faq, i) => (
+          <RevealOnScroll key={i} delay={0.05} variant="fade-up">
+            <div
+              className="border-b cursor-pointer"
+              style={{ borderColor: "var(--color-border)" }}
+              onClick={() => setOpenFaq(openFaq === i ? null : i)}
+            >
+              <div className="flex justify-between items-center gap-4 py-7">
+                <h4
+                  className={cn("font-display font-bold text-lg transition-colors", openFaq === i ? "" : "")}
+                  style={{ color: openFaq === i ? "var(--color-cyan)" : "var(--color-ink)" }}
+                >
+                  {faq.q}
+                </h4>
+                <motion.span
+                  animate={{ rotate: openFaq === i ? 135 : 0 }}
+                  transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
+                  style={{ color: "var(--color-ink-3)", flexShrink: 0 }}
+                >
+                  <LucideIcons.Plus size={18} />
+                </motion.span>
+              </div>
+              <AnimatePresence>
+                {openFaq === i && (
+                  <motion.div
+                    initial={{ height: 0, opacity: 0 }}
+                    animate={{ height: "auto", opacity: 1 }}
+                    exit={{ height: 0, opacity: 0 }}
+                    transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                    className="overflow-hidden"
+                  >
+                    <p
+                      className="text-base leading-relaxed pb-8"
+                      style={{ color: "var(--color-ink-2)" }}
+                    >
+                      {faq.a}
+                    </p>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </div>
+          </RevealOnScroll>
+        ))}
+      </section>
     </main>
   );
 }

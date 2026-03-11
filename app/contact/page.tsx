@@ -6,198 +6,214 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import * as z from "zod";
 import RevealOnScroll from "@/components/animations/RevealOnScroll";
 import { submitContactForm } from "./actions";
-import { Button } from "@/components/ui/Button";
 import { Check, Loader2 } from "lucide-react";
+import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
-// Mirroring the schema from actions.ts for client-side validation
-const contactSchema = z.object({
-  name: z.string().min(2, "Name is required"),
-  email: z.string().email("Valid email is required"),
+const schema = z.object({
+  name:    z.string().min(2, "Name is required"),
+  email:   z.string().email("Valid email required"),
   company: z.string().optional(),
-  service: z.string().min(1, "Please select a service"),
-  budget: z.string().min(1, "Please select a budget"),
-  brief: z.string().min(10, "Please provide more details"),
+  service: z.string().min(1, "Select a service"),
+  budget:  z.string().min(1, "Select a budget"),
+  brief:   z.string().min(10, "Please tell us more"),
 });
 
-type FormValues = z.infer<typeof contactSchema>;
+type FormValues = z.infer<typeof schema>;
+
+const inputClass = cn(
+  "w-full px-5 py-4 rounded-xl text-sm outline-none transition-all duration-300",
+  "bg-(--color-surface) border border-(--color-border)",
+  "text-(--color-ink) placeholder:text-(--color-ink-3)",
+  "focus:border-(--color-cyan) focus:bg-(--color-bg-3)"
+);
+
+const labelClass = "block text-[11px] tracking-[0.18em] uppercase mb-3 font-medium";
 
 export default function ContactPage() {
-  const [isSubmitting, setIsSubmitting] = useState(false);
-  const [success, setSuccess] = useState(false);
-  const [errorMsg, setErrorMsg] = useState("");
+  const [submitting, setSubmitting] = useState(false);
+  const [success,    setSuccess]    = useState(false);
+  const [error,      setError]      = useState("");
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<FormValues>({
-    resolver: zodResolver(contactSchema),
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<FormValues>({
+    resolver: zodResolver(schema),
   });
 
   const onSubmit = async (data: FormValues) => {
-    setIsSubmitting(true);
-    setErrorMsg("");
-
+    setSubmitting(true);
+    setError("");
     try {
       const result = await submitContactForm(data);
       if (result.success) {
         setSuccess(true);
         reset();
-        setTimeout(() => setSuccess(false), 5000);
+        setTimeout(() => setSuccess(false), 6000);
       } else {
-        setErrorMsg(result.error || "An error occurred");
+        setError(result.error || "Something went wrong");
       }
-    } catch (e) {
-      setErrorMsg("Failed to submit form");
+    } catch {
+      setError("Failed to send. Please try again.");
     } finally {
-      setIsSubmitting(false);
+      setSubmitting(false);
     }
   };
 
   return (
-    <main className="min-h-screen pt-32 pb-24 px-6 max-w-[1440px] mx-auto w-full">
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 lg:gap-32 w-full max-w-[1200px] mx-auto">
-        
-        {/* Left Column: Info */}
-        <div className="flex flex-col h-full">
-          <RevealOnScroll>
-            <h1 className="font-display font-bold text-[clamp(40px,6vw,80px)] leading-[1.1] mb-6">
-              Let&apos;s build something <span className="text-accent-primary">extraordinary.</span>
-            </h1>
-            <p className="text-text-secondary text-lg mb-16 max-w-md">
-              Tell us about your project. We&apos;ll respond within 24 hours to set up a discovery call.
-            </p>
-          </RevealOnScroll>
+    <main style={{ paddingTop: "120px" }}>
+      <div className="px-6 md:px-10 max-w-[1440px] mx-auto pb-40">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-20 lg:gap-40">
+          
+          {/* Left */}
+          <div className="flex flex-col">
+            <RevealOnScroll variant="fade-up">
+              <p className="text-[11px] tracking-[0.22em] uppercase mb-8 font-medium" style={{ color: "var(--color-ink-3)" }}>
+                Get In Touch
+              </p>
+              <h1
+                className="font-display font-black leading-[0.93] tracking-[-0.04em] mb-10"
+                style={{ fontSize: "clamp(48px,7vw,96px)", color: "var(--color-ink)" }}
+              >
+                Let&apos;s build
+                <br />
+                something
+                <br />
+                <span style={{ color: "var(--color-cyan)" }}>extraordinary.</span>
+              </h1>
+              <p className="text-lg leading-relaxed mb-16 max-w-md" style={{ color: "var(--color-ink-2)" }}>
+                Tell us about your project. We respond within 24 hours and set up a no-pressure discovery call.
+              </p>
+            </RevealOnScroll>
 
-          <RevealOnScroll delay={0.1} className="mt-auto">
-            <div className="space-y-8 font-mono text-sm">
-              <div>
-                <span className="block text-text-muted tracking-widest uppercase text-xs mb-2">Email</span>
-                <a href="mailto:hello@blackquantumlabs.io" className="text-text-primary hover:text-accent-primary transition-colors text-lg">
-                  hello@blackquantumlabs.io
-                </a>
+            <RevealOnScroll delay={0.15} variant="fade-up" className="mt-auto">
+              <div className="space-y-8">
+                {[
+                  { label: "Email",    value: "hello@blackquantumlabs.io", href: "mailto:hello@blackquantumlabs.io" },
+                  { label: "Location", value: "Chennai, India (Remote-first)" },
+                  { label: "Hours",    value: "Mon–Fri, 9AM–7PM IST" },
+                ].map(({ label, value, href }) => (
+                  <div key={label}>
+                    <p className="text-[11px] tracking-[0.18em] uppercase mb-2 font-medium" style={{ color: "var(--color-ink-3)" }}>
+                      {label}
+                    </p>
+                    {href ? (
+                      <a href={href} className="text-base hover-line transition-colors" style={{ color: "var(--color-cyan)" }}>
+                        {value}
+                      </a>
+                    ) : (
+                      <p className="text-base" style={{ color: "var(--color-ink-2)" }}>{value}</p>
+                    )}
+                  </div>
+                ))}
               </div>
-              <div>
-                <span className="block text-text-muted tracking-widest uppercase text-xs mb-2">Location</span>
-                <span className="text-text-primary text-lg">Chennai, India (Remote-first)</span>
-              </div>
-              <div>
-                <span className="block text-text-muted tracking-widest uppercase text-xs mb-2">Hours</span>
-                <span className="text-text-primary text-lg">Mon&ndash;Fri, 9AM&ndash;7PM IST</span>
-              </div>
-            </div>
-          </RevealOnScroll>
-        </div>
+            </RevealOnScroll>
+          </div>
 
-        {/* Right Column: Form */}
-        <div>
-          <RevealOnScroll delay={0.2}>
-            <div className="bg-bg-secondary border border-border rounded-2xl p-6 sm:p-10">
+          {/* Right — Form */}
+          <RevealOnScroll delay={0.2} variant="fade-up">
+            <div
+              className="rounded-2xl p-8 md:p-12 border"
+              style={{ background: "var(--color-bg-2)", borderColor: "var(--color-border)" }}
+            >
               {success ? (
-                <div className="flex flex-col items-center justify-center text-center py-20 h-full">
-                   <div className="w-16 h-16 rounded-full bg-accent-primary/20 flex items-center justify-center text-accent-primary mb-6">
-                      <Check size={32} />
-                   </div>
-                   <h3 className="font-display font-bold text-3xl mb-4">Message Received.</h3>
-                   <p className="text-text-secondary">We&apos;ll be in touch shortly.</p>
+                <div className="flex flex-col items-center justify-center text-center h-full min-h-[480px]">
+                  <motion.div
+                    initial={{ scale: 0 }}
+                    animate={{ scale: 1 }}
+                    transition={{ type: "spring", duration: 0.6, bounce: 0.4 }}
+                    className="w-20 h-20 rounded-full flex items-center justify-center mb-8"
+                    style={{ background: "var(--color-cyan-dim)", border: "1px solid var(--color-cyan-glow)" }}
+                  >
+                    <Check size={32} style={{ color: "var(--color-cyan)" }} />
+                  </motion.div>
+                  <h3 className="font-display font-black text-3xl mb-4" style={{ color: "var(--color-ink)" }}>
+                    Message Received.
+                  </h3>
+                  <p style={{ color: "var(--color-ink-2)" }}>
+                    We&apos;ll be in touch within 24 hours.
+                  </p>
                 </div>
               ) : (
-                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6 flex flex-col">
-                  {errorMsg && (
-                    <div className="p-4 bg-red-500/10 border border-red-500/50 text-red-500 rounded-lg text-sm">
-                      {errorMsg}
+                <form onSubmit={handleSubmit(onSubmit)} className="space-y-6">
+                  {error && (
+                    <div
+                      className="p-4 rounded-xl text-sm border"
+                      style={{ background: "rgba(239,68,68,0.08)", borderColor: "rgba(239,68,68,0.3)", color: "#f87171" }}
+                    >
+                      {error}
                     </div>
                   )}
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="flex flex-col gap-2">
-                       <label className="text-xs uppercase tracking-widest text-text-secondary font-mono">Full Name *</label>
-                       <input 
-                         {...register("name")}
-                         className="bg-bg-elevated border border-border rounded-lg px-4 py-3 text-text-primary focus:outline-none focus:border-accent-primary transition-colors"
-                         placeholder="Jane Doe"
-                       />
-                       {errors.name && <span className="text-red-500 text-xs mt-1">{errors.name.message}</span>}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className={labelClass} style={{ color: "var(--color-ink-3)" }}>Full Name *</label>
+                      <input {...register("name")} className={inputClass} placeholder="Jane Doe" />
+                      {errors.name && <p className="text-xs mt-2" style={{ color: "#f87171" }}>{errors.name.message}</p>}
                     </div>
-                    <div className="flex flex-col gap-2">
-                       <label className="text-xs uppercase tracking-widest text-text-secondary font-mono">Email Address *</label>
-                       <input 
-                         {...register("email")}
-                         className="bg-bg-elevated border border-border rounded-lg px-4 py-3 text-text-primary focus:outline-none focus:border-accent-primary transition-colors"
-                         placeholder="jane@example.com"
-                       />
-                       {errors.email && <span className="text-red-500 text-xs mt-1">{errors.email.message}</span>}
+                    <div>
+                      <label className={labelClass} style={{ color: "var(--color-ink-3)" }}>Email *</label>
+                      <input {...register("email")} className={inputClass} placeholder="jane@company.com" />
+                      {errors.email && <p className="text-xs mt-2" style={{ color: "#f87171" }}>{errors.email.message}</p>}
                     </div>
                   </div>
 
-                  <div className="flex flex-col gap-2">
-                     <label className="text-xs uppercase tracking-widest text-text-secondary font-mono">Company (Optional)</label>
-                     <input 
-                       {...register("company")}
-                       className="bg-bg-elevated border border-border rounded-lg px-4 py-3 text-text-primary focus:outline-none focus:border-accent-primary transition-colors"
-                       placeholder="Acme Corp"
-                     />
+                  <div>
+                    <label className={labelClass} style={{ color: "var(--color-ink-3)" }}>Company (Optional)</label>
+                    <input {...register("company")} className={inputClass} placeholder="Acme Corp" />
                   </div>
 
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                    <div className="flex flex-col gap-2">
-                       <label className="text-xs uppercase tracking-widest text-text-secondary font-mono">Service Needed *</label>
-                       <select 
-                         {...register("service")}
-                         className="bg-bg-elevated border border-border rounded-lg px-4 py-3 text-text-primary focus:outline-none focus:border-accent-primary transition-colors appearance-none"
-                       >
-                         <option value="">Select a service...</option>
-                         <option value="Web Development">Web Development</option>
-                         <option value="Mobile App">Mobile App</option>
-                         <option value="AI Integration">AI Integration</option>
-                         <option value="UI/UX Design">UI/UX Design</option>
-                         <option value="Cloud/DevOps">Cloud / DevOps</option>
-                         <option value="Consulting">Consulting</option>
-                         <option value="Other">Other</option>
-                       </select>
-                       {errors.service && <span className="text-red-500 text-xs mt-1">{errors.service.message}</span>}
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
+                    <div>
+                      <label className={labelClass} style={{ color: "var(--color-ink-3)" }}>Service *</label>
+                      <select {...register("service")} className={inputClass}>
+                        <option value="">Select a service…</option>
+                        <option value="Web Development">Web Development</option>
+                        <option value="Mobile App">Mobile App</option>
+                        <option value="AI Integration">AI Integration</option>
+                        <option value="UI/UX Design">UI/UX Design</option>
+                        <option value="Cloud / DevOps">Cloud / DevOps</option>
+                        <option value="Consulting">Consulting</option>
+                        <option value="Other">Other</option>
+                      </select>
+                      {errors.service && <p className="text-xs mt-2" style={{ color: "#f87171" }}>{errors.service.message}</p>}
                     </div>
-                    <div className="flex flex-col gap-2">
-                       <label className="text-xs uppercase tracking-widest text-text-secondary font-mono">Budget Range *</label>
-                       <select 
-                         {...register("budget")}
-                         className="bg-bg-elevated border border-border rounded-lg px-4 py-3 text-text-primary focus:outline-none focus:border-accent-primary transition-colors appearance-none"
-                       >
-                         <option value="">Select budget...</option>
-                         <option value="<₹50K">&lt; ₹50K</option>
-                         <option value="₹50K–₹1.5L">₹50K – ₹1.5L</option>
-                         <option value="₹1.5L–₹5L">₹1.5L – ₹5L</option>
-                         <option value="₹5L+">₹5L+</option>
-                       </select>
-                       {errors.budget && <span className="text-red-500 text-xs mt-1">{errors.budget.message}</span>}
+                    <div>
+                      <label className={labelClass} style={{ color: "var(--color-ink-3)" }}>Budget *</label>
+                      <select {...register("budget")} className={inputClass}>
+                        <option value="">Select budget…</option>
+                        <option value="<₹50K">&lt; ₹50K</option>
+                        <option value="₹50K–₹1.5L">₹50K – ₹1.5L</option>
+                        <option value="₹1.5L–₹5L">₹1.5L – ₹5L</option>
+                        <option value="₹5L+">₹5L+</option>
+                      </select>
+                      {errors.budget && <p className="text-xs mt-2" style={{ color: "#f87171" }}>{errors.budget.message}</p>}
                     </div>
                   </div>
 
-                  <div className="flex flex-col gap-2">
-                     <label className="text-xs uppercase tracking-widest text-text-secondary font-mono">Project Brief *</label>
-                     <textarea 
-                       {...register("brief")}
-                       rows={5}
-                       className="bg-bg-elevated border border-border rounded-lg px-4 py-3 text-text-primary focus:outline-none focus:border-accent-primary transition-colors resize-none"
-                       placeholder="Tell us about your goals, timeline, and any specific requirements..."
-                     ></textarea>
-                     {errors.brief && <span className="text-red-500 text-xs mt-1">{errors.brief.message}</span>}
+                  <div>
+                    <label className={labelClass} style={{ color: "var(--color-ink-3)" }}>Project Brief *</label>
+                    <textarea
+                      {...register("brief")}
+                      rows={5}
+                      className={`${inputClass} resize-none`}
+                      placeholder="Tell us about your goals, timeline, and anything else that&#39;s important…"
+                    />
+                    {errors.brief && <p className="text-xs mt-2" style={{ color: "#f87171" }}>{errors.brief.message}</p>}
                   </div>
 
-                  <Button 
-                    type="submit" 
-                    variant="primary" 
-                    size="lg" 
-                    className="w-full mt-4"
-                    disabled={isSubmitting}
+                  <motion.button
+                    type="submit"
+                    disabled={submitting}
+                    className="w-full h-14 rounded-full font-bold text-sm tracking-wide flex items-center justify-center gap-3 disabled:opacity-50"
+                    style={{ background: "var(--color-cyan)", color: "#03030A" }}
+                    whileHover={{ scale: 1.02 }}
+                    whileTap={{ scale: 0.98 }}
                   >
-                    {isSubmitting ? (
-                      <span className="flex items-center gap-2"><Loader2 className="animate-spin" size={20} /> Sending...</span>
+                    {submitting ? (
+                      <><Loader2 className="animate-spin" size={18} /> Sending…</>
                     ) : (
-                      "Send Message \u2192"
+                      <>Send Message →</>
                     )}
-                  </Button>
+                  </motion.button>
                 </form>
               )}
             </div>
