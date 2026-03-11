@@ -22,14 +22,14 @@ export default async function WorkDetailPage({
       {/* Header */}
       <section className="px-6 max-w-[1440px] mx-auto mb-20">
         <RevealOnScroll>
-          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-12 border-b border-border pb-12">
+          <div className="flex flex-col md:flex-row justify-between items-start md:items-end gap-8 mb-12 border-b border-(--color-border) pb-12">
             <div>
-              <h1 className="font-display font-extrabold text-[clamp(48px,6vw,96px)] leading-none mb-6 text-text-primary">
+              <h1 className="font-display font-extrabold text-[clamp(48px,6vw,96px)] leading-none mb-6 text-(--color-ink)">
                 {work.title}
               </h1>
               <div className="flex flex-wrap gap-3">
                 {work.tags.map(tag => (
-                  <span key={tag} className="px-4 py-1.5 rounded-full border border-border text-text-secondary text-sm font-mono bg-bg-secondary">
+                  <span key={tag} className="px-4 py-1.5 rounded-full border border-(--color-border) text-(--color-ink-2) text-sm font-mono bg-(--color-bg-2)">
                     {tag}
                   </span>
                 ))}
@@ -38,16 +38,16 @@ export default async function WorkDetailPage({
             
             <div className="grid grid-cols-2 gap-8 md:gap-16 text-sm font-mono">
               <div>
-                <span className="block text-text-muted mb-2 uppercase tracking-widest text-xs">Client</span>
-                <span className="text-text-primary">{work.client}</span>
+                <span className="block text-(--color-ink-3) mb-2 uppercase tracking-widest text-xs">Client</span>
+                <span className="text-(--color-ink)">{work.client}</span>
               </div>
               <div>
-                <span className="block text-text-muted mb-2 uppercase tracking-widest text-xs">Year</span>
-                <span className="text-text-primary">{work.year}</span>
+                <span className="block text-(--color-ink-3) mb-2 uppercase tracking-widest text-xs">Year</span>
+                <span className="text-(--color-ink)">{work.year}</span>
               </div>
               <div>
-                <span className="block text-text-muted mb-2 uppercase tracking-widest text-xs">Type</span>
-                <span className="text-text-primary">{work.type}</span>
+                <span className="block text-(--color-ink-3) mb-2 uppercase tracking-widest text-xs">Type</span>
+                <span className="text-(--color-ink)">{work.type}</span>
               </div>
             </div>
           </div>
@@ -57,9 +57,9 @@ export default async function WorkDetailPage({
       {/* Hero Image */}
       <section className="w-full px-6 mb-32 max-w-[1440px] mx-auto">
         <RevealOnScroll delay={0.2}>
-          <div className="w-full h-[60vh] bg-bg-elevated rounded-2xl border border-border flex items-center justify-center relative overflow-hidden">
-             <div className="absolute inset-0 bg-linear-to-br from-[#00F5FF20] to-[#7B61FF20] z-0"></div>
-             <p className="z-10 text-text-muted font-mono tracking-widest uppercase">[{work.title} Full Hero Image]</p>
+          <div className="w-full h-[60vh] bg-(--color-bg-3) rounded-2xl border border-(--color-border) flex items-center justify-center relative overflow-hidden">
+             <div className="absolute inset-0 bg-linear-to-br from-(--color-cyan-dim) to-(--color-accent-secondary) opacity-20 z-0"></div>
+             <p className="z-10 text-(--color-ink-3) font-mono tracking-widest uppercase">[{work.title} Full Hero Image]</p>
           </div>
         </RevealOnScroll>
       </section>
@@ -69,24 +69,24 @@ export default async function WorkDetailPage({
         <div className="grid grid-cols-1 md:grid-cols-3 gap-16">
           <RevealOnScroll>
             <div>
-              <h3 className="font-bold text-2xl mb-6 text-accent-primary">The Challenge</h3>
-              <p className="text-text-secondary leading-relaxed">
+              <h3 className="font-bold text-2xl mb-6 text-(--color-cyan)">The Challenge</h3>
+              <p className="text-(--color-ink-2) leading-relaxed">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam.
               </p>
             </div>
           </RevealOnScroll>
           <RevealOnScroll delay={0.1}>
             <div>
-              <h3 className="font-bold text-2xl mb-6 text-accent-secondary">The Approach</h3>
-              <p className="text-text-secondary leading-relaxed">
+              <h3 className="font-bold text-2xl mb-6 text-[#7B61FF]">The Approach</h3>
+              <p className="text-(--color-ink-2) leading-relaxed">
                 Quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate.
               </p>
             </div>
           </RevealOnScroll>
           <RevealOnScroll delay={0.2}>
             <div>
-              <h3 className="font-bold text-2xl mb-6 text-text-primary">The Outcome</h3>
-              <p className="text-text-secondary leading-relaxed font-bold">
+              <h3 className="font-bold text-2xl mb-6 text-(--color-ink)">The Outcome</h3>
+              <p className="text-(--color-ink-2) leading-relaxed font-bold">
                 {work.description}
               </p>
             </div>
@@ -97,24 +97,24 @@ export default async function WorkDetailPage({
       {/* Process Shots (Mockups) */}
       <section className="px-6 max-w-[1440px] mx-auto mb-32 space-y-6">
          <RevealOnScroll>
-            <div className="w-full aspect-video bg-bg-secondary rounded-2xl border border-border flex items-center justify-center">
-               <p className="text-text-muted font-mono tracking-widest uppercase">[{work.title} Process Shot 1]</p>
+            <div className="w-full aspect-video bg-(--color-bg-2) rounded-2xl border border-(--color-border) flex items-center justify-center">
+               <p className="text-(--color-ink-3) font-mono tracking-widest uppercase">[{work.title} Process Shot 1]</p>
             </div>
          </RevealOnScroll>
          <RevealOnScroll>
-            <div className="w-full aspect-video bg-bg-secondary rounded-2xl border border-border flex items-center justify-center">
-               <p className="text-text-muted font-mono tracking-widest uppercase">[{work.title} Process Shot 2]</p>
+            <div className="w-full aspect-video bg-(--color-bg-2) rounded-2xl border border-(--color-border) flex items-center justify-center">
+               <p className="text-(--color-ink-3) font-mono tracking-widest uppercase">[{work.title} Process Shot 2]</p>
             </div>
          </RevealOnScroll>
       </section>
 
       {/* Next Work Banner */}
-      <section className="border-t border-border pt-32 px-6">
+      <section className="border-t border-(--color-border) pt-32 px-6">
         <div className="max-w-[1440px] mx-auto text-center">
           <RevealOnScroll>
-            <span className="text-text-secondary text-xs tracking-[0.15em] uppercase mb-8 block">Next Case Study</span>
+            <span className="text-(--color-ink-2) text-xs tracking-[0.15em] uppercase mb-8 block">Next Case Study</span>
             <Link href={`/work/${nextWork.id}`} className="inline-block group">
-              <h2 className="font-display font-extrabold text-[clamp(40px,8vw,120px)] leading-none text-text-muted group-hover:text-text-primary transition-colors duration-500">
+              <h2 className="font-display font-extrabold text-[clamp(40px,8vw,120px)] leading-none text-(--color-ink-3) group-hover:text-(--color-ink) transition-colors duration-500">
                 {nextWork.title}
               </h2>
             </Link>

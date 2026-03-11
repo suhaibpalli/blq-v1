@@ -36,6 +36,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { ThemeProvider } from "@/components/layout/ThemeProvider";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -47,15 +49,17 @@ export default function RootLayout({
         className={`${syne.variable} ${dmSans.variable} antialiased`}
         style={{ background: "var(--color-bg)", color: "var(--color-ink)", fontFamily: "var(--font-body)" }}
       >
-        <SmoothScrolling>
-          <CustomCursor />
-          <ScrollProgress />
-          <Navbar />
-          <div className="relative z-0">
-            {children}
-          </div>
-          <Footer />
-        </SmoothScrolling>
+        <ThemeProvider attribute="class" defaultTheme="dark" enableSystem={false}>
+          <SmoothScrolling>
+            <CustomCursor />
+            <ScrollProgress />
+            <Navbar />
+            <div className="relative z-0">
+              {children}
+            </div>
+            <Footer />
+          </SmoothScrolling>
+        </ThemeProvider>
       </body>
     </html>
   );

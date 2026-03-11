@@ -4,12 +4,15 @@
 import { useRef, useMemo } from "react";
 import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
+import { useTheme } from "next-themes";
 
 function Particles({ count = 1800 }: { count?: number }) {
   const mesh     = useRef<THREE.InstancedMesh>(null);
   const dummy    = useMemo(() => new THREE.Object3D(), []);
   const { mouse, viewport } = useThree();
   const clock    = useRef(0);
+  const { resolvedTheme } = useTheme();
+  const particleColor = resolvedTheme === "light" ? "#0088A0" : "#00E8FF";
 
   const particles = useMemo(() => {
     return Array.from({ length: count }, (_, i) => {
@@ -78,7 +81,7 @@ function Particles({ count = 1800 }: { count?: number }) {
       args={[undefined as any, undefined as any, count]}
     >
       <sphereGeometry args={[0.012, 6, 6]} />
-      <meshBasicMaterial color="#00E8FF" transparent opacity={0.55} />
+      <meshBasicMaterial color={particleColor} transparent opacity={0.55} />
     </instancedMesh>
   );
 }

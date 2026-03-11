@@ -9,7 +9,7 @@ import CTABanner from "@/components/sections/CTABanner";
 
 export default function Home() {
   return (
-    <main className="flex min-h-screen flex-col items-center w-full pb-20">
+    <main className="flex min-h-screen flex-col items-center w-full pb-20 overflow-x-hidden">
       <HeroSection />
       <MarqueeSection />
       <IntroSection />

@@ -68,13 +68,13 @@ export default function CustomCursor() {
       } else if (state.current === "hover") {
         ring.style.width  = "48px";
         ring.style.height = "48px";
-        ring.style.backgroundColor = "rgba(0,232,255,0.15)";
+        ring.style.backgroundColor = "var(--color-cyan-dim)";
         ring.style.borderColor = "var(--color-cyan)";
       } else {
         ring.style.width  = "40px";
         ring.style.height = "40px";
         ring.style.backgroundColor = "transparent";
-        ring.style.borderColor = "rgba(0,232,255,0.5)";
+        ring.style.borderColor = "var(--color-cyan-glow)";
       }
 
       raf.current = requestAnimationFrame(animate);
@@ -113,7 +113,7 @@ export default function CustomCursor() {
         }}
       >
         {label && (
-          <span className="text-[9px] font-black tracking-[0.15em] uppercase" style={{ color: "#03030A" }}>
+          <span className="text-[9px] font-black tracking-[0.15em] uppercase" style={{ color: "var(--color-bg)" }}>
             {label}
           </span>
         )}

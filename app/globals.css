@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 /* ─── Design Tokens ─────────────────────────────────────────────────────── */
-@theme inline {
+:root {
   --color-bg:            #03030A;
   --color-bg-2:          #07070F;
   --color-bg-3:          #0D0D1A;
@@ -16,6 +16,50 @@
   --color-ink:           #EEEEFF;
   --color-ink-2:         #9898BB;
   --color-ink-3:         #55556A;
+}
+
+.light {
+  --color-bg:            #FCFCFF;
+  --color-bg-2:          #F5F5FA;
+  --color-bg-3:          #EBEBEE;
+  --color-surface:       #E0E0EB;
+  --color-border:        rgba(0,0,0,0.07);
+  --color-border-strong: rgba(0,0,0,0.14);
+
+  --color-cyan:          #0088A0;
+  --color-cyan-dim:      rgba(0,136,160,0.1);
+  --color-cyan-glow:     rgba(0,136,160,0.2);
+
+  --color-ink:           #03030A;
+  --color-ink-2:         #444455;
+  --color-ink-3:         #777788;
+}
+@theme inline {
+  --color-bg:            var(--color-bg);
+  --color-bg-2:          var(--color-bg-2);
+  --color-bg-3:          var(--color-bg-3);
+  --color-surface:       var(--color-surface);
+  --color-border:        var(--color-border);
+  --color-border-strong: var(--color-border-strong);
+
+  --color-cyan:          var(--color-cyan);
+  --color-cyan-dim:      var(--color-cyan-dim);
+  --color-cyan-glow:     var(--color-cyan-glow);
+
+  --color-ink:           var(--color-ink);
+  --color-ink-2:         var(--color-ink-2);
+  --color-ink-3:         var(--color-ink-3);
+
+  /* Semantic aliases for work detail page and general use */
+  --color-text-primary:   var(--color-ink);
+  --color-text-secondary: var(--color-ink-2);
+  --color-text-muted:     var(--color-ink-3);
+  --color-bg-primary:     var(--color-bg);
+  --color-bg-secondary:   var(--color-bg-2);
+  --color-bg-elevated:    var(--color-bg-3);
+  --color-border-base:    var(--color-border);
+  --color-accent-primary:   var(--color-cyan);
+  --color-accent-secondary: #7B61FF; /* Keep this as a static purple or make it variable */
 
   --font-display: var(--font-syne), 'Syne', sans-serif;
   --font-body:    var(--font-dm-sans), 'DM Sans', sans-serif;
@@ -27,7 +71,10 @@
 }
 
 /* ─── Base ──────────────────────────────────────────────────────────────── */
-*, *::before, *::after { box-sizing: border-box; }
+*, *::before, *::after { 
+  box-sizing: border-box;
+  transition: background-color 0.3s var(--ease-out-expo), border-color 0.3s var(--ease-out-expo), color 0.3s var(--ease-out-expo);
+}
 
 html {
   background: var(--color-bg);
@@ -45,8 +92,9 @@ html.lenis, html.lenis body { height: auto; }
 
 body {
   background: var(--color-bg);
-  overflow-x: hidden;
+  overflow-x: clip;
   position: relative;
+  width: 100%;
 }
 
 /* Grain texture overlay */
@@ -115,6 +163,10 @@ body::before {
 .marquee-track { display: flex; width: max-content; }
 .marquee-left  { animation: marquee-left  var(--duration, 40s) linear infinite; }
 .marquee-right { animation: marquee-right var(--duration, 40s) linear infinite; }
+
+.marquee-mask {
+  mask-image: linear-gradient(to right, transparent, black 15%, black 85%, transparent);
+}
 
 /* ─── Clip-path text reveal ─────────────────────────────────────────────── */
 .clip-reveal {

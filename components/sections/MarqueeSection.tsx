@@ -13,18 +13,18 @@ function MarqueeRow({
   const cls = direction === "left" ? "marquee-left" : "marquee-right";
 
   return (
-    <div className="overflow-hidden py-3">
+    <div className="overflow-hidden py-3 marquee-mask w-full">
       <div
         className={`marquee-track ${cls}`}
         style={{ "--duration": speed } as React.CSSProperties}
       >
-        {[...ITEMS, ...ITEMS].map((item, i) => (
+        {[...ITEMS, ...ITEMS, ...ITEMS, ...ITEMS].map((item, i) => (
           <span
             key={i}
             className="font-display font-black whitespace-nowrap px-8 select-none"
             style={{
               fontSize: "clamp(28px,4vw,52px)",
-              color: i % 3 === 0 ? "var(--color-ink-3)" : i % 3 === 1 ? "rgba(255,255,255,0.08)" : "rgba(255,255,255,0.05)",
+              color: i % 3 === 0 ? "var(--color-ink-3)" : i % 3 === 1 ? "var(--color-border-strong)" : "var(--color-border)",
             }}
           >
             {item}
@@ -42,7 +42,7 @@ function MarqueeRow({
 export default function MarqueeSection() {
   return (
     <section
-      className="relative overflow-hidden border-y py-6"
+      className="relative overflow-hidden border-y py-6 w-full"
       style={{ borderColor: "var(--color-border)", background: "var(--color-bg-2)" }}
     >
       <MarqueeRow direction="left"  speed="45s" />

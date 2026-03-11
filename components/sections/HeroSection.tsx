@@ -23,7 +23,8 @@ export default function HeroSection() {
         className="absolute inset-0 z-1 pointer-events-none"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 10% 90%, rgba(0,232,255,0.06) 0%, transparent 70%), radial-gradient(ellipse 50% 40% at 90% 10%, rgba(0,232,255,0.03) 0%, transparent 60%)",
+            "radial-gradient(ellipse 80% 60% at 10% 90%, var(--color-cyan-dim) 0%, transparent 70%), radial-gradient(ellipse 50% 40% at 90% 10%, var(--color-cyan-dim) 0%, transparent 60%)",
+          opacity: 0.5
         }}
       />
 
@@ -103,7 +104,7 @@ export default function HeroSection() {
             <Link href="/contact">
               <motion.span
                 className="inline-flex items-center gap-3 h-14 px-8 rounded-full font-bold text-sm tracking-wide"
-                style={{ background: "var(--color-cyan)", color: "#03030A" }}
+                style={{ background: "var(--color-cyan)", color: "var(--color-bg)" }}
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
               >

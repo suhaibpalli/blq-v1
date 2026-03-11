@@ -123,7 +123,7 @@ export default function AboutPage() {
               className="font-display font-black whitespace-nowrap px-8"
               style={{
                 fontSize: "clamp(24px,3.5vw,44px)",
-                color: i % 2 === 0 ? "rgba(255,255,255,0.07)" : "rgba(255,255,255,0.03)",
+                color: i % 2 === 0 ? "var(--color-border-strong)" : "var(--color-border)",
               }}
             >
               {tech} <span style={{ color: "var(--color-cyan)", opacity: 0.3 }}>·</span>
@@ -137,7 +137,7 @@ export default function AboutPage() {
               className="font-display font-black whitespace-nowrap px-8"
               style={{
                 fontSize: "clamp(20px,2.5vw,32px)",
-                color: "rgba(255,255,255,0.04)",
+                color: "var(--color-border)",
               }}
             >
               {tech} <span style={{ color: "var(--color-cyan)", opacity: 0.2 }}>·</span>

@@ -89,7 +89,7 @@ export default function WorkIndexPage() {
                     <div
                       className="absolute inset-0"
                       style={{
-                        background: `radial-gradient(ellipse at 30% 50%, rgba(0,232,255,0.06) 0%, transparent 60%)`,
+                        background: `radial-gradient(ellipse at 30% 50%, var(--color-cyan-dim) 0%, transparent 60%)`,
                       }}
                     />
                     <div className="absolute inset-0 flex items-center justify-center">
@@ -106,7 +106,7 @@ export default function WorkIndexPage() {
                       initial={{ opacity: 0 }}
                       whileHover={{ opacity: 1 }}
                       transition={{ duration: 0.3 }}
-                      style={{ background: "rgba(3,3,10,0.85)", backdropFilter: "blur(8px)" }}
+                      style={{ background: "color-mix(in srgb, var(--color-bg) 85%, transparent)", backdropFilter: "blur(8px)" }}
                     >
                       <div>
                         <p className="text-sm font-bold mb-2" style={{ color: "var(--color-cyan)" }}>

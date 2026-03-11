@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
 const NAV_LINKS = [
   { href: "/work",     label: "Work" },
@@ -73,7 +74,7 @@ export default function Navbar() {
           </Link>
 
           {/* Desktop Nav */}
-          <nav className="hidden md:flex items-center gap-10">
+          <nav className="hidden md:flex items-center gap-8">
             {NAV_LINKS.map(({ href, label }) => (
               <Link
                 key={href}
@@ -89,26 +90,29 @@ export default function Navbar() {
               </Link>
             ))}
 
-            <Link href="/contact">
-              <motion.span
-                className="inline-flex items-center gap-2 text-[13px] font-bold tracking-wide px-5 py-2.5 rounded-full border transition-all duration-300"
-                style={{
-                  borderColor: "var(--color-cyan)",
-                  color: "var(--color-cyan)",
-                }}
-                whileHover={{
-                  backgroundColor: "var(--color-cyan)",
-                  color: "#03030A",
-                  scale: 1.03,
-                }}
-                whileTap={{ scale: 0.97 }}
-              >
-                Start a Project
-                <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
-                  <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                </svg>
-              </motion.span>
-            </Link>
+            <div className="flex items-center gap-4 border-l border-(--color-border) pl-8 ml-2">
+              <ThemeToggle />
+              <Link href="/contact">
+                <motion.span
+                  className="inline-flex items-center gap-2 text-[13px] font-bold tracking-wide px-5 py-2.5 rounded-full border transition-all duration-300"
+                  style={{
+                    borderColor: "var(--color-cyan)",
+                    color: "var(--color-cyan)",
+                  }}
+                  whileHover={{
+                    backgroundColor: "var(--color-cyan)",
+                    color: "var(--color-bg)",
+                    scale: 1.03,
+                  }}
+                  whileTap={{ scale: 0.97 }}
+                >
+                  Start a Project
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                    <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+                  </svg>
+                </motion.span>
+              </Link>
+            </div>
           </nav>
 
           {/* Mobile Hamburger */}
@@ -178,12 +182,15 @@ export default function Navbar() {
                 className="mt-auto flex justify-between items-end"
               >
                 <div>
+                  <p className="text-xs tracking-[0.15em] uppercase mb-4" style={{ color: "var(--color-ink-3)" }}>Theme</p>
+                  <ThemeToggle />
+                </div>
+                <div className="text-right">
                   <p className="text-xs tracking-[0.15em] uppercase mb-1" style={{ color: "var(--color-ink-3)" }}>Email</p>
                   <a href="mailto:hello@blackquantumlabs.io" className="text-sm" style={{ color: "var(--color-ink-2)" }}>
                     hello@blackquantumlabs.io
                   </a>
                 </div>
-                <p className="text-xs font-mono" style={{ color: "var(--color-ink-3)" }}>Chennai, India</p>
               </motion.div>
             </div>
           </motion.div>

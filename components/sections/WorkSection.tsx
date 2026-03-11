@@ -59,7 +59,7 @@ export default function WorkSection() {
                 <div
                   className="absolute inset-0"
                   style={{
-                    background: `radial-gradient(ellipse at ${index % 2 === 0 ? "20% 50%" : "80% 50%"}, rgba(0,232,255,0.08) 0%, transparent 60%)`,
+                    background: `radial-gradient(ellipse at ${index % 2 === 0 ? "20% 50%" : "80% 50%"}, var(--color-cyan-dim) 0%, transparent 60%)`,
                   }}
                 />
 
@@ -89,7 +89,7 @@ export default function WorkSection() {
                   initial={{ opacity: 0 }}
                   whileHover={{ opacity: 1 }}
                   transition={{ duration: 0.4 }}
-                  style={{ background: "rgba(3,3,10,0.88)", backdropFilter: "blur(8px)" }}
+                  style={{ background: "color-mix(in srgb, var(--color-bg) 88%, transparent)", backdropFilter: "blur(8px)" }}
                 >
                   <div className="flex justify-between items-start">
                     <div className="flex flex-wrap gap-2">

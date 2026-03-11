@@ -16,7 +16,7 @@ export default function CTABanner() {
         style={{
           width: "700px",
           height: "350px",
-          background: "radial-gradient(ellipse, rgba(0,232,255,0.08) 0%, transparent 70%)",
+          background: "radial-gradient(ellipse, var(--color-cyan-glow) 0%, transparent 70%)",
         }}
         animate={{ scale: [1, 1.15, 1], opacity: [0.5, 0.8, 0.5] }}
         transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
@@ -67,7 +67,7 @@ export default function CTABanner() {
               <Link href="/contact">
                 <motion.span
                   className="inline-flex items-center gap-3 h-16 px-10 rounded-full font-bold text-base tracking-wide"
-                  style={{ background: "var(--color-cyan)", color: "#03030A" }}
+                  style={{ background: "var(--color-cyan)", color: "var(--color-bg)" }}
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.97 }}
                 >

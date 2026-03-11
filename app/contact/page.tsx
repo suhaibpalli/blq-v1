@@ -204,7 +204,7 @@ export default function ContactPage() {
                     type="submit"
                     disabled={submitting}
                     className="w-full h-14 rounded-full font-bold text-sm tracking-wide flex items-center justify-center gap-3 disabled:opacity-50"
-                    style={{ background: "var(--color-cyan)", color: "#03030A" }}
+                    style={{ background: "var(--color-cyan)", color: "var(--color-bg)" }}
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >
