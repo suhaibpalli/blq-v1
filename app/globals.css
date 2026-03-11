@@ -233,3 +233,7 @@ a, button, [role="button"] { cursor: none; }
   transform: scaleX(1);
   transform-origin: left;
 }
+
+.bg-radial-vignette {
+  background: radial-gradient(circle, transparent 20%, var(--color-bg) 100%);
+}

@@ -7,11 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 
-const NAV_LINKS = [
-  { href: "/work",     label: "Work" },
-  { href: "/services", label: "Services" },
-  { href: "/about",    label: "About" },
-];
+import { NAV_LINKS } from "@/lib/constants";
 
 export default function Navbar() {
   const [scrolled, setScrolled]   = useState(false);
@@ -52,7 +48,7 @@ export default function Navbar() {
         className={cn(
           "fixed top-0 left-0 right-0 z-50 transition-all duration-500",
           scrolled
-            ? "border-b border-(--color-border)"
+            ? "border-b border-border"
             : "border-b border-transparent"
         )}
         style={{
@@ -82,15 +78,15 @@ export default function Navbar() {
                 className={cn(
                   "text-[13px] font-medium tracking-wide hover-line transition-colors duration-300",
                   pathname.startsWith(href)
-                    ? "text-(--color-ink)"
-                    : "text-(--color-ink-2) hover:text-(--color-ink)"
+                    ? "text-ink"
+                    : "text-ink-2 hover:text-ink"
                 )}
               >
                 {label}
               </Link>
             ))}
 
-            <div className="flex items-center gap-4 border-l border-(--color-border) pl-8 ml-2">
+            <div className="flex items-center gap-4 border-l border-border pl-8 ml-2">
               <ThemeToggle />
               <Link href="/contact">
                 <motion.span
@@ -164,7 +160,7 @@ export default function Navbar() {
                 >
                   <Link
                     href={href}
-                    className="block font-display font-black text-[clamp(48px,10vw,80px)] leading-[1] tracking-tight transition-colors duration-200"
+                    className="block font-display font-black text-[clamp(48px,10vw,80px)] leading-none tracking-tight transition-colors duration-200"
                     style={{ color: pathname.startsWith(href) ? "var(--color-cyan)" : "var(--color-ink)" }}
                     onMouseEnter={e => ((e.target as HTMLElement).style.color = "var(--color-cyan)")}
                     onMouseLeave={e => ((e.target as HTMLElement).style.color = pathname.startsWith(href) ? "var(--color-cyan)" : "var(--color-ink)")}

@@ -4,6 +4,7 @@ import { WORKS } from "@/lib/constants";
 import RevealOnScroll from "@/components/animations/RevealOnScroll";
 import Link from "next/link";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 export default function WorkSection() {
   return (
@@ -22,7 +23,7 @@ export default function WorkSection() {
               Selected Work
             </p>
             <h2
-              className="font-display font-black leading-[1.0] tracking-[-0.03em]"
+              className="font-display font-black leading-none tracking-[-0.03em]"
               style={{ fontSize: "clamp(40px,5.5vw,80px)", color: "var(--color-ink)" }}
             >
               Projects that
@@ -55,33 +56,28 @@ export default function WorkSection() {
                 whileHover={{ borderColor: "var(--color-border-strong)" }}
                 transition={{ duration: 0.3 }}
               >
-                {/* Gradient placeholder — replace with next/image */}
-                <div
-                  className="absolute inset-0"
-                  style={{
-                    background: `radial-gradient(ellipse at ${index % 2 === 0 ? "20% 50%" : "80% 50%"}, var(--color-cyan-dim) 0%, transparent 60%)`,
-                  }}
-                />
+                {/* Image background */}
+                <div className="absolute inset-0 z-0">
+                  <Image
+                    src={work.image}
+                    alt={work.title}
+                    fill
+                    className="object-cover opacity-40 group-hover:scale-105 transition-transform duration-700"
+                    sizes="(max-width: 768px) 100vw, 1200px"
+                  />
+                  {/* Subtle vignette */}
+                  <div className="absolute inset-0 bg-radial-vignette opacity-60" />
+                </div>
 
-                {/* Grid pattern */}
+                {/* Grid pattern overlay */}
                 <div
-                  className="absolute inset-0 opacity-[0.03]"
+                  className="absolute inset-0 opacity-[0.03] z-1"
                   style={{
                     backgroundImage:
                       "linear-gradient(var(--color-ink) 1px, transparent 1px), linear-gradient(90deg, var(--color-ink) 1px, transparent 1px)",
                     backgroundSize: "40px 40px",
                   }}
                 />
-
-                {/* Placeholder label */}
-                <div className="absolute inset-0 flex items-center justify-center">
-                  <p
-                    className="text-[11px] tracking-[0.2em] uppercase font-mono"
-                    style={{ color: "var(--color-ink-3)" }}
-                  >
-                    [{work.id} — preview image]
-                  </p>
-                </div>
 
                 {/* Hover overlay */}
                 <motion.div

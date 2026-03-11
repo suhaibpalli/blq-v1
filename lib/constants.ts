@@ -53,7 +53,7 @@ export const WORKS = [
     description:
       "A fintech payment infrastructure platform. Processed $2M in transactions on launch week with 99.99% uptime.",
     tags: ["Next.js", "Node.js", "PostgreSQL", "Stripe"],
-    image: "/images/work-novapay.jpg",
+    image: "/images/work-novapay.png",
   },
   {
     id: "orbis-health",
@@ -64,7 +64,7 @@ export const WORKS = [
     description:
       "Patient management and telehealth mobile platform. 4.8★ App Store rating, 10K downloads in the first 30 days.",
     tags: ["React Native", "Firebase", "Twilio"],
-    image: "/images/work-orbis.jpg",
+    image: "/images/work-orbis.png",
   },
   {
     id: "synthex-ai",
@@ -75,7 +75,7 @@ export const WORKS = [
     description:
       "AI-powered content generation and brand voice platform. Reduced content creation time by 70% across 50+ brand clients.",
     tags: ["Python", "OpenAI API", "Next.js", "Redis"],
-    image: "/images/work-synthex.jpg",
+    image: "/images/work-synthex.png",
   },
 ];
 

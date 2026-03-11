@@ -62,7 +62,7 @@ export default function ProcessSection() {
               </div>
 
               <h3
-                className="font-display font-bold text-xl mb-4 transition-colors group-hover:text-(--color-ink)"
+                className="font-display font-bold text-xl mb-4 transition-colors group-hover:text-ink"
                 style={{ color: "var(--color-ink-2)" }}
               >
                 {step.title}

@@ -6,6 +6,7 @@ import RevealOnScroll from "@/components/animations/RevealOnScroll";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
+import Image from "next/image";
 
 const CATEGORIES = ["All", "Web App", "Mobile App", "AI Integration", "Design"];
 
@@ -41,8 +42,8 @@ export default function WorkIndexPage() {
                 className={cn(
                   "px-5 py-2 rounded-full text-xs font-bold tracking-wide border transition-all duration-300",
                   active === cat
-                    ? "border-(--color-cyan) text-(--color-cyan) bg-(--color-cyan-dim)"
-                    : "border-(--color-border) text-(--color-ink-2) hover:border-(--color-border-strong)"
+                    ? "border-cyan text-cyan bg-cyan-dim"
+                    : "border-border text-ink-2 hover:border-border-strong"
                 )}
               >
                 {cat}
@@ -79,26 +80,22 @@ export default function WorkIndexPage() {
               >
                 <Link href={`/work/${work.id}`} data-cursor="view" className="block">
                   <div
-                    className="relative overflow-hidden rounded-2xl border mb-5 transition-all duration-500 group-hover:border-(--color-border-strong)"
+                    className="relative overflow-hidden rounded-2xl border mb-5 transition-all duration-500 group-hover:border-border-strong"
                     style={{
                       background: "var(--color-bg-2)",
                       borderColor: "var(--color-border)",
                       aspectRatio: i === 0 && filtered.length > 2 ? "16/7" : "4/3",
                     }}
                   >
-                    <div
-                      className="absolute inset-0"
-                      style={{
-                        background: `radial-gradient(ellipse at 30% 50%, var(--color-cyan-dim) 0%, transparent 60%)`,
-                      }}
-                    />
-                    <div className="absolute inset-0 flex items-center justify-center">
-                      <p
-                        className="text-[11px] tracking-[0.2em] uppercase font-mono"
-                        style={{ color: "var(--color-ink-3)" }}
-                      >
-                        [{work.id}]
-                      </p>
+                    <div className="absolute inset-0 z-0">
+                      <Image
+                        src={work.image}
+                        alt={work.title}
+                        fill
+                        className="object-cover opacity-50 group-hover:scale-105 transition-transform duration-700"
+                        sizes="(max-width: 768px) 100vw, 800px"
+                      />
+                      <div className="absolute inset-0 bg-radial-vignette opacity-50" />
                     </div>
                     {/* Hover overlay */}
                     <motion.div

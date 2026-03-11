@@ -191,8 +191,8 @@ export default function ServicesPage() {
                     className={cn(
                       "inline-flex w-full items-center justify-center gap-2 h-12 rounded-full font-bold text-sm border transition-all",
                       tier.highlight
-                        ? "bg-(--color-cyan) text-bg border-transparent"
-                        : "bg-transparent border-(--color-border-strong) text-(--color-ink-2)"
+                        ? "bg-cyan text-bg border-transparent"
+                        : "bg-transparent border-border-strong text-ink-2"
                     )}
                     whileHover={tier.highlight ? { scale: 1.02 } : { borderColor: "var(--color-ink-2)", color: "var(--color-ink)" }}
                     whileTap={{ scale: 0.97 }}

@@ -23,9 +23,9 @@ type FormValues = z.infer<typeof schema>;
 
 const inputClass = cn(
   "w-full px-5 py-4 rounded-xl text-sm outline-none transition-all duration-300",
-  "bg-(--color-surface) border border-(--color-border)",
-  "text-(--color-ink) placeholder:text-(--color-ink-3)",
-  "focus:border-(--color-cyan) focus:bg-(--color-bg-3)"
+  "bg-surface border border-border",
+  "text-ink placeholder:text-ink-3",
+  "focus:border-cyan focus:bg-bg-3"
 );
 
 const labelClass = "block text-[11px] tracking-[0.18em] uppercase mb-3 font-medium";
