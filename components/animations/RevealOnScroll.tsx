@@ -1,20 +1,20 @@
 "use client";
 
-import { motion, useInView } from "framer-motion";
+import { motion, useInView, Variants } from "framer-motion";
 import { useRef } from "react";
 
-type Variant = "fade-up" | "fade-in" | "slide-left" | "slide-right" | "scale";
+type AnimationVariant = "fade-up" | "fade-in" | "slide-left" | "slide-right" | "scale";
 
 interface RevealOnScrollProps {
   children: React.ReactNode;
   delay?:    number;
   duration?: number;
-  variant?:  Variant;
+  variant?:  AnimationVariant;
   className?: string;
   amount?: number;
 }
 
-const VARIANTS: Record<Variant, { hidden: object; visible: object }> = {
+const VARIANTS: Record<AnimationVariant, { hidden: Variants['hidden']; visible: Variants['visible'] }> = {
   "fade-up":    { hidden: { y: 48, opacity: 0 },            visible: { y: 0, opacity: 1 } },
   "fade-in":    { hidden: { opacity: 0 },                   visible: { opacity: 1 } },
   "slide-left": { hidden: { x: 60, opacity: 0 },            visible: { x: 0, opacity: 1 } },
@@ -40,9 +40,9 @@ export default function RevealOnScroll({
       initial="hidden"
       animate={inView ? "visible" : "hidden"}
       variants={{
-        hidden:  v.hidden,
+        hidden:  v.hidden as any,
         visible: {
-          ...v.visible,
+          ...(v.visible as any),
           transition: {
             duration,
             delay,
