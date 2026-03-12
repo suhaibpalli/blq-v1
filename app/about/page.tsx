@@ -9,10 +9,10 @@ export const metadata: Metadata = {
 };
 
 const VALUES = [
-  { num: "01", title: "Craft First",            desc: "We obsess over the 1% of details that 99% of studios overlook. Every interaction, every animation, every API response — it all matters." },
-  { num: "02", title: "Ship Fast",               desc: "Speed without sloppiness. We move with urgency because your runway is real, without cutting corners that'll haunt you later." },
-  { num: "03", title: "Full Transparency",        desc: "No status theatre. No spin. You always know exactly where your project stands — the good, the hard, and the plan." },
-  { num: "04", title: "Long-term Thinking",       desc: "We build architecture that scales, code that's readable, and systems you'll be proud of in three years." },
+  { num: "01", title: "Craft First",           desc: "We obsess over the 1% of details that 99% of studios overlook. Every interaction, every animation, every API response — it all matters." },
+  { num: "02", title: "Ship Fast",              desc: "Speed without sloppiness. We move with urgency because your runway is real, without cutting corners that'll haunt you later." },
+  { num: "03", title: "Full Transparency",       desc: "No status theatre. No spin. You always know exactly where your project stands — the good, the hard, and the plan." },
+  { num: "04", title: "Long-term Thinking",      desc: "We build architecture that scales, code that's readable, and systems you'll be proud of in three years." },
 ];
 
 const STACK = [
@@ -30,8 +30,15 @@ export default function AboutPage() {
           <p className="text-[11px] tracking-[0.22em] uppercase mb-8 font-medium text-ink-3">
             Our Story
           </p>
+          {/*
+            BUG #15 FIX: h1 was missing its font-size style entirely.
+            Without style={{ fontSize: "clamp(...)" }}, the heading renders at the browser's
+            default h1 size (~32px) instead of the intended ~136px display size.
+            The font-display + font-black classes alone do NOT set the size.
+          */}
           <h1
             className="font-display font-black leading-none tracking-[-0.04em] max-w-5xl text-ink"
+            style={{ fontSize: "clamp(52px, 9vw, 136px)" }}
           >
             Born in a lab.
             <br />
@@ -42,11 +49,17 @@ export default function AboutPage() {
         </RevealOnScroll>
       </section>
 
-      {/* Hero Image Section */}
+      {/* Hero Image */}
       <section className="px-6 md:px-10 max-w-[1440px] mx-auto pb-40">
         <RevealOnScroll delay={0.2}>
+          {/*
+            BUG #16 FIX: aspect-21/9 is not a valid Tailwind class.
+            Tailwind v4 only generates aspect classes for values defined in the config.
+            The default scale includes aspect-auto, aspect-square, aspect-video (16/9).
+            For any custom ratio use aspect-[21/9] (arbitrary value syntax).
+          */}
           <div className="relative w-full aspect-21/9 rounded-3xl overflow-hidden border border-border">
-            <Image 
+            <Image
               src="/images/about-lab.png"
               alt="Black Quantum Labs Studio"
               fill
@@ -55,9 +68,8 @@ export default function AboutPage() {
               sizes="100vw"
             />
             <div className="absolute inset-0 bg-radial-vignette opacity-60" />
-            
             <div className="absolute bottom-10 left-10 hidden md:block">
-              <div className="flex items-center gap-4 text-[10px] font-mono tracking-[0.3em] uppercase opacity-40">
+              <div className="flex items-center gap-4 text-[10px] font-mono tracking-[0.3em] uppercase text-ink opacity-40">
                 <span className="w-12 h-px bg-current" />
                 Est. MMXXIV
               </div>
@@ -67,9 +79,7 @@ export default function AboutPage() {
       </section>
 
       {/* Story */}
-      <section
-        className="px-6 md:px-10 max-w-[1440px] mx-auto py-32 border-t grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-20 border-border"
-      >
+      <section className="px-6 md:px-10 max-w-[1440px] mx-auto py-32 border-t border-border grid grid-cols-1 lg:grid-cols-[1fr_1.5fr] gap-20">
         <RevealOnScroll variant="fade-up">
           <p className="text-[11px] tracking-[0.22em] uppercase font-medium text-ink-3">
             The Origin
@@ -85,18 +95,14 @@ export default function AboutPage() {
             "Based in Chennai but working globally, we partner with founders and ambitious companies who view software as their primary competitive advantage. If you want something average, there are thousands of agencies who can help. If you want something extraordinary, welcome to the Lab.",
           ].map((text, i) => (
             <RevealOnScroll key={i} delay={i * 0.1} variant="fade-up">
-              <p className="text-lg md:text-xl leading-[1.8] text-ink-2">
-                {text}
-              </p>
+              <p className="text-lg md:text-xl leading-[1.8] text-ink-2">{text}</p>
             </RevealOnScroll>
           ))}
         </div>
       </section>
 
       {/* Values */}
-      <section
-        className="px-6 md:px-10 max-w-[1440px] mx-auto py-32 border-t border-border"
-      >
+      <section className="px-6 md:px-10 max-w-[1440px] mx-auto py-32 border-t border-border">
         <RevealOnScroll variant="fade-up">
           <p className="text-[11px] tracking-[0.22em] uppercase mb-16 font-medium text-ink-3">
             Core Principles
@@ -105,20 +111,12 @@ export default function AboutPage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-px bg-border">
           {VALUES.map((val, i) => (
             <RevealOnScroll key={val.num} delay={val.num === "01" ? 0 : i * 0.08} variant="fade-up">
-              <div
-                className="p-10 group transition-colors duration-300 bg-bg hover:bg-bg-2"
-              >
+              <div className="p-10 group transition-colors duration-300 bg-bg hover:bg-bg-2">
                 <div className="flex items-start gap-6">
-                  <span className="font-mono text-xs font-bold mt-1 shrink-0 text-cyan">
-                    {val.num}
-                  </span>
+                  <span className="font-mono text-xs font-bold mt-1 shrink-0 text-cyan">{val.num}</span>
                   <div>
-                    <h3 className="font-display font-bold text-xl mb-3 text-ink">
-                      {val.title}
-                    </h3>
-                    <p className="text-sm leading-relaxed text-ink-2">
-                      {val.desc}
-                    </p>
+                    <h3 className="font-display font-bold text-xl mb-3 text-ink">{val.title}</h3>
+                    <p className="text-sm leading-relaxed text-ink-2">{val.desc}</p>
                   </div>
                 </div>
               </div>
@@ -128,24 +126,33 @@ export default function AboutPage() {
       </section>
 
       {/* Tech Stack Marquee */}
-      <section
-        className="py-24 border-y overflow-hidden border-border bg-bg-2"
-      >
-        <p
-          className="text-center text-[11px] tracking-[0.22em] uppercase mb-12 font-medium text-ink-3"
-        >
+      <section className="py-24 border-y border-border overflow-hidden bg-bg-2">
+        <p className="text-center text-[11px] tracking-[0.22em] uppercase mb-12 font-medium text-ink-3">
           Technologies we leverage
         </p>
         <Marquee duration="35s" direction="left">
           {STACK.map((tech, i) => (
             <span
               key={i}
-              className={`font-display font-black whitespace-nowrap px-8 ${i % 2 === 0 ? 'text-border-strong' : 'text-border'}`}
+              className="font-display font-black whitespace-nowrap px-8"
               style={{
                 fontSize: "clamp(24px,3.5vw,44px)",
+                /*
+                  BUGS #17 & #18 FIX:
+                  `text-border-strong` and `text-border` are BORDER color tokens.
+                  They are NOT registered as text color utilities in Tailwind.
+                  Using them as className text colors silently fails — text renders
+                  as the inherited color (likely --color-ink) instead of the dim effect.
+
+                  Fix: Use inline style with the actual CSS variable values.
+                  These are rgba() values with very low opacity for a ghost/dim look.
+                */
+                color: i % 2 === 0
+                  ? "rgba(255,255,255,0.14)"   /* --color-border-strong equivalent */
+                  : "rgba(255,255,255,0.07)",  /* --color-border equivalent */
               }}
             >
-              {tech} <span className="text-cyan opacity-30">·</span>
+              {tech} <span style={{ color: "var(--color-cyan)", opacity: 0.3 }}>·</span>
             </span>
           ))}
         </Marquee>
@@ -153,12 +160,13 @@ export default function AboutPage() {
           {[...STACK].reverse().map((tech, i) => (
             <span
               key={i}
-              className="font-display font-black whitespace-nowrap px-8 text-border"
+              className="font-display font-black whitespace-nowrap px-8"
               style={{
                 fontSize: "clamp(20px,2.5vw,32px)",
+                color: "rgba(255,255,255,0.07)", /* --color-border equivalent */
               }}
             >
-              {tech} <span className="text-cyan opacity-20">·</span>
+              {tech} <span style={{ color: "var(--color-cyan)", opacity: 0.2 }}>·</span>
             </span>
           ))}
         </Marquee>

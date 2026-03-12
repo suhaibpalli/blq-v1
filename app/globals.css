@@ -34,6 +34,7 @@
   --color-ink-2:         #444455;
   --color-ink-3:         #777788;
 }
+
 @theme inline {
   --color-bg:            var(--color-bg);
   --color-bg-2:          var(--color-bg-2);
@@ -50,7 +51,6 @@
   --color-ink-2:         var(--color-ink-2);
   --color-ink-3:         var(--color-ink-3);
 
-  /* Semantic aliases for work detail page and general use */
   --color-text-primary:   var(--color-ink);
   --color-text-secondary: var(--color-ink-2);
   --color-text-muted:     var(--color-ink-3);
@@ -59,7 +59,7 @@
   --color-bg-elevated:    var(--color-bg-3);
   --color-border-base:    var(--color-border);
   --color-accent-primary:   var(--color-cyan);
-  --color-accent-secondary: #7B61FF; /* Keep this as a static purple or make it variable */
+  --color-accent-secondary: #7B61FF;
 
   --font-display: var(--font-syne), 'Syne', sans-serif;
   --font-body:    var(--font-dm-sans), 'DM Sans', sans-serif;
@@ -71,9 +71,22 @@
 }
 
 /* ─── Base ──────────────────────────────────────────────────────────────── */
-*, *::before, *::after { 
+/*
+  ⚠️  BUG #1 FIX — The previous version had this CRITICAL line in the * selector:
+        transition: background-color 0.3s ..., border-color 0.3s ..., color 0.3s ...
+  
+  This single rule destroyed multiple systems:
+    - Three.js:    every instanceMatrix update triggers cascading color/border repaints across the DOM
+    - CSS marquee: the `transform` in @keyframes is intercepted, causing stuttering and judder
+    - Framer Motion: conflicts on every animated element, overriding spring physics
+    - Lenis:       each tick triggers transitions on hundreds of elements → jank
+  
+  Theme-aware transitions are handled individually via Tailwind's `transition-colors` utility
+  on the specific elements that need it (hover states, active states, etc.).
+  NEVER add transitions to the universal selector.
+*/
+*, *::before, *::after {
   box-sizing: border-box;
-  transition: background-color 0.3s var(--ease-out-expo), border-color 0.3s var(--ease-out-expo), color 0.3s var(--ease-out-expo);
 }
 
 html {
@@ -147,7 +160,7 @@ body::before {
   background: var(--color-cyan);
   z-index: 1000;
   transform-origin: left;
-  will-change: transform;
+  will-change: width;
 }
 
 /* ─── Marquee ────────────────────────────────────────────────────────────── */
@@ -188,8 +201,22 @@ body::before {
   backdrop-filter: blur(12px);
   -webkit-backdrop-filter: blur(12px);
 }
+
+/*
+  text-gradient RULE: NEVER combine with a Tailwind text-color utility on the same element.
+  -webkit-text-fill-color: transparent overrides ANY Tailwind color class.
+  → For cyan gradient text use .text-gradient-cyan (standalone, no text-* alongside it)
+  → For neutral gradient text use .text-gradient (standalone)
+*/
 .text-gradient {
   background-image: linear-gradient(135deg, var(--color-ink) 0%, var(--color-ink-2) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.text-gradient-cyan {
+  background-image: linear-gradient(135deg, var(--color-cyan) 0%, rgba(123,97,255,0.85) 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;

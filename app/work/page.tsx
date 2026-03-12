@@ -19,16 +19,16 @@ export default function WorkIndexPage() {
       {/* Header */}
       <section className="px-6 md:px-10 max-w-[1440px] mx-auto pb-20">
         <RevealOnScroll variant="fade-up">
-          <p className="text-[11px] tracking-[0.22em] uppercase mb-6 font-medium" style={{ color: "var(--color-ink-3)" }}>
+          <p className="text-[11px] tracking-[0.22em] uppercase mb-6 font-medium text-ink-3">
             Case Studies
           </p>
           <h1
-            className="font-display font-black leading-[0.93] tracking-[-0.04em] mb-12"
-            style={{ fontSize: "clamp(52px,9vw,120px)", color: "var(--color-ink)" }}
+            className="font-display font-black leading-[0.93] tracking-[-0.04em] mb-12 text-ink"
+            style={{ fontSize: "clamp(52px,9vw,120px)" }}
           >
             Work that speaks
             <br />
-            <span style={{ color: "var(--color-cyan)" }}>for itself.</span>
+            <span className="text-cyan">for itself.</span>
           </h1>
         </RevealOnScroll>
 
@@ -55,8 +55,7 @@ export default function WorkIndexPage() {
 
       {/* Grid */}
       <section
-        className="px-6 md:px-10 max-w-[1440px] mx-auto pb-40 border-t pt-16"
-        style={{ borderColor: "var(--color-border)" }}
+        className="px-6 md:px-10 max-w-[1440px] mx-auto pb-40 border-t border-border pt-16"
       >
         <AnimatePresence mode="wait">
           <motion.div
@@ -80,10 +79,8 @@ export default function WorkIndexPage() {
               >
                 <Link href={`/work/${work.id}`} data-cursor="view" className="block">
                   <div
-                    className="relative overflow-hidden rounded-2xl border mb-5 transition-all duration-500 group-hover:border-border-strong"
+                    className="relative overflow-hidden rounded-2xl border mb-5 transition-all duration-500 group-hover:border-border-strong bg-bg-2 border-border"
                     style={{
-                      background: "var(--color-bg-2)",
-                      borderColor: "var(--color-border)",
                       aspectRatio: i === 0 && filtered.length > 2 ? "16/7" : "4/3",
                     }}
                   >
@@ -97,19 +94,29 @@ export default function WorkIndexPage() {
                       />
                       <div className="absolute inset-0 bg-radial-vignette opacity-50" />
                     </div>
-                    {/* Hover overlay */}
+
+                    {/*
+                      BUG #8 FIX: color-mix() → rgba()
+                      color-mix(in srgb, var(--color-bg) 85%, transparent) fails in Safari < 16.2
+                      and Firefox < 113 — the entire hover overlay becomes invisible.
+                      Plain rgba is universally supported.
+                    */}
                     <motion.div
-                      className="absolute inset-0 flex items-end p-8"
+                      className="absolute inset-0 flex items-end p-8 z-1"
                       initial={{ opacity: 0 }}
                       whileHover={{ opacity: 1 }}
                       transition={{ duration: 0.3 }}
-                      style={{ background: "color-mix(in srgb, var(--color-bg) 85%, transparent)", backdropFilter: "blur(8px)" }}
+                      style={{
+                        background: "rgba(3, 3, 10, 0.85)",
+                        backdropFilter: "blur(8px)",
+                        WebkitBackdropFilter: "blur(8px)",
+                      }}
                     >
                       <div>
-                        <p className="text-sm font-bold mb-2" style={{ color: "var(--color-cyan)" }}>
+                        <p className="text-sm font-bold mb-2 text-cyan">
                           View Case Study →
                         </p>
-                        <p className="text-sm" style={{ color: "var(--color-ink-2)" }}>{work.description}</p>
+                        <p className="text-sm text-ink-2">{work.description}</p>
                       </div>
                     </motion.div>
                   </div>
@@ -117,19 +124,16 @@ export default function WorkIndexPage() {
                   {/* Meta */}
                   <div className="flex justify-between items-start">
                     <div>
-                      <h3 className="font-display font-bold text-xl mb-1" style={{ color: "var(--color-ink)" }}>
+                      <h3 className="font-display font-bold text-xl mb-1 text-ink">
                         {work.title}
                       </h3>
-                      <p className="text-sm" style={{ color: "var(--color-ink-3)" }}>{work.client}</p>
+                      <p className="text-sm text-ink-3">{work.client}</p>
                     </div>
                     <div className="text-right">
-                      <span
-                        className="block text-xs font-mono px-3 py-1 rounded-full border"
-                        style={{ borderColor: "var(--color-border)", color: "var(--color-ink-2)" }}
-                      >
+                      <span className="block text-xs font-mono px-3 py-1 rounded-full border border-border text-ink-2">
                         {work.type}
                       </span>
-                      <span className="block text-xs font-mono mt-2" style={{ color: "var(--color-ink-3)" }}>
+                      <span className="block text-xs font-mono mt-2 text-ink-3">
                         {work.year}
                       </span>
                     </div>

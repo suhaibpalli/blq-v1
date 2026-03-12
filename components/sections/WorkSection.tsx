@@ -8,16 +8,12 @@ import Image from "next/image";
 
 export default function WorkSection() {
   return (
-    <section
-      className="py-40 px-6 md:px-10 max-w-[1440px] mx-auto border-t border-border"
-    >
+    <section className="py-40 px-6 md:px-10 max-w-[1440px] mx-auto border-t border-border">
       {/* Header */}
       <RevealOnScroll variant="fade-up">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-24">
           <div>
-            <p
-              className="text-[11px] tracking-[0.22em] uppercase mb-6 font-medium text-ink-3"
-            >
+            <p className="text-[11px] tracking-[0.22em] uppercase mb-6 font-medium text-ink-3">
               Selected Work
             </p>
             <h2
@@ -26,7 +22,20 @@ export default function WorkSection() {
             >
               Projects that
               <br />
-              <span className="text-cyan text-gradient">moved the needle.</span>
+              {/*
+                BUG #5 FIX: "text-cyan text-gradient" on the same element → text is INVISIBLE.
+                .text-gradient sets `-webkit-text-fill-color: transparent` which completely
+                overrides `text-cyan`'s color. The text becomes transparent (invisible) on
+                Chrome, Safari, and any WebKit browser.
+
+                RULE: Never combine .text-gradient or .text-gradient-cyan with ANY Tailwind
+                text color utility on the same element.
+
+                Fix options:
+                  A) Use text-cyan alone (solid cyan) ← chosen here
+                  B) Use .text-gradient-cyan class alone (cyan→purple gradient) — no text-* alongside it
+              */}
+              <span className="text-cyan">moved the needle.</span>
             </h2>
           </div>
           <Link
@@ -44,10 +53,10 @@ export default function WorkSection() {
           <RevealOnScroll key={work.id} delay={index * 0.08} variant="fade-up">
             <Link href={`/work/${work.id}`} data-cursor="view" className="group block">
               <motion.div
-                className="relative overflow-hidden rounded-2xl bg-bg-2 border border-border group-hover:glow-subtle transition-shadow"
-                style={{
-                  aspectRatio: index === 0 ? "16/7" : "16/8",
-                }}
+                className="relative overflow-hidden rounded-2xl bg-bg-2 border border-border"
+                style={{ aspectRatio: index === 0 ? "16/7" : "16/8" }}
+                whileHover={{ borderColor: "var(--color-border-strong)" }}
+                transition={{ duration: 0.3 }}
               >
                 {/* Image background */}
                 <div className="absolute inset-0 z-0">
@@ -58,13 +67,11 @@ export default function WorkSection() {
                     className="object-cover opacity-40 group-hover:scale-105 transition-transform duration-700"
                     sizes="(max-width: 768px) 100vw, 1200px"
                   />
-                  {/* Subtle vignette */}
                   <div className="absolute inset-0 bg-radial-vignette opacity-60" />
                 </div>
 
-                {/* Grid pattern overlay */}
                 <div
-                  className="absolute inset-0 opacity-[0.03] z-1"
+                  className="absolute inset-0 opacity-[0.03] z-1 pointer-events-none"
                   style={{
                     backgroundImage:
                       "linear-gradient(var(--color-ink) 1px, transparent 1px), linear-gradient(90deg, var(--color-ink) 1px, transparent 1px)",
@@ -72,13 +79,22 @@ export default function WorkSection() {
                   }}
                 />
 
-                {/* Hover overlay */}
+                {/*
+                  BUG #7 FIX: color-mix() has limited browser support (requires Safari 16.2+, Firefox 113+).
+                  On older browsers the entire hover overlay is invisible.
+                  Fix: use plain rgba() value — universally supported since IE9.
+                  rgba(3,3,10,0.88) is equivalent to var(--color-bg) at 88% opacity in dark mode.
+                */}
                 <motion.div
-                  className="absolute inset-0 flex flex-col justify-between p-8 md:p-12"
+                  className="absolute inset-0 flex flex-col justify-between p-8 md:p-12 z-2"
                   initial={{ opacity: 0 }}
                   whileHover={{ opacity: 1 }}
                   transition={{ duration: 0.4 }}
-                  style={{ background: "color-mix(in srgb, var(--color-bg) 88%, transparent)", backdropFilter: "blur(8px)" }}
+                  style={{
+                    background: "rgba(3, 3, 10, 0.88)",
+                    backdropFilter: "blur(8px)",
+                    WebkitBackdropFilter: "blur(8px)",
+                  }}
                 >
                   <div className="flex justify-between items-start">
                     <div className="flex flex-wrap gap-2">
@@ -91,66 +107,36 @@ export default function WorkSection() {
                         </span>
                       ))}
                     </div>
-                    <span
-                      className="font-mono text-xs text-ink-3"
-                    >
-                      {work.year}
-                    </span>
+                    <span className="font-mono text-xs text-ink-3">{work.year}</span>
                   </div>
 
                   <div>
-                    <p
-                      className="text-xs tracking-[0.15em] uppercase mb-3 font-mono text-cyan"
-                    >
+                    <p className="text-xs tracking-[0.15em] uppercase mb-3 font-mono text-cyan">
                       {work.type} · {work.client}
                     </p>
                     <h3
                       className="font-display font-black tracking-tight mb-3 text-ink drop-shadow-md"
-                      style={{
-                        fontSize: "clamp(28px,4vw,56px)",
-                        lineHeight: 1,
-                      }}
+                      style={{ fontSize: "clamp(28px,4vw,56px)", lineHeight: 1 }}
                     >
                       {work.title}
                     </h3>
-                    <p className="text-base text-ink-2 drop-shadow-sm">
-                      {work.description}
-                    </p>
+                    <p className="text-base text-ink-2 drop-shadow-sm">{work.description}</p>
                   </div>
                 </motion.div>
 
-                {/* Bottom label (visible when not hovering) */}
-                <div
-                  className="absolute bottom-0 left-0 right-0 flex justify-between items-center px-8 py-5 border-t border-border bg-bg-2"
-                >
+                {/* Bottom label strip */}
+                <div className="absolute bottom-0 left-0 right-0 flex justify-between items-center px-8 py-5 border-t border-border bg-bg-2 z-1">
                   <div className="flex items-center gap-6">
-                    <span
-                      className="font-display font-bold text-lg text-ink"
-                    >
-                      {work.title}
-                    </span>
-                    <span
-                      className="hidden sm:block text-sm text-ink-3"
-                    >
-                      {work.type}
-                    </span>
+                    <span className="font-display font-bold text-lg text-ink">{work.title}</span>
+                    <span className="hidden sm:block text-sm text-ink-3">{work.type}</span>
                   </div>
                   <div className="flex items-center gap-2 text-ink-3">
                     <span className="text-xs font-mono">{work.year}</span>
                     <svg
-                      width="14"
-                      height="14"
-                      viewBox="0 0 14 14"
-                      fill="none"
+                      width="14" height="14" viewBox="0 0 14 14" fill="none"
                       className="group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform"
                     >
-                      <path
-                        d="M2 12L12 2M12 2H5M12 2V9"
-                        stroke="currentColor"
-                        strokeWidth="1.5"
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                      />
+                      <path d="M2 12L12 2M12 2H5M12 2V9" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                     </svg>
                   </div>
                 </div>
