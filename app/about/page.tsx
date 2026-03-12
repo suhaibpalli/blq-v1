@@ -2,6 +2,7 @@ import RevealOnScroll from "@/components/animations/RevealOnScroll";
 import { Marquee } from "@/components/ui/Marquee";
 import type { Metadata } from "next";
 import Image from "next/image";
+import AtomScene from "@/components/three/AtomScene";
 
 export const metadata: Metadata = {
   title: "About",
@@ -80,29 +81,19 @@ export default function AboutPage() {
         </RevealOnScroll>
       </section>
 
-      {/* Hero Image */}
+      {/* Hero Animation */}
       <section className="px-6 md:px-10 max-w-[1440px] mx-auto pb-40">
         <RevealOnScroll delay={0.2}>
-          {/*
-            BUG #16 FIX: aspect-21/9 is not a valid Tailwind class.
-            Tailwind v4 only generates aspect classes for values defined in the config.
-            The default scale includes aspect-auto, aspect-square, aspect-video (16/9).
-            For any custom ratio use aspect-[21/9] (arbitrary value syntax).
-          */}
-          <div className="relative w-full aspect-21/9 rounded-3xl overflow-hidden border border-border">
-            <Image
-              src="/images/about-lab.png"
-              alt="Black Quantum Labs Studio"
-              fill
-              className="object-cover"
-              priority
-              sizes="100vw"
-            />
-            <div className="absolute inset-0 bg-radial-vignette opacity-60" />
+          <div className="relative w-full aspect-21/9 rounded-3xl overflow-hidden border border-border bg-bg-2 flex items-center justify-center">
+            <AtomScene />
+            
+            {/* Overlay Gradient for depth */}
+            <div className="absolute inset-0 bg-radial-vignette opacity-40 pointer-events-none" />
+            
             <div className="absolute bottom-10 left-10 hidden md:block">
               <div className="flex items-center gap-4 text-[10px] font-mono tracking-[0.3em] uppercase text-ink opacity-40">
                 <span className="w-12 h-px bg-current" />
-                Est. MMXXIV
+                Lab Environment v1.0
               </div>
             </div>
           </div>

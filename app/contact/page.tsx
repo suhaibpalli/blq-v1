@@ -89,7 +89,7 @@ export default function ContactPage() {
                 {[
                   { label: "Email",    value: "hello@blackquantumlabs.io", href: "mailto:hello@blackquantumlabs.io" },
                   { label: "Phone (IN)", value: "+91 9150448003", href: "tel:+919150448003" },
-                  { label: "Phone (UAE)", value: "+971 50 123 4567", href: "tel:+971501234567" },
+                  { label: "Phone (UAE)", value: "+97156 553 6690", href: "tel:+971565536690" },
                   { label: "Location", value: "Global (Remote-first)" },
                   { label: "Hours",    value: "Mon–Fri, 9AM–7PM IST" },
                 ].map(({ label, value, href }) => (
