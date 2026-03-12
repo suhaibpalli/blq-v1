@@ -6,6 +6,8 @@ import CustomCursor from "@/components/ui/CustomCursor";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import ScrollProgress from "@/components/ui/ScrollProgress";
+// ↓ ADD THIS IMPORT
+import ChatWidget from "@/components/ui/ChatWidget";
 
 const syne = Syne({
   variable: "--font-syne",
@@ -58,6 +60,8 @@ export default function RootLayout({
               {children}
             </div>
             <Footer />
+            {/* ↓ ADD THIS LINE — ChatWidget renders fixed/floating, outside normal flow */}
+            <ChatWidget />
           </SmoothScrolling>
         </ThemeProvider>
       </body>
