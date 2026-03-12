@@ -52,27 +52,26 @@ export default function ServicesPage() {
       {/* Header */}
       <section className="px-6 md:px-10 max-w-[1440px] mx-auto pb-32">
         <RevealOnScroll variant="fade-up">
-          <p className="text-[11px] tracking-[0.22em] uppercase mb-6 font-medium" style={{ color: "var(--color-ink-3)" }}>
+          <p className="text-[11px] tracking-[0.22em] uppercase mb-6 font-medium text-ink-3">
             What We Do
           </p>
           <h1
-            className="font-display font-black leading-[0.93] tracking-[-0.04em]"
-            style={{ fontSize: "clamp(52px,9vw,120px)", color: "var(--color-ink)" }}
+            className="font-display font-black leading-[0.93] tracking-[-0.04em] text-ink"
+            style={{ fontSize: "clamp(52px,9vw,120px)" }}
           >
             Capabilities &
             <br />
-            <span style={{ color: "var(--color-cyan)" }}>Pricing.</span>
+            <span className="text-cyan">Pricing.</span>
           </h1>
         </RevealOnScroll>
       </section>
 
       {/* Services */}
       <section
-        className="px-6 md:px-10 max-w-[1440px] mx-auto py-24 border-t"
-        style={{ borderColor: "var(--color-border)" }}
+        className="px-6 md:px-10 max-w-[1440px] mx-auto py-24 border-t border-border"
       >
         <RevealOnScroll variant="fade-up">
-          <p className="text-[11px] tracking-[0.22em] uppercase mb-16 font-medium" style={{ color: "var(--color-ink-3)" }}>
+          <p className="text-[11px] tracking-[0.22em] uppercase mb-16 font-medium text-ink-3">
             Our Expertise
           </p>
         </RevealOnScroll>
@@ -84,16 +83,14 @@ export default function ServicesPage() {
             <RevealOnScroll key={service.id} delay={index * 0.07} variant="fade-up">
               <div
                 id={service.id}
-                className="group border-b py-12 scroll-mt-32 grid grid-cols-1 lg:grid-cols-[80px_1fr_1fr] gap-8 items-start transition-all duration-300"
-                style={{ borderColor: "var(--color-border)" }}
+                className="group border-b border-border py-12 scroll-mt-32 grid grid-cols-1 lg:grid-cols-[80px_1fr_1fr] gap-8 items-start transition-all duration-300"
               >
                 <div className="flex items-center gap-4 lg:flex-col lg:items-start">
-                  <span className="font-mono text-xs font-bold" style={{ color: "var(--color-ink-3)" }}>
+                  <span className="font-mono text-xs font-bold text-ink-3">
                     {service.id}
                   </span>
                   <div
-                    className="w-10 h-10 rounded-lg flex items-center justify-center"
-                    style={{ background: "var(--color-surface)", color: "var(--color-cyan)" }}
+                    className="w-10 h-10 rounded-lg flex items-center justify-center bg-surface text-cyan"
                   >
                     {Icon && <Icon size={18} strokeWidth={1.5} />}
                   </div>
@@ -101,20 +98,19 @@ export default function ServicesPage() {
 
                 <div>
                   <h3
-                    className="font-display font-bold text-2xl md:text-3xl mb-4 transition-colors"
-                    style={{ color: "var(--color-ink)" }}
+                    className="font-display font-bold text-2xl md:text-3xl mb-4 transition-colors text-ink"
                   >
                     {service.title}
                   </h3>
-                  <p className="text-base leading-relaxed" style={{ color: "var(--color-ink-2)" }}>
+                  <p className="text-base leading-relaxed text-ink-2">
                     {service.description}
                   </p>
                 </div>
 
-                <div className="grid grid-cols-1 gap-2 text-sm font-mono" style={{ color: "var(--color-ink-3)" }}>
+                <div className="grid grid-cols-1 gap-2 text-sm font-mono text-ink-3">
                   {["Strategy & Architecture", "Full-stack Implementation", "Performance Optimization", "Deployment & Monitoring"].map(item => (
                     <span key={item} className="flex items-center gap-2">
-                      <span style={{ color: "var(--color-cyan)", opacity: 0.5 }}>→</span>
+                      <span className="text-cyan opacity-50">→</span>
                       {item}
                     </span>
                   ))}
@@ -127,60 +123,57 @@ export default function ServicesPage() {
 
       {/* Pricing */}
       <section
-        className="px-6 md:px-10 max-w-[1440px] mx-auto py-40 border-t"
-        style={{ borderColor: "var(--color-border)" }}
+        className="px-6 md:px-10 max-w-[1440px] mx-auto py-40 border-t border-border"
       >
         <RevealOnScroll variant="fade-up">
           <div className="mb-20">
-            <p className="text-[11px] tracking-[0.22em] uppercase mb-6 font-medium" style={{ color: "var(--color-ink-3)" }}>
+            <p className="text-[11px] tracking-[0.22em] uppercase mb-6 font-medium text-ink-3">
               Investment
             </p>
             <h2
-              className="font-display font-black leading-[0.95] tracking-[-0.03em]"
-              style={{ fontSize: "clamp(40px,6vw,88px)", color: "var(--color-ink)" }}
+              className="font-display font-black leading-[0.95] tracking-[-0.03em] text-ink"
+              style={{ fontSize: "clamp(40px,6vw,88px)" }}
             >
               Transparent Pricing.
               <br />
-              <span style={{ color: "var(--color-ink-3)" }}>No hidden fees.</span>
+              <span className="text-ink-3">No hidden fees.</span>
             </h2>
           </div>
         </RevealOnScroll>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px" style={{ background: "var(--color-border)" }}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border">
           {PRICING.map((tier, i) => (
             <RevealOnScroll key={tier.tier} delay={i * 0.1} variant="fade-up">
               <div
-                className="relative p-10 flex flex-col h-full transition-all duration-300"
+                className={`relative p-10 flex flex-col h-full transition-all duration-300 ${tier.highlight ? 'bg-bg-3' : 'bg-bg-2'}`}
                 style={{
-                  background: tier.highlight ? "var(--color-bg-3)" : "var(--color-bg-2)",
                   minHeight: "520px",
                 }}
               >
                 {tier.highlight && (
                   <span
-                    className="absolute top-6 right-6 text-[10px] font-black tracking-[0.15em] uppercase px-3 py-1 rounded-full"
-                    style={{ background: "var(--color-cyan-dim)", color: "var(--color-cyan)", border: "1px solid var(--color-cyan-glow)" }}
+                    className="absolute top-6 right-6 text-[10px] font-black tracking-[0.15em] uppercase px-3 py-1 rounded-full bg-cyan-dim text-cyan border border-cyan-glow"
                   >
                     Most Popular
                   </span>
                 )}
                 <div className="mb-10">
-                  <p className="text-sm font-bold mb-2" style={{ color: "var(--color-ink-3)" }}>
+                  <p className="text-sm font-bold mb-2 text-ink-3">
                     {tier.tier}
                   </p>
                   <p
-                    className="font-display font-black tracking-tight mb-2"
-                    style={{ fontSize: "clamp(28px,3vw,44px)", color: "var(--color-ink)" }}
+                    className="font-display font-black tracking-tight mb-2 text-ink"
+                    style={{ fontSize: "clamp(28px,3vw,44px)" }}
                   >
                     {tier.price}
                   </p>
-                  <p className="text-sm" style={{ color: "var(--color-ink-3)" }}>{tier.sub}</p>
+                  <p className="text-sm text-ink-3">{tier.sub}</p>
                 </div>
 
                 <ul className="space-y-4 flex-1 mb-10">
                   {tier.features.map(f => (
-                    <li key={f} className="flex items-start gap-3 text-sm" style={{ color: "var(--color-ink-2)" }}>
-                      <LucideIcons.Check size={14} style={{ color: "var(--color-cyan)", marginTop: 3, flexShrink: 0 }} />
+                    <li key={f} className="flex items-start gap-3 text-sm text-ink-2">
+                      <LucideIcons.Check size={14} className="text-cyan mt-1 shrink-0" />
                       {f}
                     </li>
                   ))}
@@ -211,7 +204,7 @@ export default function ServicesPage() {
         className="px-6 md:px-10 max-w-[800px] mx-auto pb-40"
       >
         <RevealOnScroll variant="fade-up">
-          <p className="text-[11px] tracking-[0.22em] uppercase mb-16 font-medium" style={{ color: "var(--color-ink-3)" }}>
+          <p className="text-[11px] tracking-[0.22em] uppercase mb-16 font-medium text-ink-3">
             FAQ
           </p>
         </RevealOnScroll>
@@ -219,21 +212,19 @@ export default function ServicesPage() {
         {FAQS.map((faq, i) => (
           <RevealOnScroll key={i} delay={0.05} variant="fade-up">
             <div
-              className="border-b cursor-pointer"
-              style={{ borderColor: "var(--color-border)" }}
+              className="border-b border-border cursor-pointer"
               onClick={() => setOpenFaq(openFaq === i ? null : i)}
             >
               <div className="flex justify-between items-center gap-4 py-7">
                 <h4
-                  className={cn("font-display font-bold text-lg transition-colors", openFaq === i ? "" : "")}
-                  style={{ color: openFaq === i ? "var(--color-cyan)" : "var(--color-ink)" }}
+                  className={cn("font-display font-bold text-lg transition-colors", openFaq === i ? "text-cyan" : "text-ink")}
                 >
                   {faq.q}
                 </h4>
                 <motion.span
                   animate={{ rotate: openFaq === i ? 135 : 0 }}
                   transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
-                  style={{ color: "var(--color-ink-3)", flexShrink: 0 }}
+                  className="text-ink-3 shrink-0"
                 >
                   <LucideIcons.Plus size={18} />
                 </motion.span>
@@ -248,8 +239,7 @@ export default function ServicesPage() {
                     className="overflow-hidden"
                   >
                     <p
-                      className="text-base leading-relaxed pb-8"
-                      style={{ color: "var(--color-ink-2)" }}
+                      className="text-base leading-relaxed pb-8 text-ink-2"
                     >
                       {faq.a}
                     </p>

@@ -24,19 +24,18 @@ export default function IntroSection() {
         <div className="lg:sticky lg:top-36 h-fit">
           <RevealOnScroll variant="fade-up">
             <p
-              className="text-[11px] tracking-[0.22em] uppercase mb-8 font-medium"
-              style={{ color: "var(--color-ink-3)" }}
+              className="text-[11px] tracking-[0.22em] uppercase mb-8 font-medium text-ink-3"
             >
               The Studio
             </p>
             <h2
-              className="font-display font-black leading-[1.0] tracking-[-0.03em]"
-              style={{ fontSize: "clamp(40px,5.5vw,80px)", color: "var(--color-ink)" }}
+              className="font-display font-black leading-none tracking-[-0.03em] text-ink"
+              style={{ fontSize: "clamp(40px,5.5vw,80px)" }}
             >
               We don&apos;t just
               <br />build software.
               <br />
-              <span style={{ color: "var(--color-cyan)" }}>
+              <span className="text-cyan">
                 We engineer
                 <br />leverage.
               </span>
@@ -46,21 +45,18 @@ export default function IntroSection() {
 
         {/* Right — scrollable with separator */}
         <div
-          className="flex flex-col gap-16 lg:pl-16 lg:border-l"
-          style={{ borderColor: "var(--color-border)" }}
+          className="flex flex-col gap-16 lg:pl-16 lg:border-l border-border"
         >
           {PARAGRAPHS.map(({ num, text }, i) => (
             <RevealOnScroll key={num} delay={i * 0.12} variant="fade-up">
               <div className="flex gap-8">
                 <span
-                  className="font-mono text-xs shrink-0 mt-[6px] font-bold tracking-widest"
-                  style={{ color: "var(--color-cyan)" }}
+                  className="font-mono text-xs shrink-0 mt-[6px] font-bold tracking-widest text-cyan"
                 >
                   {num}
                 </span>
                 <p
-                  className="text-lg md:text-xl leading-[1.75]"
-                  style={{ color: "var(--color-ink-2)" }}
+                  className="text-lg md:text-xl leading-[1.75] text-ink-2"
                 >
                   {text}
                 </p>
@@ -71,8 +67,7 @@ export default function IntroSection() {
           {/* Quick metrics */}
           <RevealOnScroll delay={0.36} variant="fade-up">
             <div
-              className="grid grid-cols-3 gap-px border rounded-2xl overflow-hidden mt-6"
-              style={{ borderColor: "var(--color-border)", background: "var(--color-border)" }}
+              className="grid grid-cols-3 gap-px border rounded-2xl overflow-hidden mt-6 border-border bg-border"
             >
               {[
                 { v: "15+", l: "Projects Shipped" },
@@ -81,16 +76,14 @@ export default function IntroSection() {
               ].map(({ v, l }) => (
                 <div
                   key={l}
-                  className="px-6 py-8"
-                  style={{ background: "var(--color-bg-2)" }}
+                  className="px-6 py-8 bg-bg-2"
                 >
                   <p
-                    className="font-display font-black text-4xl tracking-tight mb-2"
-                    style={{ color: "var(--color-ink)" }}
+                    className="font-display font-black text-4xl tracking-tight mb-2 text-ink"
                   >
                     {v}
                   </p>
-                  <p className="text-xs tracking-wide" style={{ color: "var(--color-ink-3)" }}>
+                  <p className="text-xs tracking-wide text-ink-3">
                     {l}
                   </p>
                 </div>

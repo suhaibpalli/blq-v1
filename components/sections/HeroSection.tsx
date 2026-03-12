@@ -20,11 +20,10 @@ export default function HeroSection() {
 
       {/* Radial gradient from bottom-left */}
       <div
-        className="absolute inset-0 z-1 pointer-events-none"
+        className="absolute inset-0 z-1 pointer-events-none opacity-50"
         style={{
           background:
             "radial-gradient(ellipse 80% 60% at 10% 90%, var(--color-cyan-dim) 0%, transparent 70%), radial-gradient(ellipse 50% 40% at 90% 10%, var(--color-cyan-dim) 0%, transparent 60%)",
-          opacity: 0.5
         }}
       />
 
@@ -39,19 +38,16 @@ export default function HeroSection() {
           className="flex items-center gap-4 mb-12"
         >
           <span
-            className="inline-flex items-center gap-2 text-[11px] tracking-[0.22em] uppercase font-medium"
-            style={{ color: "var(--color-ink-2)" }}
+            className="inline-flex items-center gap-2 text-[11px] tracking-[0.22em] uppercase font-medium text-ink-2"
           >
             <span
-              className="inline-block w-1.5 h-1.5 rounded-full"
-              style={{ background: "var(--color-cyan)" }}
+              className="inline-block w-1.5 h-1.5 rounded-full bg-cyan"
             />
             Digital Engineering Studio
           </span>
-          <span className="h-px w-12" style={{ background: "var(--color-border-strong)" }} />
+          <span className="h-px w-12 bg-border-strong" />
           <span
-            className="text-[11px] tracking-[0.22em] uppercase"
-            style={{ color: "var(--color-ink-3)" }}
+            className="text-[11px] tracking-[0.22em] uppercase text-ink-3"
           >
             Chennai, India
           </span>
@@ -69,10 +65,9 @@ export default function HeroSection() {
                 delay: 0.3 + i * 0.085,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              className="inline-block mr-[0.2em]"
+              className={`inline-block mr-[0.2em] ${i === words.length - 1 ? 'text-cyan' : 'text-ink'}`}
               style={{
                 fontSize: "clamp(52px, 9.5vw, 140px)",
-                color: i === words.length - 1 ? "var(--color-cyan)" : "var(--color-ink)",
               }}
             >
               {word}
@@ -85,14 +80,12 @@ export default function HeroSection() {
           initial={{ opacity: 0, y: 24 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1, delay: 1.1, ease: [0.16, 1, 0.3, 1] }}
-          className="border-t flex flex-col md:flex-row md:items-end gap-10 pt-8 pb-12"
-          style={{ borderColor: "var(--color-border)" }}
+          className="border-t border-border flex flex-col md:flex-row md:items-end gap-10 pt-8 pb-12"
         >
           {/* Subtext */}
           <div className="flex-1 max-w-md">
             <p
-              className="text-base md:text-lg leading-relaxed"
-              style={{ color: "var(--color-ink-2)" }}
+              className="text-base md:text-lg leading-relaxed text-ink-2"
             >
               From pixel-perfect interfaces to distributed cloud systems —
               we ship products that move the needle.
@@ -103,8 +96,7 @@ export default function HeroSection() {
           <div className="flex flex-col sm:flex-row gap-4 items-start sm:items-center">
             <Link href="/contact">
               <motion.span
-                className="inline-flex items-center gap-3 h-14 px-8 rounded-full font-bold text-sm tracking-wide"
-                style={{ background: "var(--color-cyan)", color: "var(--color-bg)" }}
+                className="inline-flex items-center gap-3 h-14 px-8 rounded-full font-bold text-sm tracking-wide bg-cyan text-bg"
                 whileHover={{ scale: 1.04 }}
                 whileTap={{ scale: 0.97 }}
               >
@@ -116,8 +108,7 @@ export default function HeroSection() {
             </Link>
             <Link href="/work">
               <motion.span
-                className="inline-flex items-center gap-2 h-14 px-8 rounded-full font-medium text-sm border tracking-wide"
-                style={{ borderColor: "var(--color-border-strong)", color: "var(--color-ink-2)" }}
+                className="inline-flex items-center gap-2 h-14 px-8 rounded-full font-medium text-sm border tracking-wide border-border-strong text-ink-2"
                 whileHover={{ borderColor: "var(--color-ink-2)", color: "var(--color-ink)", scale: 1.02 }}
                 whileTap={{ scale: 0.97 }}
               >
@@ -127,16 +118,15 @@ export default function HeroSection() {
           </div>
 
           {/* Stats */}
-          <div className="hidden lg:flex items-center gap-10 pl-10 border-l" style={{ borderColor: "var(--color-border)" }}>
+          <div className="hidden lg:flex items-center gap-10 pl-10 border-l border-border mt-8 md:mt-0">
             {STATS.map(({ value, label }) => (
               <div key={label}>
                 <p
-                  className="font-display font-black text-3xl tracking-tight"
-                  style={{ color: "var(--color-ink)" }}
+                  className="font-display font-black text-3xl tracking-tight text-ink"
                 >
                   {value}
                 </p>
-                <p className="text-xs mt-0.5 tracking-wide" style={{ color: "var(--color-ink-3)" }}>
+                <p className="text-xs mt-0.5 tracking-wide text-ink-3">
                   {label}
                 </p>
               </div>
@@ -157,8 +147,8 @@ export default function HeroSection() {
           style={{ background: "linear-gradient(to bottom, var(--color-border-strong), transparent)" }}
         />
         <p
-          className="text-[10px] tracking-[0.2em] uppercase font-mono"
-          style={{ color: "var(--color-ink-3)", writingMode: "vertical-rl" }}
+          className="text-[10px] tracking-[0.2em] uppercase font-mono text-ink-3"
+          style={{ writingMode: "vertical-rl" }}
         >
           Scroll
         </p>

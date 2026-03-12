@@ -9,32 +9,29 @@ import Image from "next/image";
 export default function WorkSection() {
   return (
     <section
-      className="py-40 px-6 md:px-10 max-w-[1440px] mx-auto border-t"
-      style={{ borderColor: "var(--color-border)" }}
+      className="py-40 px-6 md:px-10 max-w-[1440px] mx-auto border-t border-border"
     >
       {/* Header */}
       <RevealOnScroll variant="fade-up">
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-8 mb-24">
           <div>
             <p
-              className="text-[11px] tracking-[0.22em] uppercase mb-6 font-medium"
-              style={{ color: "var(--color-ink-3)" }}
+              className="text-[11px] tracking-[0.22em] uppercase mb-6 font-medium text-ink-3"
             >
               Selected Work
             </p>
             <h2
-              className="font-display font-black leading-none tracking-[-0.03em]"
-              style={{ fontSize: "clamp(40px,5.5vw,80px)", color: "var(--color-ink)" }}
+              className="font-display font-black leading-none tracking-[-0.03em] text-ink"
+              style={{ fontSize: "clamp(40px,5.5vw,80px)" }}
             >
               Projects that
               <br />
-              <span style={{ color: "var(--color-cyan)" }}>moved the needle.</span>
+              <span className="text-cyan text-gradient">moved the needle.</span>
             </h2>
           </div>
           <Link
             href="/work"
-            className="shrink-0 inline-flex items-center gap-2 text-sm font-bold hover-line"
-            style={{ color: "var(--color-ink-2)" }}
+            className="shrink-0 inline-flex items-center gap-2 text-sm font-bold hover-line text-ink-2"
           >
             All Projects →
           </Link>
@@ -47,14 +44,10 @@ export default function WorkSection() {
           <RevealOnScroll key={work.id} delay={index * 0.08} variant="fade-up">
             <Link href={`/work/${work.id}`} data-cursor="view" className="group block">
               <motion.div
-                className="relative overflow-hidden rounded-2xl"
+                className="relative overflow-hidden rounded-2xl bg-bg-2 border border-border group-hover:glow-subtle transition-shadow"
                 style={{
-                  background: "var(--color-bg-2)",
-                  border: "1px solid var(--color-border)",
                   aspectRatio: index === 0 ? "16/7" : "16/8",
                 }}
-                whileHover={{ borderColor: "var(--color-border-strong)" }}
-                transition={{ duration: 0.3 }}
               >
                 {/* Image background */}
                 <div className="absolute inset-0 z-0">
@@ -92,20 +85,14 @@ export default function WorkSection() {
                       {work.tags.map((tag) => (
                         <span
                           key={tag}
-                          className="px-3 py-1 rounded-full text-[11px] font-mono border"
-                          style={{
-                            borderColor: "var(--color-border-strong)",
-                            color: "var(--color-ink-2)",
-                            background: "var(--color-surface)",
-                          }}
+                          className="px-3 py-1 rounded-full text-[11px] font-mono border border-border-strong text-ink-2 bg-surface glass-panel"
                         >
                           {tag}
                         </span>
                       ))}
                     </div>
                     <span
-                      className="font-mono text-xs"
-                      style={{ color: "var(--color-ink-3)" }}
+                      className="font-mono text-xs text-ink-3"
                     >
                       {work.year}
                     </span>
@@ -113,22 +100,20 @@ export default function WorkSection() {
 
                   <div>
                     <p
-                      className="text-xs tracking-[0.15em] uppercase mb-3 font-mono"
-                      style={{ color: "var(--color-cyan)" }}
+                      className="text-xs tracking-[0.15em] uppercase mb-3 font-mono text-cyan"
                     >
                       {work.type} · {work.client}
                     </p>
                     <h3
-                      className="font-display font-black tracking-tight mb-3"
+                      className="font-display font-black tracking-tight mb-3 text-ink drop-shadow-md"
                       style={{
                         fontSize: "clamp(28px,4vw,56px)",
-                        color: "var(--color-ink)",
                         lineHeight: 1,
                       }}
                     >
                       {work.title}
                     </h3>
-                    <p className="text-base" style={{ color: "var(--color-ink-2)" }}>
+                    <p className="text-base text-ink-2 drop-shadow-sm">
                       {work.description}
                     </p>
                   </div>
@@ -136,24 +121,21 @@ export default function WorkSection() {
 
                 {/* Bottom label (visible when not hovering) */}
                 <div
-                  className="absolute bottom-0 left-0 right-0 flex justify-between items-center px-8 py-5 border-t"
-                  style={{ borderColor: "var(--color-border)", background: "var(--color-bg-2)" }}
+                  className="absolute bottom-0 left-0 right-0 flex justify-between items-center px-8 py-5 border-t border-border bg-bg-2"
                 >
                   <div className="flex items-center gap-6">
                     <span
-                      className="font-display font-bold text-lg"
-                      style={{ color: "var(--color-ink)" }}
+                      className="font-display font-bold text-lg text-ink"
                     >
                       {work.title}
                     </span>
                     <span
-                      className="hidden sm:block text-sm"
-                      style={{ color: "var(--color-ink-3)" }}
+                      className="hidden sm:block text-sm text-ink-3"
                     >
                       {work.type}
                     </span>
                   </div>
-                  <div className="flex items-center gap-2" style={{ color: "var(--color-ink-3)" }}>
+                  <div className="flex items-center gap-2 text-ink-3">
                     <span className="text-xs font-mono">{work.year}</span>
                     <svg
                       width="14"

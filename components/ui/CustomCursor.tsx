@@ -93,9 +93,8 @@ export default function CustomCursor() {
       {/* Inner dot */}
       <div
         ref={dotRef}
-        className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full pointer-events-none z-9997"
+        className="fixed top-0 left-0 w-1.5 h-1.5 rounded-full pointer-events-none z-9997 bg-cyan"
         style={{
-          background: "var(--color-cyan)",
           transition: "opacity 0.2s",
           willChange: "transform",
         }}
@@ -103,17 +102,16 @@ export default function CustomCursor() {
       {/* Outer ring */}
       <div
         ref={ringRef}
-        className="fixed top-0 left-0 rounded-full pointer-events-none z-9997 border flex items-center justify-center"
+        className="fixed top-0 left-0 rounded-full pointer-events-none z-9997 border flex items-center justify-center border-cyan/50"
         style={{
           width: "40px",
           height: "40px",
-          borderColor: "rgba(0,232,255,0.5)",
           transition: "width 0.3s cubic-bezier(0.16,1,0.3,1), height 0.3s cubic-bezier(0.16,1,0.3,1), background-color 0.3s, border-color 0.3s",
           willChange: "transform, width, height",
         }}
       >
         {label && (
-          <span className="text-[9px] font-black tracking-[0.15em] uppercase" style={{ color: "var(--color-bg)" }}>
+          <span className="text-[9px] font-black tracking-[0.15em] uppercase text-bg">
             {label}
           </span>
         )}

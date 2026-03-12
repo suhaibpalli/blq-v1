@@ -66,20 +66,20 @@ export default function ContactPage() {
           {/* Left */}
           <div className="flex flex-col">
             <RevealOnScroll variant="fade-up">
-              <p className="text-[11px] tracking-[0.22em] uppercase mb-8 font-medium" style={{ color: "var(--color-ink-3)" }}>
+              <p className="text-[11px] tracking-[0.22em] uppercase mb-8 font-medium text-ink-3">
                 Get In Touch
               </p>
               <h1
-                className="font-display font-black leading-[0.93] tracking-[-0.04em] mb-10"
-                style={{ fontSize: "clamp(48px,7vw,96px)", color: "var(--color-ink)" }}
+                className="font-display font-black leading-[0.93] tracking-[-0.04em] mb-10 text-ink"
+                style={{ fontSize: "clamp(48px,7vw,96px)" }}
               >
                 Let&apos;s build
                 <br />
                 something
                 <br />
-                <span style={{ color: "var(--color-cyan)" }}>extraordinary.</span>
+                <span className="text-cyan">extraordinary.</span>
               </h1>
-              <p className="text-lg leading-relaxed mb-16 max-w-md" style={{ color: "var(--color-ink-2)" }}>
+              <p className="text-lg leading-relaxed mb-16 max-w-md text-ink-2">
                 Tell us about your project. We respond within 24 hours and set up a no-pressure discovery call.
               </p>
             </RevealOnScroll>
@@ -88,19 +88,21 @@ export default function ContactPage() {
               <div className="space-y-8">
                 {[
                   { label: "Email",    value: "hello@blackquantumlabs.io", href: "mailto:hello@blackquantumlabs.io" },
-                  { label: "Location", value: "Chennai, India (Remote-first)" },
+                  { label: "Phone (IN)", value: "+91 9150448003", href: "tel:+919150448003" },
+                  { label: "Phone (UAE)", value: "+971 50 123 4567", href: "tel:+971501234567" },
+                  { label: "Location", value: "Global (Remote-first)" },
                   { label: "Hours",    value: "Mon–Fri, 9AM–7PM IST" },
                 ].map(({ label, value, href }) => (
                   <div key={label}>
-                    <p className="text-[11px] tracking-[0.18em] uppercase mb-2 font-medium" style={{ color: "var(--color-ink-3)" }}>
+                    <p className="text-[11px] tracking-[0.18em] uppercase mb-2 font-medium text-ink-3">
                       {label}
                     </p>
                     {href ? (
-                      <a href={href} className="text-base hover-line transition-colors" style={{ color: "var(--color-cyan)" }}>
+                      <a href={href} className="text-base hover-line transition-colors text-cyan">
                         {value}
                       </a>
                     ) : (
-                      <p className="text-base" style={{ color: "var(--color-ink-2)" }}>{value}</p>
+                      <p className="text-base text-ink-2">{value}</p>
                     )}
                   </div>
                 ))}
@@ -111,8 +113,7 @@ export default function ContactPage() {
           {/* Right — Form */}
           <RevealOnScroll delay={0.2} variant="fade-up">
             <div
-              className="rounded-2xl p-8 md:p-12 border"
-              style={{ background: "var(--color-bg-2)", borderColor: "var(--color-border)" }}
+              className="rounded-2xl p-8 md:p-12 border bg-bg-2 border-border"
             >
               {success ? (
                 <div className="flex flex-col items-center justify-center text-center h-full min-h-[480px]">
@@ -120,15 +121,14 @@ export default function ContactPage() {
                     initial={{ scale: 0 }}
                     animate={{ scale: 1 }}
                     transition={{ type: "spring", duration: 0.6, bounce: 0.4 }}
-                    className="w-20 h-20 rounded-full flex items-center justify-center mb-8"
-                    style={{ background: "var(--color-cyan-dim)", border: "1px solid var(--color-cyan-glow)" }}
+                    className="w-20 h-20 rounded-full flex items-center justify-center mb-8 bg-cyan-dim border border-cyan-glow"
                   >
-                    <Check size={32} style={{ color: "var(--color-cyan)" }} />
+                    <Check size={32} className="text-cyan" />
                   </motion.div>
-                  <h3 className="font-display font-black text-3xl mb-4" style={{ color: "var(--color-ink)" }}>
+                  <h3 className="font-display font-black text-3xl mb-4 text-ink">
                     Message Received.
                   </h3>
-                  <p style={{ color: "var(--color-ink-2)" }}>
+                  <p className="text-ink-2">
                     We&apos;ll be in touch within 24 hours.
                   </p>
                 </div>
@@ -145,25 +145,25 @@ export default function ContactPage() {
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label className={labelClass} style={{ color: "var(--color-ink-3)" }}>Full Name *</label>
+                      <label className={`${labelClass} text-ink-3`}>Full Name *</label>
                       <input {...register("name")} className={inputClass} placeholder="Jane Doe" />
-                      {errors.name && <p className="text-xs mt-2" style={{ color: "#f87171" }}>{errors.name.message}</p>}
+                      {errors.name && <p className="text-xs mt-2 text-red-400">{errors.name.message}</p>}
                     </div>
                     <div>
-                      <label className={labelClass} style={{ color: "var(--color-ink-3)" }}>Email *</label>
+                      <label className={`${labelClass} text-ink-3`}>Email *</label>
                       <input {...register("email")} className={inputClass} placeholder="jane@company.com" />
-                      {errors.email && <p className="text-xs mt-2" style={{ color: "#f87171" }}>{errors.email.message}</p>}
+                      {errors.email && <p className="text-xs mt-2 text-red-400">{errors.email.message}</p>}
                     </div>
                   </div>
 
                   <div>
-                    <label className={labelClass} style={{ color: "var(--color-ink-3)" }}>Company (Optional)</label>
+                    <label className={`${labelClass} text-ink-3`}>Company (Optional)</label>
                     <input {...register("company")} className={inputClass} placeholder="Acme Corp" />
                   </div>
 
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                     <div>
-                      <label className={labelClass} style={{ color: "var(--color-ink-3)" }}>Service *</label>
+                      <label className={`${labelClass} text-ink-3`}>Service *</label>
                       <select {...register("service")} className={inputClass}>
                         <option value="">Select a service…</option>
                         <option value="Web Development">Web Development</option>
@@ -174,10 +174,10 @@ export default function ContactPage() {
                         <option value="Consulting">Consulting</option>
                         <option value="Other">Other</option>
                       </select>
-                      {errors.service && <p className="text-xs mt-2" style={{ color: "#f87171" }}>{errors.service.message}</p>}
+                      {errors.service && <p className="text-xs mt-2 text-red-400">{errors.service.message}</p>}
                     </div>
                     <div>
-                      <label className={labelClass} style={{ color: "var(--color-ink-3)" }}>Budget *</label>
+                      <label className={`${labelClass} text-ink-3`}>Budget *</label>
                       <select {...register("budget")} className={inputClass}>
                         <option value="">Select budget…</option>
                         <option value="<₹50K">&lt; ₹50K</option>
@@ -185,26 +185,25 @@ export default function ContactPage() {
                         <option value="₹1.5L–₹5L">₹1.5L – ₹5L</option>
                         <option value="₹5L+">₹5L+</option>
                       </select>
-                      {errors.budget && <p className="text-xs mt-2" style={{ color: "#f87171" }}>{errors.budget.message}</p>}
+                      {errors.budget && <p className="text-xs mt-2 text-red-400">{errors.budget.message}</p>}
                     </div>
                   </div>
 
                   <div>
-                    <label className={labelClass} style={{ color: "var(--color-ink-3)" }}>Project Brief *</label>
+                    <label className={`${labelClass} text-ink-3`}>Project Brief *</label>
                     <textarea
                       {...register("brief")}
                       rows={5}
                       className={`${inputClass} resize-none`}
                       placeholder="Tell us about your goals, timeline, and anything else that&#39;s important…"
                     />
-                    {errors.brief && <p className="text-xs mt-2" style={{ color: "#f87171" }}>{errors.brief.message}</p>}
+                    {errors.brief && <p className="text-xs mt-2 text-red-400">{errors.brief.message}</p>}
                   </div>
 
                   <motion.button
                     type="submit"
                     disabled={submitting}
-                    className="w-full h-14 rounded-full font-bold text-sm tracking-wide flex items-center justify-center gap-3 disabled:opacity-50"
-                    style={{ background: "var(--color-cyan)", color: "var(--color-bg)" }}
+                    className="w-full h-14 rounded-full font-bold text-sm tracking-wide flex items-center justify-center gap-3 disabled:opacity-50 bg-cyan text-bg"
                     whileHover={{ scale: 1.02 }}
                     whileTap={{ scale: 0.98 }}
                   >

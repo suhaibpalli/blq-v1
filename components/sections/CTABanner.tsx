@@ -7,8 +7,7 @@ import { motion } from "framer-motion";
 export default function CTABanner() {
   return (
     <section
-      className="relative py-48 px-6 md:px-10 overflow-hidden border-t"
-      style={{ borderColor: "var(--color-border)", background: "var(--color-bg-2)" }}
+      className="relative py-48 px-6 md:px-10 overflow-hidden border-t border-border bg-bg-2"
     >
       {/* Ambient glow */}
       <motion.div
@@ -38,18 +37,17 @@ export default function CTABanner() {
         <div className="flex-1">
           <RevealOnScroll variant="fade-up">
             <p
-              className="text-[11px] tracking-[0.22em] uppercase mb-8 font-medium"
-              style={{ color: "var(--color-cyan)", opacity: 0.7 }}
+              className="text-[11px] tracking-[0.22em] uppercase mb-8 font-medium text-cyan opacity-70"
             >
               Ready to build?
             </p>
             <h2
-              className="font-display font-black leading-[0.95] tracking-[-0.04em]"
-              style={{ fontSize: "clamp(48px,8vw,120px)", color: "var(--color-ink)" }}
+              className="font-display font-black leading-[0.95] tracking-[-0.04em] text-ink"
+              style={{ fontSize: "clamp(48px,8vw,120px)" }}
             >
               Got a project
               <br />
-              <span style={{ color: "var(--color-cyan)" }}>in mind?</span>
+              <span className="text-cyan">in mind?</span>
             </h2>
           </RevealOnScroll>
         </div>
@@ -58,16 +56,14 @@ export default function CTABanner() {
         <RevealOnScroll variant="slide-left" delay={0.2}>
           <div className="flex flex-col gap-8">
             <p
-              className="text-lg leading-relaxed max-w-sm"
-              style={{ color: "var(--color-ink-2)" }}
+              className="text-lg leading-relaxed max-w-sm text-ink-2"
             >
               No pitch decks, no fluff — just a real conversation about what we can build together.
             </p>
-            <div className="flex flex-col sm:flex-row gap-4">
-              <Link href="/contact">
+            <div className="flex flex-col sm:flex-row gap-4 flex-wrap">
+              <Link href="/contact" className="w-full sm:w-auto">
                 <motion.span
-                  className="inline-flex items-center gap-3 h-16 px-10 rounded-full font-bold text-base tracking-wide"
-                  style={{ background: "var(--color-cyan)", color: "var(--color-bg)" }}
+                  className="w-full inline-flex items-center justify-center gap-3 h-16 px-10 rounded-full font-bold text-base tracking-wide bg-cyan text-bg"
                   whileHover={{ scale: 1.04 }}
                   whileTap={{ scale: 0.97 }}
                 >
@@ -77,10 +73,9 @@ export default function CTABanner() {
                   </svg>
                 </motion.span>
               </Link>
-              <a href="mailto:hello@blackquantumlabs.io">
+              <a href="mailto:hello@blackquantumlabs.io" className="w-full sm:w-auto">
                 <motion.span
-                  className="inline-flex items-center gap-3 h-16 px-10 rounded-full font-medium text-base border tracking-wide"
-                  style={{ borderColor: "var(--color-border-strong)", color: "var(--color-ink-2)" }}
+                  className="w-full inline-flex items-center justify-center gap-3 h-16 px-10 rounded-full font-medium text-base border tracking-wide border-border-strong text-ink-2"
                   whileHover={{ borderColor: "var(--color-ink-2)", color: "var(--color-ink)" }}
                   whileTap={{ scale: 0.97 }}
                 >

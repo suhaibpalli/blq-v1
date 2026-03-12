@@ -51,20 +51,15 @@ export default function Navbar() {
             ? "border-b border-border"
             : "border-b border-transparent"
         )}
-        style={{
-          backdropFilter: scrolled ? "blur(24px) saturate(180%)" : "none",
-          background: scrolled ? "rgba(3,3,10,0.85)" : "transparent",
-        }}
       >
         <div className="max-w-[1440px] mx-auto px-6 md:px-10 h-[72px] flex items-center justify-between">
           {/* Logo */}
           <Link href="/" className="relative z-10 group flex items-center gap-3">
             <span
-              className="font-display font-black text-[15px] tracking-[0.22em] uppercase"
-              style={{ color: "var(--color-ink)" }}
+              className="font-display font-black text-[15px] tracking-[0.22em] uppercase text-ink"
             >
               Black
-              <span style={{ color: "var(--color-cyan)" }}>Quantum</span>
+              <span className="text-cyan">Quantum</span>
               Labs
             </span>
           </Link>
@@ -90,11 +85,7 @@ export default function Navbar() {
               <ThemeToggle />
               <Link href="/contact">
                 <motion.span
-                  className="inline-flex items-center gap-2 text-[13px] font-bold tracking-wide px-5 py-2.5 rounded-full border transition-all duration-300"
-                  style={{
-                    borderColor: "var(--color-cyan)",
-                    color: "var(--color-cyan)",
-                  }}
+                  className="inline-flex items-center gap-2 text-[13px] font-bold tracking-wide px-5 py-2.5 rounded-full border transition-all duration-300 border-cyan text-cyan"
                   whileHover={{
                     backgroundColor: "var(--color-cyan)",
                     color: "var(--color-bg)",
@@ -103,7 +94,7 @@ export default function Navbar() {
                   whileTap={{ scale: 0.97 }}
                 >
                   Start a Project
-                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none">
+                  <svg width="12" height="12" viewBox="0 0 12 12" fill="none" aria-hidden="true">
                     <path d="M2 10L10 2M10 2H4M10 2V8" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                   </svg>
                 </motion.span>
@@ -114,26 +105,23 @@ export default function Navbar() {
           {/* Mobile Hamburger */}
           <button
             onClick={() => setMenuOpen(!menuOpen)}
-            className="md:hidden relative z-10 flex flex-col gap-[5px] p-2 group"
+            className="md:hidden relative z-50 flex flex-col gap-[5px] p-2 group"
             aria-label={menuOpen ? "Close menu" : "Open menu"}
           >
             <motion.span
-              animate={menuOpen ? { rotate: 45, y: 6.5 } : { rotate: 0, y: 0 }}
+              animate={menuOpen ? { rotate: 45, y: 6.5, backgroundColor: "var(--color-ink)" } : { rotate: 0, y: 0, backgroundColor: "var(--color-ink)" }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
               className="block w-6 h-[1.5px] rounded-full origin-center"
-              style={{ background: "var(--color-ink)" }}
             />
             <motion.span
-              animate={menuOpen ? { opacity: 0, scaleX: 0 } : { opacity: 1, scaleX: 1 }}
+              animate={menuOpen ? { opacity: 0, scaleX: 0, backgroundColor: "var(--color-ink)" } : { opacity: 1, scaleX: 1, backgroundColor: "var(--color-ink)" }}
               transition={{ duration: 0.2 }}
               className="block w-4 h-[1.5px] rounded-full"
-              style={{ background: "var(--color-ink)" }}
             />
             <motion.span
-              animate={menuOpen ? { rotate: -45, y: -6.5 } : { rotate: 0, y: 0 }}
+              animate={menuOpen ? { rotate: -45, y: -6.5, backgroundColor: "var(--color-ink)" } : { rotate: 0, y: 0, backgroundColor: "var(--color-ink)" }}
               transition={{ duration: 0.3, ease: [0.16, 1, 0.3, 1] }}
               className="block w-6 h-[1.5px] rounded-full origin-center"
-              style={{ background: "var(--color-ink)" }}
             />
           </button>
         </div>
@@ -147,10 +135,9 @@ export default function Navbar() {
             animate={{ clipPath: "inset(0 0 0% 0)" }}
             exit={{ clipPath: "inset(0 0 100% 0)" }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="fixed inset-0 z-40 flex flex-col"
-            style={{ background: "var(--color-bg-3)" }}
+            className="fixed inset-0 z-40 flex flex-col bg-bg-3"
           >
-            <div className="flex flex-col justify-center h-full px-10 pt-24 pb-16 gap-2">
+            <div className="flex flex-col justify-center h-full px-8 md:px-10 pt-24 pb-16 gap-2">
               {[...NAV_LINKS, { href: "/contact", label: "Contact" }].map(({ href, label }, i) => (
                 <motion.div
                   key={href}
@@ -160,14 +147,13 @@ export default function Navbar() {
                 >
                   <Link
                     href={href}
-                    className="block font-display font-black text-[clamp(48px,10vw,80px)] leading-none tracking-tight transition-colors duration-200"
-                    style={{ color: pathname.startsWith(href) ? "var(--color-cyan)" : "var(--color-ink)" }}
-                    onMouseEnter={e => ((e.target as HTMLElement).style.color = "var(--color-cyan)")}
-                    onMouseLeave={e => ((e.target as HTMLElement).style.color = pathname.startsWith(href) ? "var(--color-cyan)" : "var(--color-ink)")}
+                    className={`block font-display font-black text-[clamp(40px,10vw,80px)] leading-none tracking-tight transition-colors duration-200 ${pathname.startsWith(href) ? 'text-cyan' : 'text-ink'}`}
+                    onMouseEnter={e => ((e.target as HTMLElement).classList.add("text-cyan"))}
+                    onMouseLeave={e => ((e.target as HTMLElement).classList.remove("text-cyan"))}
                   >
                     {label}
                   </Link>
-                  <div className="h-px mt-4" style={{ background: "var(--color-border)" }} />
+                  <div className="h-px mt-4 bg-border" />
                 </motion.div>
               ))}
 
@@ -178,12 +164,12 @@ export default function Navbar() {
                 className="mt-auto flex justify-between items-end"
               >
                 <div>
-                  <p className="text-xs tracking-[0.15em] uppercase mb-4" style={{ color: "var(--color-ink-3)" }}>Theme</p>
+                  <p className="text-xs tracking-[0.15em] uppercase mb-4 text-ink-3">Theme</p>
                   <ThemeToggle />
                 </div>
                 <div className="text-right">
-                  <p className="text-xs tracking-[0.15em] uppercase mb-1" style={{ color: "var(--color-ink-3)" }}>Email</p>
-                  <a href="mailto:hello@blackquantumlabs.io" className="text-sm" style={{ color: "var(--color-ink-2)" }}>
+                  <p className="text-xs tracking-[0.15em] uppercase mb-1 text-ink-3">Email</p>
+                  <a href="mailto:hello@blackquantumlabs.io" className="text-sm text-ink-2">
                     hello@blackquantumlabs.io
                   </a>
                 </div>

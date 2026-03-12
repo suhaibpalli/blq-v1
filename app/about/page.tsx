@@ -140,13 +140,12 @@ export default function AboutPage() {
           {STACK.map((tech, i) => (
             <span
               key={i}
-              className="font-display font-black whitespace-nowrap px-8"
+              className={`font-display font-black whitespace-nowrap px-8 ${i % 2 === 0 ? 'text-border-strong' : 'text-border'}`}
               style={{
                 fontSize: "clamp(24px,3.5vw,44px)",
-                color: i % 2 === 0 ? "var(--color-border-strong)" : "var(--color-border)",
               }}
             >
-              {tech} <span style={{ color: "var(--color-cyan)", opacity: 0.3 }}>·</span>
+              {tech} <span className="text-cyan opacity-30">·</span>
             </span>
           ))}
         </Marquee>
@@ -154,13 +153,12 @@ export default function AboutPage() {
           {[...STACK].reverse().map((tech, i) => (
             <span
               key={i}
-              className="font-display font-black whitespace-nowrap px-8"
+              className="font-display font-black whitespace-nowrap px-8 text-border"
               style={{
                 fontSize: "clamp(20px,2.5vw,32px)",
-                color: "var(--color-border)",
               }}
             >
-              {tech} <span style={{ color: "var(--color-cyan)", opacity: 0.2 }}>·</span>
+              {tech} <span className="text-cyan opacity-20">·</span>
             </span>
           ))}
         </Marquee>

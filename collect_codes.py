@@ -7,7 +7,7 @@ def read_selected_code_files_to_txt(
     output_file='all_content.txt'
 ):
     """
-    Read all .py, .html, .js, .ts, .tsx, .json, .mjs, .env, .env.local, .yml, .yaml files in root_dir recursively,
+    Read all .py, .html, .js, .ts, .tsx, .json, .mjs, .css, .env, .env.local, .yml, .yaml files in root_dir recursively,
     excluding specified files and folders and docker-related files, and write their contents to output_file.
     """
     # Set of file extensions to include (extension must include dot)
@@ -19,7 +19,7 @@ def read_selected_code_files_to_txt(
     # Filenames to include regardless of extension (e.g. .env.local)
     # Dockerfile and docker-compose files are deliberately NOT included
     special_include_filenames = {
-        '.env.local'
+        '.env.local', 'global.css', 'globals.css'
     }
 
     # Patterns for docker-related filenames to explicitly exclude

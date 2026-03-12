@@ -28,8 +28,7 @@ export default function Footer() {
 
   return (
     <footer
-      className="relative mt-0 border-t"
-      style={{ borderColor: "var(--color-border)", background: "var(--color-bg-2)" }}
+      className="relative mt-0 border-t border-border bg-bg-2"
     >
       {/* Top Section */}
       <div className="max-w-[1440px] mx-auto px-6 md:px-10 pt-20 pb-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-16">
@@ -38,27 +37,24 @@ export default function Footer() {
         <div className="lg:col-span-2">
           <Link href="/" className="inline-block mb-6">
             <span
-              className="font-display font-black text-[15px] tracking-[0.22em] uppercase"
-              style={{ color: "var(--color-ink)" }}
+              className="font-display font-black text-[15px] tracking-[0.22em] uppercase text-ink"
             >
-              Black<span style={{ color: "var(--color-cyan)" }}>Quantum</span>Labs
+              Black<span className="text-cyan">Quantum</span>Labs
             </span>
           </Link>
           <p
-            className="text-sm leading-relaxed max-w-[280px] mb-10"
-            style={{ color: "var(--color-ink-2)" }}
+            className="text-sm leading-relaxed max-w-[280px] mb-10 text-ink-2"
           >
             Full-spectrum digital engineering studio. Building the future,
             one system at a time.
           </p>
           <div>
-            <p className="text-[11px] tracking-[0.18em] uppercase mb-3" style={{ color: "var(--color-ink-3)" }}>
+            <p className="text-[11px] tracking-[0.18em] uppercase mb-3 text-ink-3">
               Start a project
             </p>
             <a
               href="mailto:hello@blackquantumlabs.io"
-              className="text-sm font-medium hover-line transition-colors"
-              style={{ color: "var(--color-cyan)" }}
+              className="text-sm font-medium hover-line transition-colors text-cyan"
             >
               hello@blackquantumlabs.io
             </a>
@@ -69,8 +65,7 @@ export default function Footer() {
         {Object.entries(LINKS).map(([group, links]) => (
           <div key={group}>
             <p
-              className="text-[11px] tracking-[0.18em] uppercase mb-6 font-medium"
-              style={{ color: "var(--color-ink-3)" }}
+              className="text-[11px] tracking-[0.18em] uppercase mb-6 font-medium text-ink-3"
             >
               {group}
             </p>
@@ -79,8 +74,7 @@ export default function Footer() {
                 <li key={label}>
                   <Link
                     href={href}
-                    className="text-sm hover-line transition-colors duration-200"
-                    style={{ color: "var(--color-ink-2)" }}
+                    className="text-sm hover-line transition-colors duration-200 text-ink-2"
                   >
                     {label}
                   </Link>
@@ -93,24 +87,21 @@ export default function Footer() {
 
       {/* Bottom Bar */}
       <div
-        className="border-t"
-        style={{ borderColor: "var(--color-border)" }}
+        className="border-t border-border"
       >
         <div className="max-w-[1440px] mx-auto px-6 md:px-10 h-16 flex items-center justify-between gap-4 flex-wrap">
-          <p className="text-[12px] font-mono" style={{ color: "var(--color-ink-3)" }}>
+          <p className="text-[12px] font-mono text-ink-3">
             © {year} Black Quantum Labs. All rights reserved.
           </p>
           <div className="flex items-center gap-6">
-            <p className="text-[12px] font-mono" style={{ color: "var(--color-ink-3)" }}>
-              Chennai, India · Remote-first
+            <p className="text-[12px] font-mono text-ink-3">
+              Global · Remote-first
             </p>
             <span
-              className="hidden sm:flex items-center gap-1.5 text-[11px] font-mono tracking-widest"
-              style={{ color: "var(--color-ink-3)" }}
+              className="hidden sm:flex items-center gap-1.5 text-[11px] font-mono tracking-widest text-ink-3"
             >
               <span
-                className="inline-block w-1.5 h-1.5 rounded-full animate-pulse"
-                style={{ background: "var(--color-cyan)" }}
+                className="inline-block w-1.5 h-1.5 rounded-full animate-pulse bg-cyan"
               />
               AVAILABLE FOR PROJECTS
             </span>
