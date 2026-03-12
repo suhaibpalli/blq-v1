@@ -7,6 +7,7 @@ import { motion, AnimatePresence } from "framer-motion";
 import { cn } from "@/lib/utils";
 import { ThemeToggle } from "@/components/ui/ThemeToggle";
 import { NAV_LINKS } from "@/lib/constants";
+import Logo from "@/components/ui/Logo";
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -62,7 +63,8 @@ export default function Navbar() {
       >
         <div className="max-w-[1440px] mx-auto px-6 md:px-10 h-[72px] flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" className="relative z-10 flex items-center gap-3">
+          <Link href="/" className="relative z-10 flex items-center gap-3 group">
+            <Logo className="w-8 h-8 text-cyan transition-transform duration-500 group-hover:rotate-12" />
             <span className="font-display font-black text-[15px] tracking-[0.22em] uppercase text-ink">
               Black<span className="text-cyan">Quantum</span>Labs
             </span>

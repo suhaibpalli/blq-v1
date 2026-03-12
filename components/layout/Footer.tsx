@@ -1,4 +1,5 @@
 import Link from "next/link";
+import Logo from "@/components/ui/Logo";
 
 const LINKS = {
   Studio: [
@@ -35,7 +36,8 @@ export default function Footer() {
         
         {/* Brand Column */}
         <div className="lg:col-span-2">
-          <Link href="/" className="inline-block mb-6">
+          <Link href="/" className="inline-flex items-center gap-3 mb-6 group">
+            <Logo className="w-8 h-8 text-cyan transition-transform duration-500 group-hover:rotate-12" />
             <span
               className="font-display font-black text-[15px] tracking-[0.22em] uppercase text-ink"
             >
