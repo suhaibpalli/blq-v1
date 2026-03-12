@@ -14,6 +14,7 @@
   --color-cyan-glow:     rgba(0,232,255,0.25);
 
   --color-ink:           #EEEEFF;
+  --color-ink-rgb:       238, 238, 255;
   --color-ink-2:         #9898BB;
   --color-ink-3:         #55556A;
 }
@@ -31,6 +32,7 @@
   --color-cyan-glow:     rgba(0,136,160,0.2);
 
   --color-ink:           #03030A;
+  --color-ink-rgb:       3, 3, 10;
   --color-ink-2:         #444455;
   --color-ink-3:         #777788;
 }

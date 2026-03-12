@@ -15,10 +15,41 @@ const VALUES = [
   { num: "04", title: "Long-term Thinking",      desc: "We build architecture that scales, code that's readable, and systems you'll be proud of in three years." },
 ];
 
+import {
+  SiReact, SiNextdotjs, SiTypescript, SiNodedotjs, SiPython, SiGooglecloud,
+  SiFigma, SiThreedotjs, SiPostgresql, SiMongodb, SiDocker, SiKubernetes,
+  SiRedis, SiGraphql, SiTailwindcss, SiVercel, SiSupabase, SiPrisma, SiFramer,
+  SiStripe, SiGo, SiWebgl, SiOpenai, SiAnthropic, SiLangchain
+} from "react-icons/si";
+import { FaAws } from "react-icons/fa";
+
 const STACK = [
-  "React", "Next.js", "TypeScript", "Node.js", "Python", "AWS", "GCP",
-  "Figma", "Three.js", "PostgreSQL", "MongoDB", "Docker", "Kubernetes",
-  "Redis", "GraphQL", "Tailwind",
+  { name: "React", icon: SiReact },
+  { name: "Next.js", icon: SiNextdotjs },
+  { name: "TypeScript", icon: SiTypescript },
+  { name: "Node.js", icon: SiNodedotjs },
+  { name: "Python", icon: SiPython },
+  { name: "Go", icon: SiGo },
+  { name: "AWS", icon: FaAws },
+  { name: "GCP", icon: SiGooglecloud },
+  { name: "Vercel", icon: SiVercel },
+  { name: "OpenAI", icon: SiOpenai },
+  { name: "Anthropic", icon: SiAnthropic },
+  { name: "LangChain", icon: SiLangchain },
+  { name: "Figma", icon: SiFigma },
+  { name: "Three.js", icon: SiThreedotjs },
+  { name: "WebGL", icon: SiWebgl },
+  { name: "Framer Motion", icon: SiFramer },
+  { name: "PostgreSQL", icon: SiPostgresql },
+  { name: "MongoDB", icon: SiMongodb },
+  { name: "Supabase", icon: SiSupabase },
+  { name: "Redis", icon: SiRedis },
+  { name: "Prisma", icon: SiPrisma },
+  { name: "GraphQL", icon: SiGraphql },
+  { name: "Docker", icon: SiDocker },
+  { name: "Kubernetes", icon: SiKubernetes },
+  { name: "Tailwind", icon: SiTailwindcss },
+  { name: "Stripe", icon: SiStripe },
 ];
 
 export default function AboutPage() {
@@ -145,14 +176,14 @@ export default function AboutPage() {
                   as the inherited color (likely --color-ink) instead of the dim effect.
 
                   Fix: Use inline style with the actual CSS variable values.
-                  These are rgba() values with very low opacity for a ghost/dim look.
                 */
-                color: i % 2 === 0
-                  ? "rgba(255,255,255,0.14)"   /* --color-border-strong equivalent */
-                  : "rgba(255,255,255,0.07)",  /* --color-border equivalent */
+                color: "var(--color-ink)",
+                opacity: i % 2 === 0 ? 0.35 : 0.15,
+                WebkitTextStroke: "1px rgba(var(--color-ink-rgb), 0.05)",
               }}
             >
-              {tech} <span style={{ color: "var(--color-cyan)", opacity: 0.3 }}>·</span>
+              <tech.icon className="shrink-0" style={{ fontSize: "0.8em" }} />
+              {tech.name} <span style={{ color: "var(--color-cyan)", opacity: 0.3, marginLeft: "1rem" }}>·</span>
             </span>
           ))}
         </Marquee>
@@ -160,13 +191,16 @@ export default function AboutPage() {
           {[...STACK].reverse().map((tech, i) => (
             <span
               key={i}
-              className="font-display font-black whitespace-nowrap px-8"
+              className="font-display font-black whitespace-nowrap px-8 flex items-center gap-4"
               style={{
                 fontSize: "clamp(20px,2.5vw,32px)",
-                color: "rgba(255,255,255,0.07)", /* --color-border equivalent */
+                color: "var(--color-ink)",
+                opacity: 0.2,
+                WebkitTextStroke: "1px rgba(var(--color-ink-rgb), 0.05)",
               }}
             >
-              {tech} <span style={{ color: "var(--color-cyan)", opacity: 0.2 }}>·</span>
+              <tech.icon className="shrink-0" style={{ fontSize: "0.8em" }} />
+              {tech.name} <span style={{ color: "var(--color-cyan)", opacity: 0.2, marginLeft: "1rem" }}>·</span>
             </span>
           ))}
         </Marquee>

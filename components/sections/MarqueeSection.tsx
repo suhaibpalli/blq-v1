@@ -50,12 +50,15 @@ function MarqueeRow({
                   - Every 3rd+1 (i%3===1): mid dim
                   - Every 3rd+2 (i%3===2): most dim
               */
-              color:
+              color: "var(--color-ink)",
+              opacity:
                 i % 3 === 0
-                  ? "rgba(238,238,255,0.12)"  /* bright ghost */
+                  ? 0.45  /* bright ghost */
                   : i % 3 === 1
-                  ? "rgba(238,238,255,0.07)"  /* mid ghost */
-                  : "rgba(238,238,255,0.04)", /* dim ghost */
+                  ? 0.25  /* mid ghost */
+                  : 0.15, /* dim ghost */
+              // Professional touch: subtle outline to define the shapes even when very dim
+              WebkitTextStroke: "1px rgba(var(--color-ink-rgb), 0.08)",
             }}
           >
             {item}
