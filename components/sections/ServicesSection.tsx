@@ -2,12 +2,14 @@
 
 import { useState } from "react";
 import { SERVICES } from "@/lib/constants";
+import { cn } from "@/lib/utils";
 import RevealOnScroll, {
   StaggerReveal,
   StaggerItem,
 } from "@/components/animations/RevealOnScroll";
 import Link from "next/link";
 import * as LucideIcons from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function ServicesSection() {
@@ -23,12 +25,11 @@ export default function ServicesSection() {
               Capabilities
             </p>
             <h2
-              className="font-display font-black leading-none tracking-[-0.03em] text-ink"
-              style={{ fontSize: "clamp(40px,5.5vw,80px)" }}
+              className="font-display font-black leading-none tracking-[-0.04em] text-ink"
+              style={{ fontSize: "clamp(44px,6vw,96px)" }}
             >
-              Everything you need.
-              <br />
-              <span className="text-ink-3">Nothing you don&apos;t.</span>
+              Everything you need.<br />
+              <span className="text-ink-3">Zero compromise.</span>
             </h2>
           </div>
           <Link
@@ -43,10 +44,9 @@ export default function ServicesSection() {
       {/* Service List */}
       <StaggerReveal stagger={0.07}>
         {SERVICES.map((service, index) => {
-          // eslint-disable-next-line @typescript-eslint/no-explicit-any
           const Icon = LucideIcons[
             service.icon as keyof typeof LucideIcons
-          ] as any;
+          ] as LucideIcon;
           const isHovered = hovered === service.id;
 
           return (
@@ -54,9 +54,12 @@ export default function ServicesSection() {
               <motion.div
                 onMouseEnter={() => setHovered(service.id)}
                 onMouseLeave={() => setHovered(null)}
-                className={`group relative border-b border-border flex items-start gap-8 py-8 transition-all duration-400 service-row ${isHovered ? "bg-bg-2" : "bg-transparent"}`}
-                animate={{ paddingLeft: isHovered ? "16px" : "0px" }}
-                transition={{ duration: 0.35, ease: [0.16, 1, 0.3, 1] }}
+                className={cn(
+                  "group relative border-b border-white/5 flex items-start gap-8 py-10 transition-all duration-500",
+                  isHovered ? "bg-white/2" : "bg-transparent"
+                )}
+                animate={{ paddingLeft: isHovered ? "24px" : "0px" }}
+                transition={{ duration: 0.5, ease: "easeOut" }}
               >
                 {/* Number */}
                 <span
@@ -122,10 +125,13 @@ export default function ServicesSection() {
 
                 {/* Large background number on hover */}
                 <motion.span
-                  animate={{ opacity: isHovered ? 0.04 : 0 }}
-                  transition={{ duration: 0.3 }}
-                  className="absolute right-6 top-1/2 -translate-y-1/2 font-display font-black pointer-events-none select-none text-ink"
-                  style={{ fontSize: "clamp(60px,10vw,120px)", lineHeight: 1 }}
+                  animate={{
+                    opacity: isHovered ? 0.05 : 0,
+                    x: isHovered ? -20 : 0
+                  }}
+                  transition={{ duration: 0.5 }}
+                  className="absolute right-12 top-1/2 -translate-y-1/2 font-display font-black pointer-events-none select-none text-ink"
+                  style={{ fontSize: "clamp(80px,12vw,160px)", lineHeight: 1 }}
                 >
                   {String(index + 1).padStart(2, "0")}
                 </motion.span>

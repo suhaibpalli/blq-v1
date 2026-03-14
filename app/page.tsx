@@ -4,6 +4,7 @@ import IntroSection from "@/components/sections/IntroSection";
 import ServicesSection from "@/components/sections/ServicesSection";
 import WorkSection from "@/components/sections/WorkSection";
 import ProcessSection from "@/components/sections/ProcessSection";
+import PricingSection from "@/components/sections/PricingSection";
 import TestimonialsSection from "@/components/sections/TestimonialsSection";
 import CTABanner from "@/components/sections/CTABanner";
 
@@ -16,6 +17,7 @@ export default function Home() {
       <ServicesSection />
       <WorkSection />
       <ProcessSection />
+      <PricingSection />
       <TestimonialsSection />
       <CTABanner />
     </main>

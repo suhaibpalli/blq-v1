@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import * as LucideIcons from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import PricingSection from "@/components/sections/PricingSection";
 import type { LucideIcon } from "lucide-react";
 
 interface Service {
@@ -72,12 +73,16 @@ export default function ServicePageClient({
             {service.id} — {service.shortTitle}
           </p>
           <h1
-            className="font-display font-black leading-[0.93] tracking-[-0.04em] text-ink mb-8"
-            style={{ fontSize: "clamp(40px,8vw,96px)" }}
+            className="font-display font-black leading-[0.93] tracking-[-0.04em] text-ink mb-10"
+            style={{ fontSize: "clamp(40px,8.5vw,110px)" }}
           >
-            {service.title}
+            {service.title.split(' ').map((word, i) => (
+              <span key={i} className={i === service.title.split(' ').length - 1 ? "text-gradient-hero" : ""}>
+                {word}{' '}
+              </span>
+            ))}
           </h1>
-          <p className="text-xl md:text-2xl text-ink-2 max-w-2xl leading-relaxed">
+          <p className="text-xl md:text-2xl text-ink-2 max-w-2xl leading-relaxed font-medium">
             {service.description}
           </p>
         </RevealOnScroll>
@@ -87,7 +92,7 @@ export default function ServicePageClient({
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16">
           <RevealOnScroll variant="fade-up">
             <div className="aspect-video rounded-2xl bg-bg-2 border border-border flex items-center justify-center overflow-hidden relative">
-              <div className="absolute inset-0 bg-gradient-to-br from-cyan-dim/20 to-purple-500/10" />
+              <div className="absolute inset-0 bg-linear-to-br from-cyan-dim/20 to-purple-500/10" />
               <div className="w-20 h-20 rounded-2xl bg-cyan-dim flex items-center justify-center">
                 {ServiceIcon && (
                   <ServiceIcon
@@ -101,45 +106,44 @@ export default function ServicePageClient({
           </RevealOnScroll>
 
           <RevealOnScroll variant="fade-up" delay={0.1}>
-            <div className="space-y-8">
-              <div>
-                <p className="text-[11px] tracking-[0.22em] uppercase mb-4 font-medium text-ink-3">
-                  Overview
+            <div className="space-y-10">
+              <div className="p-8 rounded-3xl glass-panel border-white/5">
+                <p className="text-[11px] tracking-[0.22em] uppercase mb-6 font-bold text-cyan">
+                  Mission Overview
                 </p>
                 <p className="text-lg text-ink-2 leading-relaxed">
                   {service.fullDescription}
                 </p>
               </div>
 
-              <div>
-                <p className="text-[11px] tracking-[0.22em] uppercase mb-4 font-medium text-ink-3">
-                  Investment
-                </p>
-                <div className="flex items-baseline gap-4">
-                  <span className="font-display font-black text-5xl text-cyan">
-                    ${service.pricing.min.toLocaleString()}
-                  </span>
-                  <span className="text-ink-3">
-                    – ${service.pricing.max.toLocaleString()}
-                  </span>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+                <div className="p-8 rounded-3xl glass-panel border-white/5">
+                  <p className="text-[10px] tracking-widest uppercase mb-4 font-bold text-ink-3">
+                    Est. Timeline
+                  </p>
+                  <p className="text-2xl font-display font-bold text-ink">
+                    4–12 Weeks
+                  </p>
                 </div>
-                <p className="text-sm text-ink-3 mt-2">
-                  {service.pricing.unit === "project"
-                    ? "Starting price"
-                    : "Starting monthly"}{" "}
-                  · Custom quotes available
-                </p>
+                <div className="p-8 rounded-3xl glass-panel border-white/5">
+                  <p className="text-[10px] tracking-widest uppercase mb-4 font-bold text-ink-3">
+                    Deliverables
+                  </p>
+                  <p className="text-2xl font-display font-bold text-ink">
+                    {service.features.length}+ Items
+                  </p>
+                </div>
               </div>
 
-              <Link href="/contact">
-                <motion.span
-                  className="inline-flex items-center justify-center gap-2 h-14 px-8 rounded-full font-bold text-base bg-cyan text-bg"
+              <Link href="/contact" className="block">
+                <motion.div
+                  className="w-full inline-flex items-center justify-center gap-3 h-16 rounded-full font-bold text-lg bg-cyan text-bg shadow-xl shadow-cyan/20"
                   whileHover={{ scale: 1.02 }}
                   whileTap={{ scale: 0.98 }}
                 >
-                  Get a Quote
-                  <LucideIcons.ArrowRight size={18} />
-                </motion.span>
+                  Initiate Project
+                  <LucideIcons.ArrowRight size={20} />
+                </motion.div>
               </Link>
             </div>
           </RevealOnScroll>
@@ -183,7 +187,7 @@ export default function ServicePageClient({
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}
+            transition={{ duration: 0.4, ease: "easeOut" }}
             className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
           >
             {(activeTab === "features"
@@ -191,31 +195,31 @@ export default function ServicePageClient({
               : activeTab === "benefits"
                 ? service.benefits
                 : [
-                    "Discovery & Requirements",
-                    "Architecture Planning",
-                    "Sprint-based Development",
-                    "Regular Demos",
-                    "Testing & QA",
-                    "Deployment",
+                    "Discovery & Deep Strategy",
+                    "Advanced System Design",
+                    "Agile 1-Week Build Sprints",
+                    "Bi-Weekly Progress Demos",
+                    "Stress-Testing & Security QA",
+                    "Seamless Production Launch",
                   ]
             ).map((item, index) => (
               <RevealOnScroll key={item} delay={index * 0.05} variant="fade-up">
-                <div className="p-6 rounded-xl bg-bg-2 border border-border hover:border-cyan/50 transition-colors">
-                  <div className="w-10 h-10 rounded-lg bg-surface flex items-center justify-center mb-4">
+                <div className="p-8 rounded-3xl glass-panel border-white/5 hover:border-cyan/30 transition-all duration-500 group/feature">
+                  <div className="w-12 h-12 rounded-2xl bg-surface border border-border flex items-center justify-center mb-6 group-hover/feature:bg-cyan-dim transition-colors">
                     <span className="font-mono text-sm font-bold text-cyan">
                       {String(index + 1).padStart(2, "0")}
                     </span>
                   </div>
-                  <h3 className="font-display font-bold text-lg text-ink mb-2">
+                  <h3 className="font-display font-bold text-xl text-ink mb-3 group-hover/feature:text-cyan transition-colors">
                     {item}
                   </h3>
-                  <p className="text-sm text-ink-3">
+                  <p className="text-sm leading-relaxed text-ink-3">
                     {activeTab === "features" &&
-                      "Core deliverable included in every project"}
+                      "A core pillar of our delivery excellence, included as standard."}
                     {activeTab === "benefits" &&
-                      "Business value you receive from our work"}
+                      "Measurable business impact and strategic advantage for your firm."}
                     {activeTab === "process" &&
-                      "Our proven methodology for success"}
+                      "Our battle-tested methodology for engineering at speed."}
                   </p>
                 </div>
               </RevealOnScroll>
@@ -224,96 +228,7 @@ export default function ServicePageClient({
         </AnimatePresence>
       </section>
 
-      <section className="px-6 md:px-10 max-w-[1440px] mx-auto py-20 border-t border-border">
-        <RevealOnScroll variant="fade-up">
-          <div className="text-center mb-16">
-            <p className="text-[11px] tracking-[0.22em] uppercase mb-4 font-medium text-ink-3">
-              Pricing Tiers
-            </p>
-            <h2 className="font-display font-black text-4xl md:text-5xl text-ink mb-4">
-              Flexible Investment Options
-            </h2>
-            <p className="text-ink-2 max-w-xl mx-auto">
-              Choose the tier that best fits your needs. All projects include
-              our commitment to quality.
-            </p>
-          </div>
-        </RevealOnScroll>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border max-w-[1200px] mx-auto">
-          {PRICING_TIERS.map((tier: PricingTier, i: number) => {
-            const isPopular = tier.popularFor?.some(
-              (p: string) =>
-                service.title
-                  .toLowerCase()
-                  .includes(p.toLowerCase().split(" ")[0]) ||
-                p.toLowerCase().split(" ")[0] ===
-                  service.title.toLowerCase().split(" ")[0],
-            );
-
-            return (
-              <RevealOnScroll key={tier.tier} delay={i * 0.1} variant="fade-up">
-                <div
-                  className={cn(
-                    "relative p-8 flex flex-col h-full transition-all duration-300",
-                    tier.highlight || isPopular ? "bg-bg-3" : "bg-bg-2",
-                  )}
-                >
-                  {(tier.highlight || isPopular) && (
-                    <span className="absolute top-4 right-4 text-[10px] font-black tracking-[0.15em] uppercase px-3 py-1 rounded-full bg-cyan-dim text-cyan border border-cyan-glow">
-                      {tier.highlight ? "Popular" : "Recommended"}
-                    </span>
-                  )}
-                  <p className="text-sm font-bold mb-2 text-ink-3">
-                    {tier.tier}
-                  </p>
-                  <p className="font-display font-black text-3xl mb-2 text-ink">
-                    {tier.price}
-                  </p>
-                  <p className="text-sm text-ink-3 mb-6">{tier.sub}</p>
-
-                  <ul className="space-y-3 flex-1 mb-8">
-                    {tier.features.slice(0, 4).map((f: string) => (
-                      <li
-                        key={f}
-                        className="flex items-start gap-3 text-sm text-ink-2"
-                      >
-                        <LucideIcons.Check
-                          size={14}
-                          className="text-cyan mt-1 shrink-0"
-                        />
-                        {f}
-                      </li>
-                    ))}
-                  </ul>
-
-                  <Link href="/contact">
-                    <motion.span
-                      className={cn(
-                        "inline-flex w-full items-center justify-center gap-2 h-11 rounded-full font-bold text-sm border transition-all",
-                        tier.highlight || isPopular
-                          ? "bg-cyan text-bg border-transparent"
-                          : "bg-transparent border-border-strong text-ink-2",
-                      )}
-                      whileHover={
-                        tier.highlight || isPopular
-                          ? { scale: 1.02 }
-                          : {
-                              borderColor: "var(--color-ink-2)",
-                              color: "var(--color-ink)",
-                            }
-                      }
-                      whileTap={{ scale: 0.97 }}
-                    >
-                      {tier.cta} →
-                    </motion.span>
-                  </Link>
-                </div>
-              </RevealOnScroll>
-            );
-          })}
-        </div>
-      </section>
+      <PricingSection />
 
       <section className="px-6 md:px-10 max-w-[800px] mx-auto py-20 border-t border-border">
         <RevealOnScroll variant="fade-up">

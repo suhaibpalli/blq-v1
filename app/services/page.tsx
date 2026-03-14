@@ -7,6 +7,7 @@ import { cn } from "@/lib/utils";
 import * as LucideIcons from "lucide-react";
 import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
+import PricingSection from "@/components/sections/PricingSection";
 
 const SERVICE_INDEX = SERVICES.map((s) => ({
   id: s.id,
@@ -91,51 +92,46 @@ export default function ServicesPage() {
               <Link
                 href={`/services/${service.slug}`}
                 id={service.slug}
-                className="group border-b border-border py-12 scroll-mt-32 grid grid-cols-1 lg:grid-cols-[80px_1fr_280px] gap-8 items-start transition-all duration-300 hover:bg-bg-2"
+                className="group border-b border-white/5 py-12 scroll-mt-32 grid grid-cols-1 lg:grid-cols-[100px_1fr_300px] gap-8 items-start transition-all duration-500 hover:bg-white/2"
               >
-                <div className="flex items-center gap-4 lg:flex-col lg:items-start">
+                <div className="flex items-center gap-6 lg:flex-col lg:items-start">
                   <span className="font-mono text-xs font-bold text-ink-3">
                     {service.id}
                   </span>
-                  <div className="w-10 h-10 rounded-lg flex items-center justify-center bg-surface text-cyan group-hover:bg-cyan-dim transition-colors">
-                    {Icon && <Icon size={18} strokeWidth={1.5} />}
+                  <div className="w-14 h-14 rounded-2xl flex items-center justify-center bg-surface border border-border text-cyan group-hover:bg-cyan-dim transition-all duration-300">
+                    {Icon && <Icon size={24} strokeWidth={1.5} />}
                   </div>
                 </div>
 
                 <div>
-                  <h3 className="font-display font-bold text-2xl md:text-3xl mb-4 transition-colors text-ink group-hover:text-cyan">
+                  <h3 className="font-display font-bold text-3xl md:text-4xl mb-4 transition-colors text-ink group-hover:text-cyan">
                     {service.title}
                   </h3>
-                  <p className="text-base leading-relaxed text-ink-2 mb-4">
+                  <p className="text-lg leading-relaxed text-ink-2 mb-6">
                     {service.description}
                   </p>
-                  <div className="flex flex-wrap gap-2">
-                    {service.features.slice(0, 3).map((f) => (
+                  <div className="flex flex-wrap gap-3">
+                    {service.features.slice(0, 4).map((f) => (
                       <span
                         key={f}
-                        className="text-xs px-3 py-1 rounded-full bg-surface text-ink-3"
+                        className="text-xs px-4 py-1.5 rounded-full bg-surface border border-border text-ink-2"
                       >
                         {f}
                       </span>
                     ))}
-                    {service.features.length > 3 && (
-                      <span className="text-xs px-3 py-1 text-ink-3">
-                        +{service.features.length - 3} more
-                      </span>
-                    )}
                   </div>
                 </div>
 
-                <div className="hidden lg:flex flex-col items-end justify-between h-full">
+                <div className="hidden lg:flex flex-col items-end justify-between h-full pt-2">
                   <div className="text-right">
-                    <p className="text-xs text-ink-3 mb-1">Starting at</p>
-                    <p className="font-display font-bold text-xl text-cyan">
-                      ${service.pricing.min.toLocaleString()}
+                    <p className="text-[10px] uppercase tracking-widest text-ink-3 mb-2 font-bold">Starting Portfolio</p>
+                    <p className="font-display font-black text-3xl text-ink">
+                      ${service.pricing.min.toLocaleString()}—
                     </p>
                   </div>
-                  <div className="inline-flex items-center gap-2 text-sm font-medium text-ink-2 group-hover:text-cyan transition-colors">
-                    Learn more
-                    <LucideIcons.ArrowRight size={14} />
+                  <div className="inline-flex items-center gap-3 text-sm font-bold text-cyan group-hover:translate-x-2 transition-transform">
+                    Explore Details
+                    <LucideIcons.ArrowRight size={16} />
                   </div>
                 </div>
               </Link>
@@ -144,105 +140,7 @@ export default function ServicesPage() {
         })}
       </section>
 
-      <section className="px-6 md:px-10 max-w-[1440px] mx-auto py-40 border-t border-border">
-        <RevealOnScroll variant="fade-up">
-          <div className="mb-20">
-            <p className="text-[11px] tracking-[0.22em] uppercase mb-6 font-medium text-ink-3">
-              Investment
-            </p>
-            <h2
-              className="font-display font-black leading-[0.95] tracking-[-0.03em] text-ink"
-              style={{ fontSize: "clamp(40px,6vw,88px)" }}
-            >
-              Transparent Pricing.
-              <br />
-              <span className="text-ink-3">No hidden fees.</span>
-            </h2>
-          </div>
-        </RevealOnScroll>
-
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-px bg-border">
-          {PRICING_TIERS.map((tier, i) => (
-            <RevealOnScroll key={tier.tier} delay={i * 0.1} variant="fade-up">
-              <div
-                className={`relative p-10 flex flex-col h-full transition-all duration-300 ${tier.highlight ? "bg-bg-3" : "bg-bg-2"}`}
-                style={{ minHeight: "520px" }}
-              >
-                {tier.highlight && (
-                  <span className="absolute top-6 right-6 text-[10px] font-black tracking-[0.15em] uppercase px-3 py-1 rounded-full bg-cyan-dim text-cyan border border-cyan-glow">
-                    Most Popular
-                  </span>
-                )}
-                <div className="mb-10">
-                  <p className="text-sm font-bold mb-2 text-ink-3">
-                    {tier.tier}
-                  </p>
-                  <p
-                    className="font-display font-black tracking-tight mb-2 text-ink"
-                    style={{ fontSize: "clamp(28px,3vw,44px)" }}
-                  >
-                    {tier.price}
-                  </p>
-                  <p className="text-sm text-ink-3">{tier.sub}</p>
-                </div>
-
-                <ul className="space-y-4 flex-1 mb-10">
-                  {tier.features.map((f) => (
-                    <li
-                      key={f}
-                      className="flex items-start gap-3 text-sm text-ink-2"
-                    >
-                      <LucideIcons.Check
-                        size={14}
-                        className="text-cyan mt-1 shrink-0"
-                      />
-                      {f}
-                    </li>
-                  ))}
-                </ul>
-
-                {tier.popularFor && tier.popularFor.length > 0 && (
-                  <div className="mb-6">
-                    <p className="text-xs text-ink-3 mb-2">Best for:</p>
-                    <div className="flex flex-wrap gap-2">
-                      {tier.popularFor.map((s) => (
-                        <span
-                          key={s}
-                          className="text-xs px-2 py-1 bg-surface rounded text-ink-2"
-                        >
-                          {s}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                )}
-
-                <Link href="/contact">
-                  <motion.span
-                    className={cn(
-                      "inline-flex w-full items-center justify-center gap-2 h-12 rounded-full font-bold text-sm border transition-all",
-                      tier.highlight
-                        ? "bg-cyan text-bg border-transparent"
-                        : "bg-transparent border-border-strong text-ink-2",
-                    )}
-                    whileHover={
-                      tier.highlight
-                        ? { scale: 1.02 }
-                        : {
-                            borderColor: "var(--color-ink-2)",
-                            color: "var(--color-ink)",
-                          }
-                    }
-                    whileTap={{ scale: 0.97 }}
-                  >
-                    {tier.cta} →
-                  </motion.span>
-                </Link>
-              </div>
-            </RevealOnScroll>
-          ))}
-        </div>
-      </section>
+      <PricingSection />
 
       <section className="px-6 md:px-10 max-w-[800px] mx-auto pb-40">
         <RevealOnScroll variant="fade-up">

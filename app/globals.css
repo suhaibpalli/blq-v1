@@ -2,21 +2,24 @@
 
 /* ─── Design Tokens ─────────────────────────────────────────────────────── */
 :root {
-  --color-bg:            #03030A;
-  --color-bg-2:          #07070F;
-  --color-bg-3:          #0D0D1A;
-  --color-surface:       #111124;
-  --color-border:        rgba(255,255,255,0.07);
-  --color-border-strong: rgba(255,255,255,0.14);
+  --color-bg:            #020205;
+  --color-bg-2:          #05050A;
+  --color-bg-3:          #080812;
+  --color-surface:       #0C0C1D;
+  --color-border:        rgba(255,255,255,0.05);
+  --color-border-strong: rgba(255,255,255,0.12);
 
-  --color-cyan:          #00E8FF;
-  --color-cyan-dim:      rgba(0,232,255,0.12);
-  --color-cyan-glow:     rgba(0,232,255,0.25);
+  --color-cyan:          #00F5FF;
+  --color-cyan-dim:      rgba(0,245,255,0.08);
+  --color-cyan-glow:     rgba(0,245,255,0.2);
 
-  --color-ink:           #EEEEFF;
-  --color-ink-rgb:       238, 238, 255;
-  --color-ink-2:         #9898BB;
-  --color-ink-3:         #55556A;
+  --color-ink:           #F8F8FF;
+  --color-ink-rgb:       248, 248, 255;
+  --color-ink-2:         #A1A1C3;
+  --color-ink-3:         #606080;
+  
+  --color-accent-2:      #8A2BE2; /* Violet */
+  --color-accent-3:      #FF00FF; /* Fuchsia */
 }
 
 .light {
@@ -63,6 +66,9 @@
   --color-accent-primary:   var(--color-cyan);
   --color-accent-secondary: #7B61FF;
 
+  --color-accent-2:       var(--color-accent-2);
+  --color-accent-3:       var(--color-accent-3);
+
   --font-display: var(--font-syne), 'Syne', sans-serif;
   --font-body:    var(--font-dm-sans), 'DM Sans', sans-serif;
   --font-mono:    'DM Mono', 'Courier New', monospace;
@@ -70,6 +76,7 @@
   --ease-out-expo: cubic-bezier(0.16, 1, 0.3, 1);
   --ease-in-expo:  cubic-bezier(0.7, 0, 0.84, 0);
   --ease-circ:     cubic-bezier(0.85, 0, 0.15, 1);
+  --ease-premium:  cubic-bezier(0.6, 0.05, 0.01, 0.99);
 }
 
 /* ─── Base ──────────────────────────────────────────────────────────────── */
@@ -198,10 +205,18 @@ body::before {
   box-shadow: 0 4px 24px -4px var(--color-cyan-dim);
 }
 .glass-panel {
-  background: var(--color-bg-2);
+  background: rgba(var(--color-ink-rgb), 0.03);
   border: 1px solid var(--color-border);
-  backdrop-filter: blur(12px);
-  -webkit-backdrop-filter: blur(12px);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+}
+
+.glass-premium {
+  background: linear-gradient(135deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
+  border: 1px solid var(--color-border-strong);
+  backdrop-filter: blur(30px);
+  -webkit-backdrop-filter: blur(30px);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
 }
 
 /*
@@ -218,10 +233,30 @@ body::before {
 }
 
 .text-gradient-cyan {
-  background-image: linear-gradient(135deg, var(--color-cyan) 0%, rgba(123,97,255,0.85) 100%);
+  background: linear-gradient(135deg, var(--color-cyan) 0%, var(--color-accent-2) 50%, #FF00E5 100%);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   background-clip: text;
+}
+
+.text-gradient-hero {
+  background: linear-gradient(to right, #fff 20%, var(--color-cyan) 40%, var(--color-accent-2) 60%, #fff 80%);
+  background-size: 200% auto;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shine 8s linear infinite;
+}
+
+@keyframes shine {
+  to { background-position: 200% center; }
+}
+
+.bg-grid-premium {
+  background-image: 
+    linear-gradient(var(--color-border) 1px, transparent 1px),
+    linear-gradient(90deg, var(--color-border) 1px, transparent 1px);
+  background-size: 50px 50px;
 }
 
 /* ─── Line animation ─────────────────────────────────────────────────────── */

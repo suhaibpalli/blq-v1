@@ -19,10 +19,10 @@ export default function HeroSection() {
       <HeroCanvas />
 
       <div
-        className="absolute inset-0 z-1 pointer-events-none opacity-50"
+        className="absolute inset-0 z-1 pointer-events-none opacity-40"
         style={{
           background:
-            "radial-gradient(ellipse 80% 60% at 10% 90%, var(--color-cyan-dim) 0%, transparent 70%), radial-gradient(ellipse 50% 40% at 90% 10%, var(--color-cyan-dim) 0%, transparent 60%)",
+            "radial-gradient(ellipse 80% 60% at 10% 90%, var(--color-cyan-glow) 0%, transparent 70%), radial-gradient(ellipse 50% 40% at 90% 10%, var(--color-accent-2) 0%, transparent 60%)",
         }}
       />
 
@@ -57,7 +57,9 @@ export default function HeroSection() {
                 delay: 0.3 + i * 0.085,
                 ease: [0.16, 1, 0.3, 1],
               }}
-              className={`inline-block mr-[0.2em] ${i === words.length - 1 ? "text-cyan" : "text-ink"}`}
+              className={`inline-block mr-[0.2em] ${
+                i === words.length - 1 ? "text-gradient-hero" : "text-ink"
+              }`}
               style={{ fontSize: "clamp(52px, 9.5vw, 140px)" }}
             >
               {word}
@@ -94,11 +96,11 @@ export default function HeroSection() {
             </Link>
             <Link href="/work">
               <motion.span
-                className="inline-flex items-center gap-2 h-14 px-8 rounded-full font-medium text-sm border tracking-wide border-border-strong text-ink-2"
-                whileHover={{ borderColor: "var(--color-ink-2)", color: "var(--color-ink)", scale: 1.02 }}
+                className="inline-flex items-center gap-2 h-14 px-8 rounded-full font-medium text-sm border tracking-wide border-border-strong text-ink-2 bg-white/5 backdrop-blur-sm"
+                whileHover={{ borderColor: "var(--color-cyan)", color: "var(--color-ink)", scale: 1.02, backgroundColor: "rgba(255,255,255,0.1)" }}
                 whileTap={{ scale: 0.97 }}
               >
-                View Our Work ↓
+                Explore Case Studies
               </motion.span>
             </Link>
           </div>
