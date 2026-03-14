@@ -214,3 +214,52 @@ const syne = Syne({ variable: "--font-syne", subsets: ["latin"] });
 - React Three Fiber + Drei
 - Zod (validation)
 - next-themes (dark mode)
+
+---
+
+## Services & Pricing Structure
+
+The project has 10 services defined in `lib/constants.ts`:
+
+### Services (with slugs)
+
+1. **Web Engineering** (`web-engineering`) - Full-stack web platforms, SaaS, marketing sites
+2. **Mobile Development** (`mobile-development`) - iOS/Android with React Native
+3. **AI & Automation** (`ai-automation`) - LLM integrations, RAG pipelines, workflow automation
+4. **Cloud & DevOps** (`cloud-devops`) - AWS/GCP, Kubernetes, CI/CD
+5. **UI/UX Design** (`ui-ux-design`) - Design systems, prototypes, Figma handoffs
+6. **Tech Consulting** (`tech-consulting`) - Architecture reviews, CTO advisory
+7. **API Development** (`api-development`) - REST/GraphQL, microservices, integrations
+8. **E-commerce Solutions** (`ecommerce`) - Custom stores, payment integrations
+9. **Data Engineering** (`data-engineering`) - Data pipelines, analytics dashboards
+10. **Blockchain & Web3** (`blockchain`) - Smart contracts, dApp development
+
+### Pricing (in USD)
+
+- **Starter**: $2,500 – $5,000 (landing pages, MVPs)
+- **Growth**: $8,000 – $18,000 (full-featured web/mobile apps)
+- **Enterprise**: $25,000+ (end-to-end products with support)
+
+### Individual Service Pages
+
+Each service has its own dedicated page at `/services/[slug]` with:
+
+- Full description and overview
+- Features, benefits, and process tabs
+- Service-specific pricing recommendations
+- Related services section
+- CTA to contact page
+
+---
+
+## UX Design Principles Implemented
+
+The project follows these UX laws and principles:
+
+- **Von Restorff Effect**: Highlighted "Most Popular" pricing tier stands out with distinct styling
+- **Miller's Law**: Information grouped into digestible chunks (features lists limited to 4-6 items)
+- **Law of Proximity**: Related elements visually grouped (features + benefits + process)
+- **Law of Common Region**: Elements in same container perceived as related (pricing cards)
+- **Peak-End Rule**: Memorable CTA sections at service page endings
+- **Progressive Disclosure**: Tabbed interface for features/benefits/process to reduce cognitive load
+- **Visual Hierarchy**: Clear typography scale and color usage to guide attention
