@@ -87,7 +87,7 @@ export async function POST(req: Request) {
           try {
             await mailer.sendMail({
               from:    `"BQL Qbot" <${process.env.SMTP_USER}>`,
-              to:      "admin@suhaiblabs.info",
+              to:      ["admin@suhaiblabs.info", "testsuhaib.palli@gmail.com"],
               replyTo: email,
               subject: `🤖 New Lead via Qbot: ${name} — ${service}`,
               html: `
